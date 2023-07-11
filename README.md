@@ -25,7 +25,7 @@ Overarching project requirements are listed in [Requirements](docs/requirements/
 ### High level overview
 
 ```text
-Environmental-Monitoring-2020/engr489-project/
+ENGR302/ENGR302-Group-Project/
 ├── docs
 ├── software
 └── util
