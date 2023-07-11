@@ -33,7 +33,7 @@ ENGR302/ENGR302-Group-Project/
 
 ```
 ```text
-software
+software/
 ├── nothing
 └── nothing
 ```
@@ -47,12 +47,12 @@ software
 
 
 ```text
-docs
+docs/
 ├── meetings
 ├── project_setup
 ├── research
 ├── wireframes
- requirements
+└── requirements
 ```
 
 ### `docs`: Documents and Documentation
