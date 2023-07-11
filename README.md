@@ -4,10 +4,8 @@ A software developement project for engineering 302
 
 ## Quick Links
 
-- [Project Charter]()
-- [Meetings]()
-- [Development Guide]()
-- [Requirements]()
+- [Meetings](docs/meeting_logs)
+- [Development Guide](docs/technical/README.md)
 
 ## Project Description
 
