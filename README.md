@@ -6,6 +6,7 @@ A software developement project for engineering 302
 
 - [Meetings](docs/meeting_logs)
 - [Development Guide](docs/technical/README.md)
+- [Project Setup Guide](docs/technical/project_setup.md)
 
 ## Project Description
 
