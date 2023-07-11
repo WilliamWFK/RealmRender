@@ -28,9 +28,22 @@ Environmental-Monitoring-2020/engr489-project/
 ├── docs
 ├── software
 └── util
+
+
+```
+```text
+software
+├── nothing
+└── nothing
 ```
 
+
 ### `software`: Where the software for the project is being developed
+
+
+- `nothing`: nothing
+- `nothing`: nothing
+
 
 ```text
 docs
@@ -38,7 +51,7 @@ docs
 ├── project_setup
 ├── research
 ├── wireframes
-└── requirements
+ requirements
 ```
 
 ### `docs`: Documents and Documentation
@@ -47,14 +60,22 @@ docs
 
 - `meeting_logs`: docuentation of meetings with the team and with clients.
 - `project_setup`: docuentation of the standard project setup to begin developement on software for our group.
-- `requirements`: documentation provided by collaborating with the clients for project requirements.
-- `wireframes`: documentation of wireframes for design ideas to discuss with team and client.
 - `research`: Research on similar projects, useful articles for developement and IDE's.
+- `wireframes`: documentation of wireframes for design ideas to discuss with team and client.
+- `requirements`: documentation provided by collaborating with the clients for project requirements.
+
+
+```text
+util/
+├── nothing
+└── nothing
+```
 
 
 ### `util`: utility scripts
 
-```text
-util/
-└── Nothing
-```
+
+
+- `nothing`: nothing
+- `nothing`: nothing
+
