@@ -14,7 +14,7 @@ Group Project for Engineering 302
 
 ## Project Requirements
 
-Overarching project requirements are listed in [docs/requirements/requirements.md](docs/requirements/requirements.md).
+Overarching project requirements are listed in [Requirements](docs/requirements/requirements.md).
 
 
 ## Overall Objectives
