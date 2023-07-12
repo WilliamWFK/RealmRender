@@ -75,7 +75,7 @@ util/
 ```
 
 
-### `util`: utility scripts
+### `util`: Utility scripts
 
 
 
