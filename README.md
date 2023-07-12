@@ -51,10 +51,10 @@ docs/
 ├── meeting_logs
 ├── quality_management
 ├── requirements
-├── risk_management
 ├── research
-├── wireframes
-└── technical
+├── risk_management
+├── technical
+└── wireframes
 ```
 
 ### `docs`: Documents and Documentation
