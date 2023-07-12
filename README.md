@@ -48,11 +48,13 @@ software/
 
 ```text
 docs/
-├── meetings
-├── project_setup
+├── meeting_logs
+├── quality_management
+├── requirements
+├── risk_management
 ├── research
 ├── wireframes
-└── requirements
+└── technical
 ```
 
 ### `docs`: Documents and Documentation
