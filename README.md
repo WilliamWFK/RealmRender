@@ -1,6 +1,6 @@
-# Engineering Group Project
+# Dungeons and Dragons World Builder
 
-A software developement project for engineering 302
+Group Project Group B; Dungeons and Dragons World Builder
 
 ## Quick Links
 
@@ -10,7 +10,7 @@ A software developement project for engineering 302
 
 ## Project Description
 
-Group Project for Engineering 302
+A world builder for Dungeons and Dragons. 
 
 ## Project Requirements
 
