@@ -1,0 +1,1 @@
+# Plan for getting the project started
