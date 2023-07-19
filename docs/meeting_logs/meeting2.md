@@ -1,19 +1,22 @@
-# Plan for getting the project started
 **Questions for Client:**
 
-By "world builder" do you mean to generate the Map i.e the land that would be played on or? Question below.
+
+By “world builder” do you mean to generate the Map i.e the land that would be played on or? Question below.
 
 Answer: random map gen YES
 
-Would you like it to be more of a dungeon master tool kit: e.g a bunch of generators for different mob types, item types, puzzles, traps & encounters:,would you like a general campaign idea with everything generated for the normal start of a DND campaign played in person, or would you like an entire one shot adventure generated?
+Would you like it to be more of a dungeon master tool kit: e.g a bunch of generators for different mob types, item types, puzzles, traps & encounters:,would you like a general campaign idea with everything generated for the normal start of a DND campaign played in person, or would you like an entire one shot adventure generated? 
 
 Would you like to have a campaign generated throughout the gameplay, or all upfront at the start, and what aspects would you like generated upfront?
+
 
 Would you like it to be a dungeon crawl adventure or an open world adventure?
 
 Dungeon crawling can include a goal, traps and treasure to find scattered around an either procedurally generated dungeon or a hand-crafted one.
 
+
 Would you like it developed as a web application or an executable application?
+
 
 Would you like to have a difficulty scale?
 
