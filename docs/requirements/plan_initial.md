@@ -39,7 +39,7 @@ Develop the as a Webapp frontend React and backend consisting of Node.js.
 Ideally we would want to have the app be available anywhere.
 P5js can be used to draw designs.
 
-MVP would be a random map generation where user can create a map by selecting labels to generate the limitations of the 
+MVP would be a random map generation where user can create a map by selecting labels to generate the limitations of the map. 
 
 
 Logic behind the map i.e the narrative can be maybe preset? (trie-structure for logic)
