@@ -20,6 +20,15 @@ stages:          # List of stages for jobs, and their order of execution
 eslint:      #Name of the job
  stage: lint  #Tells job which stage it is
  script:          #Scripts which need to be ran by the server
-  - npm i eslint
-  - node_modules/eslint/bin/eslint.js .
+    - |
+     npm install eslint \
+      eslint-config-airbnb \
+      eslint-config-prettier \
+      eslint-plugin-flowtype \ 
+      eslint-plugin-import \
+      eslint-plugin-jsx-a11y \
+      eslint-plugin-prettier \
+      eslint-plugin-react
+    # Run eslint
+    - node_modules/eslint/bin/eslint.js .
 
