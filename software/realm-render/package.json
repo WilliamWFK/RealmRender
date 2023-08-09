@@ -19,7 +19,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "@gitlab",
+      "eslint:recommended",
       "react-app",
       "react-app/jest"
     ]
