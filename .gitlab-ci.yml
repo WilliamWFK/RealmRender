@@ -24,7 +24,6 @@ eslint:      #Name of the job
     - |
       npm install eslint
     # Run eslint
-    - eslint --init
     - node_modules/eslint/bin/eslint.js .
     
 
