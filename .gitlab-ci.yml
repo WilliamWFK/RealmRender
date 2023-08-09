@@ -1,0 +1,21 @@
+## This is a Gitlab CI (Continuous Integration) pipeline that will be used to help with:
+# Build Management and Quality Management
+
+image: node
+
+stages:          # List of stages for jobs, and their order of execution
+  - lint
+  #- build
+  #- test
+  #- deploy
+
+####################################################
+# LINT STAGE
+####################################################
+
+eslint:      #Name of the job
+ stage: lint  #Tells job which stage it is
+ script:          #Scripts which need to be ran by the server
+  - npm i eslint
+  - npm run lint
+
