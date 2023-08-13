@@ -5,13 +5,22 @@ import Tile from './Model/Tile';
 import TileComponent from './Model/TileComponent';
 
 const createGrid = () => {
+  const tileEdge = ["wall", "empty"];
   const grid = [];
   for (let x = 0; x < 10; x++) {
+    const row = [];
     for (let y = 0; y < 10; y++) {
-      const tile = new Tile(x, y, 0, "grass", "nothing", "TilesImg/Allwalls.png");
-      grid.push(tile);
+      const tile = new Tile(x, y, 0, "grass", "nothing");
+      tile.setDirections(tileEdge[Math.floor(Math.random() * tileEdge.length)],tileEdge[Math.floor(Math.random() * tileEdge.length)]
+      ,tileEdge[Math.floor(Math.random() * tileEdge.length)],tileEdge[Math.floor(Math.random() * tileEdge.length)]);
+      tile.selectImage();
+      row.push(tile);
     }
+    grid.push(row);
   }
+  
+
+
   return grid;
 };
 
@@ -21,9 +30,13 @@ const App = () => {
   return (
     <div className="App">
       <div className="map-container">
-        {grid.map((tile, index) => (
-          <TileComponent key={index} tile={tile} />
-        ))}
+      {grid.map((row, rowIndex) => (
+        <div key={rowIndex} className="grid-row">
+          {row.map((tile, columnIndex) => (
+            <TileComponent key={columnIndex} tile={tile} />
+          ))}
+        </div>
+      ))}
       </div>
     </div>
   );
