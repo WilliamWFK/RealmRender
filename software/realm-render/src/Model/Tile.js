@@ -1,6 +1,7 @@
 class Tile {
     imageStart = "TilesImg/tile";
     image;
+    rotate;
     constructor(x, y, z, type, contents) {
         this.x = x;
         this.y = y;
@@ -32,29 +33,59 @@ class Tile {
      * */
     selectImage(){
         this.image = this.imageStart;
+        var counter = 0;
         for(const dir in this.directions){
-            if (this.directions[dir] === "wall") {
-                // Append the corresponding character to the image string based on direction
-                switch (dir) {
-                  case "up":
-                    this.image += "U";
-                    break;
-                  case "down":
-                    this.image += "D";
-                    break;
-                  case "left":
-                    this.image += "L";
-                    break;
-                  case "right":
-                    this.image += "R";
-                    break;
-                  default:
-                    // Handle unexpected direction
-                    break;
-                }
+          if (this.directions[dir] === "wall"){
+            counter++;
+            switch(dir){
+              case "up":
+                this.rotate += 0;
+                break;
+              case "right":
+                this.rotate += 90;
+                break;
+              case "down":
+                this.rotate += 180;
+                break;
+              case "left":
+                this.rotate += -90;
+                break;
+              default:
+                break;
             }
+          }
         }
-        this.image += ".png"
+      if (counter === 1){
+        this.image += "U.png";
+      }
+      else if (counter === 2){
+        if(this.directions.up === "wall" && this.directions.down === "wall"){
+          this.rotate = 0;
+          this.image += "UD.png";
+        } else if(this.directions.left === "wall" && this.directions.right === "wall"){
+          this.rotate = 90;
+          this.image += "UD.png";
+        }
+        else {
+          if(this.directions.left === "wall" && this.directions.down === "wall"){
+            this.rotate = -270;
+          }
+          this.rotate = (this.rotate / 2) - 45;
+          this.image += "UR.png";
+        }
+      }
+      else if (counter === 3){
+        this.rotate = (360 - this.rotate);
+        this.image += "URL.png";
+      }
+      else if (counter === 4){
+        this.rotate = 0;
+        this.image += "URDL.png";
+      }
+      else {
+        this.rotate = 0;
+        this.image += ".png";
+      } 
     }
 }
 
