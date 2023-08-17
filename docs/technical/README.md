@@ -1,6 +1,6 @@
 To run the react app:
 
-1) Install npm and Node.js 
+1) Install npm and Node.js
 2) cd into the realm-render directory
 3) In the realm-render dir run npm install react
-4) run npm start to run the app locally 
+4) run npm start to run the app locally

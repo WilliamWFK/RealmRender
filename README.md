@@ -1,4 +1,5 @@
-# Dungeons and Dragons World Builder
+# Realm Render
+## A Dungeons and Dragons World Builder
 
 Group Project Group B; Dungeons and Dragons World Builder
 
@@ -10,7 +11,7 @@ Group Project Group B; Dungeons and Dragons World Builder
 
 ## Project Description
 
-A world builder for Dungeons and Dragons. 
+A world builder for Dungeons and Dragons.
 
 ## Project Requirements
 
@@ -81,4 +82,3 @@ util/
 
 - `nothing`: nothing
 - `nothing`: nothing
-
