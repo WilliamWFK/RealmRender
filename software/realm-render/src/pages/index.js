@@ -1,5 +1,6 @@
 //HOME PAGE index.js file
 import React from 'react';
+import { Link } from 'react-router-dom';
 import background from '../RealmRenderWireframe1.drawio.svg';
  
 const Home = () => {
@@ -9,15 +10,16 @@ const Home = () => {
             Realm Render
             </header>
             <div className="menuButtons">
-            <a href="#" className="menuButtonItem"><p>New</p></a>
-            <a href="#" className="menuButtonItem"><p>Load</p></a>
-            <a href="#" className="menuButtonItem"><p>Join</p></a>
+                <Link to="/new" className="menuButtonItem"><p>New</p></Link>
+                <Link to="/loadMap" className="menuButtonItem"><p>Load</p></Link>
+                <Link to="/join" className="menuButtonItem"><p>Join</p></Link>
             </div>
-            
+            <img src={background} alt="background"></img>
         </div>
+        
     );
     //background was removed from above
-    //<img src={background} alt="background"></img>
+    
 };
  
 export default Home;
