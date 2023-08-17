@@ -40,4 +40,4 @@ repos:
     rev: v8.46.0
     hooks:
       - id: eslint
-        args: [--fix, "./software/realm-render/src/*"] # Fix all fixable ESLint violations in the repository
+        args: [--fix, "./software/realm-render/src/*.js*"] # Fix all fixable ESLint violations in the repository
