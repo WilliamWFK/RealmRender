@@ -5,12 +5,12 @@
 
 window.addEventListener('load', init);
 
-function init(){
-    clearMap();
+function init() {
+  clearMap();
 }
 
 function clearMap() {
-    return null;
+  return null;
 }
 
 /**
@@ -19,5 +19,5 @@ function clearMap() {
  * @returns
  */
 function bindEvents() {
-    return null;
+  return null;
 }

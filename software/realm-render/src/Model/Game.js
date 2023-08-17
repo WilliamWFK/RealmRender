@@ -6,11 +6,11 @@
  * @class Game
  * @constructor
  */
-var Game = function() {
-    this.map = null;
-    this.players = [];
-    this.monsters = [];
-    this.fog = [];
+const Game = function() {
+  this.map = null;
+  this.players = [];
+  this.monsters = [];
+  this.fog = [];
 };
 
 /**
@@ -21,9 +21,9 @@ var Game = function() {
  * @return {void}
  */
 Game.prototype.addPlayer = function(player) {
-    this.players.push(player);
-    return this;
-}
+  this.players.push(player);
+  return this;
+};
 
 /**
  * This will add a monster to the game.
@@ -33,6 +33,6 @@ Game.prototype.addPlayer = function(player) {
  * @return {void}
  */
 Game.prototype.addMonster = function(monster) {
-    this.monsters.push(monster);
-    return this;
-}
+  this.monsters.push(monster);
+  return this;
+};
