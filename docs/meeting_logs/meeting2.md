@@ -5,7 +5,7 @@ By “world builder” do you mean to generate the Map i.e the land that would b
 
 Answer: random map gen YES
 
-Would you like it to be more of a dungeon master tool kit: e.g a bunch of generators for different mob types, item types, puzzles, traps & encounters:,would you like a general campaign idea with everything generated for the normal start of a DND campaign played in person, or would you like an entire one shot adventure generated? 
+Would you like it to be more of a dungeon master tool kit: e.g a bunch of generators for different mob types, item types, puzzles, traps & encounters:,would you like a general campaign idea with everything generated for the normal start of a DND campaign played in person, or would you like an entire one shot adventure generated?
 
 Would you like to have a campaign generated throughout the gameplay, or all upfront at the start, and what aspects would you like generated upfront?
 

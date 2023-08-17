@@ -1,23 +1,32 @@
 /**
- * Controller will respond to the button presses and actions done by the user and will update the model and view accordingly.
- * 
+ * Controller will respond to the button presses and
+ * actions done by the user and will update the model and view accordingly.
+ *
  */
 
 window.addEventListener('load', init);
 
-function init(){
-    clearMap();
-}
-
-function clearMap() {
-    return null;
+/**
+ * This method will initialize the controller.
+ */
+function init() {
+  clearMap();
 }
 
 /**
- * This method will respond to the button presses and call the appropriate methods.
- * 
- * @returns 
+ * This function clears the map and resets the model.
+ * @return {null} object.
  */
-function bindEvents() {
-    return null;
+function clearMap() {
+  return null;
 }
+
+/**
+ * This method will respond to the button presses
+ * and call the appropriate methods.
+ * Is currently commented out as it isnt being used.
+ * @returns {null} object.
+ */
+/** function bindEvents() {
+  return null;
+}*/

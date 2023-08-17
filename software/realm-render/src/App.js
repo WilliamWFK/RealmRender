@@ -1,20 +1,24 @@
+import React from 'react';
 import './styles/App.css';
-import background from './RealmRenderWireframe1.drawio.svg';
+import { BrowserRouter as Router, Routes, Route }
+    from 'react-router-dom';
+import Home from './pages';
+import LoadMap from './pages/loadMap';
 
+/**
+ * Main function to return App component.
+ * @return {App} object.
+ */
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        Realm Render
-      </header>
-      <div className="menuButtons">
-        <a href="#" className="menuButtonItem"><p>New</p></a>
-        <a href="#" className="menuButtonItem"><p>Load</p></a>
-        <a href="#" className="menuButtonItem"><p>Join</p></a>
-      </div>
-      <img src={background} alt="background"></img>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path='/' element={<Home />} />
+        <Route path='/loadMap' element={<LoadMap />} />
+        <Route path='/index' element={<Home />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
