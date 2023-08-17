@@ -6,9 +6,23 @@
  * 
  */
 
-var Map = function() {
-    this.tiles = [];
-    this.width = 0;
-    this.height = 0;
-};
+class Map {
+    constructor(width, height) {
+        this.tiles = [];
+        this.rooms = [];
+        this.width = width;
+        this.height = height;
+        this.gmView = false;
+    }
+
+    setTiles(newTiles){
+        this.tiles = newTiles;
+    }
+
+    setRooms(newRoom){
+        this.newRoom = newRoom;
+    }
+}
+
+export default Map
 

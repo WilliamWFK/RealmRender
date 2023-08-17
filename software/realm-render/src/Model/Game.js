@@ -6,12 +6,20 @@
  * @class Game
  * @constructor
  */
-var Game = function() {
-    this.map = null;
-    this.players = [];
-    this.monsters = [];
-    this.fog = [];
-};
+class Game {
+    constructor(width, height) {
+        this.map = null;
+        this.players = [];
+        this.monsters = [];
+        this.fog = [];
+    }
+
+    setMap(newMap){
+        this.map = newMap
+    }
+
+
+}
 
 /**
  * This will add a player to the game.
@@ -36,3 +44,5 @@ Game.prototype.addMonster = function(monster) {
     this.monsters.push(monster);
     return this;
 }
+
+export default Game

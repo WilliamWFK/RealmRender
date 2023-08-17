@@ -9,10 +9,10 @@ class Tile {
         this.type = type;       // Thematic type of tile
         this.contents = contents; // What's on the tile
         this.directions = { //to tell whats edges are made of
-            up: "wall",
-            right: "wall",
-            down: "wall",
-            left: "wall"
+            up: "empty",
+            right: "empty",
+            down: "empty",
+            left: "empty"
         };
         this.selectImage();
     }
@@ -25,6 +25,26 @@ class Tile {
           down: down,
           left: left
         };
+    }
+
+    //set Up
+    setUp(newDir) {
+      this.directions.up = newDir;
+    }
+
+    //set Right
+    setRight(newDir) {
+      this.directions.right = newDir;
+    }
+
+    //set Down
+    setDown(newDir) {
+      this.directions.down = newDir;
+    }
+
+    //set Left
+    setLeft(newDir) {
+      this.directions.left = newDir;
     }
 
     /**

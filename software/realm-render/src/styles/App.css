@@ -62,14 +62,14 @@ img {
 
 .map-container {
   display: grid;
-  grid-template-columns: repeat(10, 200px);
+  grid-template-columns: repeat(20, 32px);
   margin: auto auto;
   width: fit-content;
 }
 
 .tile {
-  width: 200px;
-  height: 200px;
+  width: 32px;
+  height: 32px;
   border: 1px solid #000;
   box-sizing: border-box; /* Include border in width and height */
 }

@@ -6,5 +6,12 @@ class Room {
         this.exits = [];
         this.items = [];
         this.characters = [];
+        this.tiles = [];
+    }
+
+    setTiles(newTiles){
+        this.tiles = newTiles;
     }
 }
+
+export default Room

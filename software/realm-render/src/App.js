@@ -2,14 +2,17 @@ import './styles/App.css';
 import background from './RealmRenderWireframe1.drawio.svg';
 import React from 'react';
 import Tile from './Model/Tile';
+import Room from './Model/Room';
+import Map from './Model/Map';
+import Game from './Model/Game';
 import TileComponent from './Model/TileComponent';
 
-const createGrid = () => {
+const createGrid = (width, height) => {
   const tileEdge = ["wall", "empty"];
   const grid = [];
-  for (let x = 0; x < 10; x++) {
+  for (let x = 0; x < width; x++) {
     const row = [];
-    for (let y = 0; y < 10; y++) {
+    for (let y = 0; y < height; y++) {
       const tile = new Tile(x, y, 0, "grass", "nothing");
       tile.setDirections(tileEdge[Math.floor(Math.random() * tileEdge.length)],tileEdge[Math.floor(Math.random() * tileEdge.length)]
       ,tileEdge[Math.floor(Math.random() * tileEdge.length)],tileEdge[Math.floor(Math.random() * tileEdge.length)]);
@@ -18,23 +21,85 @@ const createGrid = () => {
     }
     grid.push(row);
   }
-  
-
 
   return grid;
 };
 
-const App = () => {
-  const grid = createGrid();
+const createRoom = () => {
+  const roomObj = new Room();
+  const tileEdge = ["wall", "empty"];
+  const room = [];
+  for (let x = 0; x < 10; x++) {
+    const row = [];
+    for (let y = 0; y < 10; y++) {
+      const tile = new Tile(x, y, 0, "grass", "nothing");
+      if (y === 0){
+        tile.setUp("wall");
+      }
+      if(x === 0){
+        tile.setLeft("wall")
+      }
+      if(x === 9){
+        tile.setRight("wall")
+      }
+      if(y === 9 && x < 4){
+        tile.setDown("wall")
+      }
+      if(y === 9 && x > 5){
+        tile.setDown("wall")
+      }
+      if(y > 5 && x === 3){
+        tile.setRight("wall")
+      }
+      if(y > 5 && x === 5){
+        tile.setRight("wall")
+      }
+      if(y === 6 && (x > 3 && x < 6)){
+        tile.setUp("wall")
+      }
+      if(y === 2 && (x > 2 && x < 7)){
+        tile.setUp("wall")
+      }
+      if(y === 4 && (x > 2 && x < 7)){
+        tile.setDown("wall")
+      }   
+      if((y > 1 && y < 5) && x === 3){
+        tile.setLeft("wall")
+      }   
+      if((y > 1 && y < 5) && x === 6){
+        tile.setRight("wall")
+      }   
 
+      tile.selectImage();
+      row.push(tile);
+    }
+    room.push(row);
+  }
+  roomObj.setTiles(room)
+  return roomObj
+}
+
+const App = () => {
+  const room = createRoom();
+  const map = new Map(20,20);
+  map.setRooms(room);
+  map.setTiles(createGrid(map.width, map.height));
+  const game = new Game();
+  game.setMap(map);
   return (
     <div className="App">
       <div className="map-container">
-      {grid.map((row, rowIndex) => (
-        <div key={rowIndex} className="grid-row">
-          {row.map((tile, columnIndex) => (
-            <TileComponent key={columnIndex} tile={tile} />
-          ))}
+      {map.tiles.map((row, rowIndex) => (
+        <div key={rowIndex} className={"grid-row" + rowIndex}>
+          {row.map((tile, colIndex) => {
+            if (rowIndex < 10 && colIndex < 10) {
+              // Render room tiles for the first 10 rows
+              return <TileComponent key={colIndex} tile={room.tiles[rowIndex][colIndex]} />;
+            } else {
+              // Render regular map tiles for the remaining rows
+              return <TileComponent key={colIndex} tile={tile} />;
+            }
+          })}
         </div>
       ))}
       </div>
