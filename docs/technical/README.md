@@ -6,5 +6,4 @@ To run the react app:
 4) Install the following dependencies:
     npm install react-router-dom 
     npm install --save styled-components
-    npm install react-icons -- save
 5) run npm start to run the app locally 
