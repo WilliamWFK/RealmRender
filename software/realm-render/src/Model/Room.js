@@ -12,6 +12,10 @@ class Room {
     setTiles(newTiles){
         this.tiles = newTiles;
     }
+
+    setCharacters(newChara){
+        this.characters = newChara;
+    }
 }
 
 export default Room
