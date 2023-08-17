@@ -1,4 +1,7 @@
-class Room {
+/**
+ * Room model. This is a room object made up of tiles.
+ */
+/** class Room {
   constructor() {
     this.id = 0;
     this.name = '';
@@ -7,4 +10,4 @@ class Room {
     this.items = [];
     this.characters = [];
   }
-}
+}*/

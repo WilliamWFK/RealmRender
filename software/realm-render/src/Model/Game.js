@@ -1,7 +1,8 @@
 /**
  * This will represent the current game state.
  *
- * Our game will hold the current Dungeon Map, the current players, and the current monsters, and the fog of war state.
+ * Our game will hold the current Dungeon Map,
+ * the current players, and the current monsters, and the fog of war state.
  *
  * @class Game
  * @constructor

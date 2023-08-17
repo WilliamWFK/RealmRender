@@ -1,6 +1,6 @@
 // HOME PAGE index.js file
 import React from 'react';
-import background from '../RealmRenderWireframe1.drawio.svg';
+/* import background from '../RealmRenderWireframe1.drawio.svg';*/
 
 const Home = () => {
   return (

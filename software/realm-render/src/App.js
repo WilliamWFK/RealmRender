@@ -6,6 +6,10 @@ import {BrowserRouter as Router, Routes, Route}
 import Home from './pages';
 import LoadMap from './pages/loadMap';
 
+/**
+ * Main function to return App component.
+ * @return {App} object.
+ */
 function App() {
   return (
     <Router>
