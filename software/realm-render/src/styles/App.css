@@ -50,6 +50,7 @@
   background-color: var(--onHoverColor);
 
 }
+<<<<<<< HEAD
 
 img {
   position: absolute;
@@ -59,3 +60,5 @@ img {
   width: 100vw;
   object-position: bottom;
 }
+=======
+>>>>>>> 943b03643043a52f59d6fe0b23747b376c9524d0
