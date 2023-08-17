@@ -1,8 +1,8 @@
 /**
  * This will represent the current game state.
- * 
+ *
  * Our game will hold the current Dungeon Map, the current players, and the current monsters, and the fog of war state.
- * 
+ *
  * @class Game
  * @constructor
  */
@@ -23,7 +23,7 @@ class Game {
 
 /**
  * This will add a player to the game.
- * 
+ *
  * @method addPlayer
  * @param {Player} player The player to add to the game.
  * @return {void}
@@ -35,7 +35,7 @@ Game.prototype.addPlayer = function(player) {
 
 /**
  * This will add a monster to the game.
- * 
+ *
  * @method addMonster
  * @param {Monster} monster The monster to add to the game.
  * @return {void}

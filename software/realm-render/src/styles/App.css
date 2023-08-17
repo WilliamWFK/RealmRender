@@ -58,24 +58,4 @@ img {
   object-fit: contain;
   width: 100vw;
   object-position: bottom;
-}*/
-
-.map-container {
-  display: grid;
-  grid-template-columns: repeat(20, 32px);
-  margin: auto auto;
-  width: fit-content;
-}
-
-.tile {
-  width: 32px;
-  height: 32px;
-  border: 1px solid #000;
-  box-sizing: border-box; /* Include border in width and height */
-}
-
-.tile img {
-  width: 100%; /* Stretch the image horizontally to fill the container */
-  height: 100%; /* Stretch the image vertically to fill the container */
-  object-fit: cover; /* Resize the image to cover the container, maintaining aspect ratio */
 }
