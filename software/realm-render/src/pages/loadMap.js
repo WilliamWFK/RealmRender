@@ -5,7 +5,7 @@ const LoadMap = () => {
     return (
         <div>
             <h1>
-                LoadMap
+                Load Map
             </h1>
             <Link to="/index" className="menuButtonItem"><p>Home</p></Link>
         </div>
