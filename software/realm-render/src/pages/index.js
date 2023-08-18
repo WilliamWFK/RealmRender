@@ -14,7 +14,9 @@ const Home = () => {
                 <Link to="/loadMap" className="menuButtonItem"><p>Load</p></Link>
                 <Link to="/join" className="menuButtonItem"><p>Join</p></Link>
             </div>
-            <img src={background} alt="background"></img>
+            <div className="custom-background">
+              <img src={background} alt="background"></img>
+            </div>
         </div>
         
     );
