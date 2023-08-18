@@ -1,0 +1,73 @@
+:root {
+    --textColor: #000;
+    --borderColor: #000;
+    --buttonColor: #fff;
+    --onHoverColor: #a0a0a0;
+  }
+  
+  .App-header {
+    position: absolute;
+    color: var(--textColor);
+    left: 10vh;
+    top: 10vh;
+    font-size: 80px;
+    z-index: 2;
+  }
+  
+  .menuButtons {
+    border: 1px solid var(--borderColor);
+    position: absolute;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 200px;
+    left: 10vh;
+    top: 35vh;
+    border-radius: 10px;
+    z-index: 2;
+    padding: 1em;
+  }
+  
+  .menuButtonItem {
+    border: 1px solid var(--borderColor);
+    color: var(--textColor);
+    background-color: var(--buttonColor);
+    border-radius: 10px;
+    text-decoration: none;
+    position: relative;
+    z-index: 2;
+    flex-grow: 1;
+    width: 100%;
+    text-align: center;
+    line-height: 80px;
+    font-size: 24px;
+    transition-duration: 250ms;
+  }
+  
+  .menuButtonItem:hover {
+    transition-duration: 250ms;
+    background-color: var(--onHoverColor);
+  
+  }
+  
+  .map-container {
+    display: grid;
+    grid-template-columns: repeat(20, 32px);
+    margin: auto auto;
+    width: fit-content;
+  }
+  
+  .tile {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #000;
+    box-sizing: border-box; /* Include border in width and height */
+  }
+  
+  .tile img {
+    width: 100%; /* Stretch the image horizontally to fill the container */
+    height: 100%; /* Stretch the image vertically to fill the container */
+    object-fit: cover; /* Resize the image to cover the container, maintaining aspect ratio */
+  }
+  
