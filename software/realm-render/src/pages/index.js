@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import background from '../RealmRenderWireframe1.drawio.svg';
- 
+
 const Home = () => {
   return (
     <div className="App">
@@ -14,14 +14,11 @@ const Home = () => {
                 <Link to="/loadMap" className="menuButtonItem"><p>Load</p></Link>
                 <Link to="/join" className="menuButtonItem"><p>Join</p></Link>
             </div>
-            <div className="custom-background">
-              <img src={background} alt="background"></img>
+            <div>
+              <img className="custom-background" src={background} alt="background"></img>
             </div>
         </div>
-        
     );
-    //background was removed from above
-    
 };
 
 export default Home;
