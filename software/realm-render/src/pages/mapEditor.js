@@ -121,7 +121,7 @@ const createGrid = (seed) => {
     const startY = room1.startY + Math.floor(room1.height / 2); // Connect from the center
     const endX = room2.startX + Math.floor(room2.width / 2);
     const endY = room2.startY + Math.floor(room2.height / 2); // Connect to the center
-  
+
     createCorridor(grid, startX, startY, endX, endY);
   }
 
@@ -131,7 +131,7 @@ const createGrid = (seed) => {
 const LoadMap = () => {
     const seed = 'exampleSeed';
     const grid = createGrid(seed);
-  
+
     return (
       <div className="LoadMap">
         <div className="map-container">
