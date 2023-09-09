@@ -41,12 +41,12 @@
   text-align: center;
   line-height: 80px;
   font-size: 24px;
+  cursor: pointer;
 }
 
 .menuButtonItem:hover {
   transition-duration: 250ms;
   background-color: var(--onHoverColor);
-
 }
 
 .mainMenu {

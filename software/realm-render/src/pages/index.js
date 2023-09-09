@@ -1,7 +1,7 @@
 // HOME PAGE index.js file
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import background from '../RealmRenderWireframe1.drawio.svg';
+import background from '../indexBackground.svg';
 
 const Home = () => {
   const [menumode, setMenumode] = useState(0);
