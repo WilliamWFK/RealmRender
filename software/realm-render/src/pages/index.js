@@ -10,7 +10,7 @@ const Home = () => {
             Realm Render
             </header>
             <div className="menuButtons">
-                <Link to="/new" className="menuButtonItem"><p>New</p></Link>
+                <Link to="/newMap" className="menuButtonItem"><p>New</p></Link>
                 <Link to="/loadMap" className="menuButtonItem"><p>Load</p></Link>
                 <Link to="/join" className="menuButtonItem"><p>Join</p></Link>
             </div>
