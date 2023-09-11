@@ -1,5 +1,5 @@
 node_modules
 package.json
 package-lock.json
-software/realm-render/.eslintrc.json
 software/realm-render/node_modules
+.eslintrc.json
