@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/App.css';
-import { BrowserRouter as Router, Routes, Route }
-    from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route}
+  from 'react-router-dom';
 import Home from './pages';
 import LoadMap from './pages/loadMap';
 
