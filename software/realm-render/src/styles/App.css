@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   gap: 1em;
-  left: 10vh;
+  left: 5vw;
   top: 35vh;
   z-index: 2;
   padding: 1em;
@@ -45,26 +45,27 @@
 }
 
 .menuButtonItem:hover {
-  transition-duration: 250ms;
   background-color: var(--onHoverColor);
 }
 
 .mainMenu {
-  width: 200px;
+  width: 10vw;
 }
 
 .createForm {
-  width: 500px;
+  left: 18vw;
+  width: 25vw;
 }
 
 .loadForm {
-  width: 550px;
+  left: 18vw;
+  width: 27vw;
 }
 
 .settingForm {
   display: grid;
-  column-gap: 20px;
-  row-gap: 20px;
+  column-gap: 1vw;
+  row-gap: 1vw;
 }
 
 .settingForm>div {
@@ -80,12 +81,12 @@
 .settingForm>input {
   grid-column-start: 9;
   grid-column-end: 10;
+  width: 100%;
 }
 
 .navButtons {
   display: flex;
   justify-content: space-between;
-
 }
 
 .linkitem {
@@ -93,7 +94,7 @@
 }
 
 .backButton {
-  width: 180px;
+  width: 9vw;
   height: 60px;
   border-radius: 8px;
   background: #dadada;
@@ -114,11 +115,11 @@
 .backButton>.text {
   flex-grow: 1;
   text-align: left;
-  padding-left: 30px;
+  padding-left: 20%;
 }
 
 .createButton {
-  width: 180px;
+  width: 9vw;
   height: 60px;
   border-radius: 8px;
   background: #a8dc59;
@@ -139,7 +140,7 @@
 .createButton>.text {
   flex-grow: 1;
   text-align: right;
-  padding-right: 30px;
+  padding-right: 15%;
 }
 
 .custom-background {
