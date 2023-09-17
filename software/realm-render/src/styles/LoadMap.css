@@ -53,7 +53,7 @@
   
   .map-container {
     display: grid;
-    grid-template-columns: repeat(20, 32px);
+    grid-template-columns: repeat(30, 32px);
     margin: auto auto;
     width: fit-content;
   }

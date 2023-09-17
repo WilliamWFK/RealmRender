@@ -1,6 +1,10 @@
+import Tile from '../Model/Tile';
+
 class Room {
-    constructor() {
+    constructor(width, height) {
         this.id = 0;
+        this.roomWidth = width
+        this.roomHeight = height
         this.name = "";
         this.description = "";
         this.exits = [];
