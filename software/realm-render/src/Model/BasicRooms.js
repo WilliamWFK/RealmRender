@@ -54,7 +54,7 @@ class TshapeRoom extends Room {
             for (let y = 0; y < this.roomHeight; y++) {
                 const tile = new Tile(x, y, 0, "", "nothing");
                 // Customize tile directions as needed
-                if (x === startX || x === startX + this.roomWidth - 1 || y === startY + (this.roomWidth/2) || y === startY + this.roomHeight - (1 + (this.roomWidth/2))) {
+                if (x === startX || x >= startX && x <= startX + this.roomWidth - 1 && y === startY + (this.roomHeight/2 - 3) || y === startY + this.roomHeight - (1 + (this.roomWidth/2 ) - 3)) {
                     tile.setDirections("wall", "wall", "wall", "wall");
                 } else {
                     tile.setDirections("empty", "empty", "empty", "empty");
