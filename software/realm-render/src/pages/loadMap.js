@@ -15,18 +15,16 @@ const createGrid = (width, height) => {
   const rooms = [room1, room2];
   map.setRooms(rooms);
   const grid = map.tiles;
-    // Loop through the grid and log each tile's properties
-
-  // for (let x = 0; x < width; x++) {
-  //   for (let y = 0; y < height; y++) {
-  //     const tile = grid[x][y];
-  //     console.log(`Tile at (${x}, ${y}):`);
-  //     console.log(`  Type: ${tile.type}`);
-  //     console.log(`  Contents: ${tile.contents}`);
-  //     console.log(`  Directions:`, tile.directions);
-  //       // Add more properties as needed
-  //   }
-  // }
+//   for (let x = 0; x < sectionWidth; x++) {
+//     for (let y = 0; y < sectionHeight; y++) {
+//         const testTile = this.tiles[x][y];
+//         console.log(`Tile at (${x}, ${y}):`);
+//         console.log(`  Type: ${testTile.type}`);
+//         console.log(`  Contents: ${testTile.contents}`);
+//         console.log(`  Directions:`, testTile.directions);
+// // Add more properties as needed
+//     }
+// }
 
   return grid;
 };
