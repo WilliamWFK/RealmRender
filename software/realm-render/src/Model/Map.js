@@ -9,8 +9,6 @@ import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom } from "../Model/Basi
 import Tile from '../Model/Tile';
 import seedrandom from 'seedrandom';
 
-
-
 class Map {
     constructor(width, height, seed) {
         this.tiles = [];
