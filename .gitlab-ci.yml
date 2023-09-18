@@ -32,19 +32,11 @@ build:
     - cd ./software/realm-render
     - npm ci
     - npm run build
+    - mkdir -p ../../build
+    - mv ./build/* ../../build/
   artifacts:
     paths:
       - ./software/realm-render/build/
-
-
-move_to_build_folder:
-  stage: build
-  script:
-    - mkdir -p build  # Create the build folder at the root
-    - mv ./software/realm-render/build/* build/  # Move artifacts to the build folder
-  artifacts:
-    paths:
-      - build/
 
 # deploy:
 #   stage: deploy
