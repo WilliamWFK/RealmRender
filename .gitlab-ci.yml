@@ -19,10 +19,11 @@ stages:          # List of stages for jobs, and their order of execution
 
 eslint:      #Name of the job
  stage: lint  #Tells job which stage it is
- image: python:3.7  #Tells job which docker image to use
+ image: python:3.10  #Tells job which docker image to use
  script:
-    - python pre-commit-3.3.3.pyz install
-    - python pre-commit-3.3.3.pyz run --all-files
+    - pip install pre-commit==3.3.3
+    - apt update && apt install -y --no-install-recommends git
+    - pre-commit run --all-files
 
 build:
   stage: build
