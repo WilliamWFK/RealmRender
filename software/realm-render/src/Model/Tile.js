@@ -116,7 +116,7 @@ class Tile {
       else {
         this.rotate = 0;
         this.image += ".png";
-      } 
+      }
     }
 }
 
