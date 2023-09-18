@@ -2,7 +2,7 @@
   --textColor: #000;
   --borderColor: #000;
   --buttonColor: #fff;
-  --onHoverColor: #a0a0a0;
+  --onHoverColor: #e9e9e9;
 }
 
 .App-header {
@@ -14,23 +14,22 @@
   z-index: 2;
 }
 
-.menuButtons {
-  border: 1px solid var(--borderColor);
+.menuBackdrop {
   position: absolute;
-  background-color: #fff;
   display: flex;
   flex-direction: column;
   gap: 1em;
-  width: 200px;
-  left: 10vh;
+  left: 5vw;
   top: 35vh;
-  border-radius: 10px;
   z-index: 2;
   padding: 1em;
+  border-radius: 8px;
+  background: rgba(240, 243, 234, 0.8);
+  background-blend-mode: normal;
+  backdrop-filter: blur(5px);
 }
 
 .menuButtonItem {
-  border: 1px solid var(--borderColor);
   color: var(--textColor);
   background-color: var(--buttonColor);
   border-radius: 10px;
@@ -42,13 +41,106 @@
   text-align: center;
   line-height: 80px;
   font-size: 24px;
-  transition-duration: 250ms;
+  cursor: pointer;
 }
 
 .menuButtonItem:hover {
-  transition-duration: 250ms;
   background-color: var(--onHoverColor);
+}
 
+.mainMenu {
+  width: 10vw;
+}
+
+.createForm {
+  left: 18vw;
+  width: 25vw;
+}
+
+.loadForm {
+  left: 18vw;
+  width: 27vw;
+}
+
+.settingForm {
+  display: grid;
+  column-gap: 1vw;
+  row-gap: 1vw;
+}
+
+.settingForm>div {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.settingForm>label {
+  grid-column-start: 8;
+  grid-column-end: 9;
+}
+
+.settingForm>input {
+  grid-column-start: 9;
+  grid-column-end: 10;
+  width: 100%;
+}
+
+.navButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.linkitem {
+  text-decoration: none;
+}
+
+.backButton {
+  width: 9vw;
+  height: 60px;
+  border-radius: 8px;
+  background: #dadada;
+  color: #757575;
+  font-weight: 400;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.backButton>.caret {
+  aspect-ratio: 1;
+  text-align: center;
+  padding-left: 20px;
+}
+
+.backButton>.text {
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 20%;
+}
+
+.createButton {
+  width: 9vw;
+  height: 60px;
+  border-radius: 8px;
+  background: #a8dc59;
+  color: #000000;
+  font-weight: 400;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.createButton>.plus {
+  aspect-ratio: 1;
+  text-align: center;
+  padding-right: 20px;
+  font-size: 40px;
+}
+
+.createButton>.text {
+  flex-grow: 1;
+  text-align: right;
+  padding-right: 15%;
 }
 
 .custom-background {
