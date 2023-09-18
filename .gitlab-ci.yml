@@ -11,7 +11,7 @@ stages:          # List of stages for jobs, and their order of execution
   - lint
   - build
   #- test
-  #- deploy
+  - deploy
 
 ####################################################
 # LINT STAGE
@@ -19,20 +19,10 @@ stages:          # List of stages for jobs, and their order of execution
 
 eslint:      #Name of the job
  stage: lint  #Tells job which stage it is
+ image: python:3.7  #Tells job which docker image to use
  script:
-    # Install eslint
-    #- |
-    #  npm install eslint \
-    #  eslint-config-airbnb \
-    #  eslint-config-prettier \
-    #  eslint-plugin-flowtype \
-    #  eslint-plugin-import \
-    #  eslint-plugin-jsx-a11y \
-    #  eslint-plugin-prettier \
-    #  eslint-plugin-react
-    # Run eslint
-    #- node_modules/eslint/bin/eslint.js .
-    echo "Lint Passed"
+    - python pre-commit-3.3.3.pyz install
+    - python pre-commit-3.3.3.pyz run --all-files
 
 build:
   stage: build
@@ -41,3 +31,15 @@ build:
     - cd ./software/realm-render
     - npm ci
     - npm start
+  artifacts:
+    paths:
+      - build/
+
+deploy:
+  stage: deploy
+  image: node:latest
+  script:
+    - cd ./software/realm-render
+    - npm ci
+    - npm run build
+    - npm run deploy
