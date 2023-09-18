@@ -33,3 +33,11 @@ eslint:      #Name of the job
     # Run eslint
     #- node_modules/eslint/bin/eslint.js .
     echo "Lint Passed"
+
+build:
+  stage: build
+  image: node:latest
+  script:
+    - cd ./software/realm-render
+    - npm ci
+    - npm start
