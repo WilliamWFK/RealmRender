@@ -63,25 +63,24 @@
 }
 
 .settingForm {
-  display: grid;
   column-gap: 1vw;
   row-gap: 1vw;
 }
 
-.settingForm>div {
-  grid-column-start: 1;
-  grid-column-end: 2;
-}
-
-.settingForm>label {
-  grid-column-start: 8;
-  grid-column-end: 9;
-}
-
-.settingForm>input {
-  grid-column-start: 9;
-  grid-column-end: 10;
+.settingForm .formInput {
   width: 100%;
+  padding: 5px;
+}
+
+.settingForm label {
+  padding: 5px;
+  width: 25%;
+  float: left;
+}
+
+.settingForm input {
+  box-sizing: border-box;
+  width: 60%;
 }
 
 .navButtons {

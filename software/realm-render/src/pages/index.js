@@ -1,11 +1,28 @@
 // HOME PAGE index.js file
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import background from '../indexBackground.svg';
 
 const Home = () => {
   const [menumode, setMenumode] = useState(0);
-  const [sliderValue, setValue] = useState(5); // example setting
+  //const [sliderValue, setValue] = useState(5); // example setting
+
+  const [formData, setFormData] = useState({name: "",width: 5,height: 5, players: 2, theme: "Space"});
+
+  const handleChange = (event) => {
+      const { name, value } = event.target;
+      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+  
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
+      event.preventDefault();
+      alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
+      );
+
+      navigate("/createMap", {state: {name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme}});
+  }
 
   function menuContents() {
     if (menumode === 0) {
@@ -20,15 +37,46 @@ const Home = () => {
       return (
         <div>
           <div class="menuBackdrop createForm">
-            <h1>Options</h1>
+            <h1>Create Your Map</h1>
             <div class="settingForm">
               {/* example settings */}
-              <div>setting:</div>
+              {/*<div>setting:</div>
               <input type="text" id="setting1" name="setting1"></input>
               <div>setting two:</div>
               <label for="setting2">{sliderValue}</label>
               <input type="range" min="0" max="10" value={sliderValue} onInput={(e) => setValue(e.target.value)} id="setting2" name="setting2"></input>
+              */}
               {/* example settings end */}
+              <form onSubmit={handleSubmit}>
+                <div class = "formInput">
+                  <label htmlFor="name">Name:</label>
+                  <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
+                </div>
+                {/* Create a dropdown to select theme*/}
+                <div class = "formInput">
+                  <label htmlFor="theme">Theme:</label>
+                  <select id="theme" name="theme" value={formData.theme} onChange={handleChange}>
+                    <option value="Space">Space</option>
+                    <option value="Fantasy">Fantasy</option>
+                  </select>
+                </div>
+
+                <div class="formInput">
+                  <label htmlFor="width">Width: {formData.width}</label>
+                  <input type="range" min="1" max="20" defaultValue={formData.width} onChange={(e) =>setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
+                </div>
+                <div class="formInput">
+                  <label htmlFor="height">Height: {formData.height}</label>
+                  <input type="range" min="1" max="20" defaultValue={formData.height} onChange={(e) =>setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
+                </div>
+                {/* Create a slider to select 1-6 players*/}
+                <div class="formInput">
+                  <label htmlFor="players">Players: {formData.players}</label>
+                  <input type="range" min="1" max="6" defaultValue={formData.players} onChange={(e) =>setFormData({ ...formData, players: parseInt(e.target.value) })} id="players" name="players"></input>
+                </div>
+
+                <button type="submit">Submit</button>
+              </form>
             </div>
             <div class="navButtons">
               <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
