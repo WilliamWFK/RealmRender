@@ -34,13 +34,12 @@ build:
     - npm run build
   artifacts:
     paths:
-      - build/
+      - ../../build/
 
-deploy:
-  stage: deploy
-  image: node:latest
-  script:
-    - cd ./software/realm-render
-    - npm ci
-    - npm run build
-    - npm run deploy
+# deploy:
+#   stage: deploy
+#   image: node:latest
+#   script:
+#     - cd ./software/realm-render
+#     - npm ci
+#     - npm run deploy
