@@ -1,0 +1,157 @@
+:root {
+  --textColor: #000;
+  --borderColor: #000;
+  --buttonColor: #fff;
+  --onHoverColor: #e9e9e9;
+}
+
+.App-header {
+  position: absolute;
+  color: var(--textColor);
+  left: 10vh;
+  top: 10vh;
+  font-size: 80px;
+  z-index: 2;
+}
+
+.menuBackdrop {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  left: 5vw;
+  top: 35vh;
+  z-index: 2;
+  padding: 1em;
+  border-radius: 8px;
+  background: rgba(240, 243, 234, 0.8);
+  background-blend-mode: normal;
+  backdrop-filter: blur(5px);
+}
+
+.menuButtonItem {
+  color: var(--textColor);
+  background-color: var(--buttonColor);
+  border-radius: 10px;
+  text-decoration: none;
+  position: relative;
+  z-index: 2;
+  flex-grow: 1;
+  width: 100%;
+  text-align: center;
+  line-height: 80px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.menuButtonItem:hover {
+  background-color: var(--onHoverColor);
+}
+
+.mainMenu {
+  width: 10vw;
+}
+
+.createForm {
+  left: 18vw;
+  width: 25vw;
+}
+
+.loadForm {
+  left: 18vw;
+  width: 27vw;
+}
+
+.settingForm {
+  column-gap: 1vw;
+  row-gap: 1vw;
+}
+
+.settingForm .formInput {
+  width: 100%;
+  padding: 5px;
+}
+
+.settingForm label {
+  padding: 5px;
+  width: 25%;
+  float: left;
+}
+
+.settingForm input {
+  box-sizing: border-box;
+  width: 60%;
+}
+
+.navButtons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navButtons button {
+  cursor: pointer;
+}
+
+.linkitem {
+  text-decoration: none;
+}
+
+.backButton {
+  width: 9vw;
+  height: 60px;
+  border-radius: 8px;
+  background: #dadada;
+  color: #757575;
+  font-weight: 400;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 10px; /* Add margin to separate from Create button */
+}
+
+.backButton > .caret {
+  aspect-ratio: 1;
+  text-align: center;
+  padding-left: 20px;
+}
+
+.backButton > .text {
+  flex-grow: 1;
+  text-align: left;
+  padding-left: 20%;
+}
+
+.createButton {
+  width: 9vw;
+  height: 60px;
+  border-radius: 8px;
+  background: #a8dc59;
+  color: #000000;
+  font-weight: 400;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  margin-left: 10px; /* Add margin to separate from Back button */
+}
+
+.createButton > .plus {
+  aspect-ratio: 1;
+  text-align: center;
+  padding-right: 20px;
+  font-size: 40px;
+}
+
+.createButton > .text {
+  flex-grow: 1;
+  text-align: right;
+  padding-right: 15%;
+}
+.custom-background {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  object-fit: contain;
+  width: 100vw;
+  object-position: bottom;
+}
