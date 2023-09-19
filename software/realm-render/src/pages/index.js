@@ -7,7 +7,7 @@ const Home = () => {
   const [menumode, setMenumode] = useState(0);
   //const [sliderValue, setValue] = useState(5); // example setting
 
-  const [formData, setFormData] = useState({name: "",width: 5,height: 5, players: 2, theme: "Space"});
+  const [formData, setFormData] = useState({name: "",width: 6,height: 6, players: 2, theme: "Space"});
 
   const handleChange = (event) => {
       const { name, value } = event.target;
@@ -63,11 +63,11 @@ const Home = () => {
 
                 <div class="formInput">
                   <label htmlFor="width">Width: {formData.width}</label>
-                  <input type="range" min="1" max="20" defaultValue={formData.width} onChange={(e) =>setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
+                  <input type="range" min="2" max="20" step="2" defaultValue={formData.width} onChange={(e) =>setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
                 </div>
                 <div class="formInput">
                   <label htmlFor="height">Height: {formData.height}</label>
-                  <input type="range" min="1" max="20" defaultValue={formData.height} onChange={(e) =>setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
+                  <input type="range" min="2" max="20" step="2" defaultValue={formData.height} onChange={(e) =>setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
                 </div>
                 {/* Create a slider to select 1-6 players*/}
                 <div class="formInput">
@@ -75,13 +75,15 @@ const Home = () => {
                   <input type="range" min="1" max="6" defaultValue={formData.players} onChange={(e) =>setFormData({ ...formData, players: parseInt(e.target.value) })} id="players" name="players"></input>
                 </div>
 
-                <button type="submit">Submit</button>
+                
+                
+                <div class="navButtons">
+                  <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
+                  <button type="submit" class="createButton"><p class="text">Create</p><p class="plus">+</p></button>
+                </div>
               </form>
             </div>
-            <div class="navButtons">
-              <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
-              <Link to="/mapEditor" class="linkitem"><div class="createButton"><p class="text">Create</p><p class="plus">+</p></div></Link>
-            </div>
+            
           </div>
           <div class="menuBackdrop mainMenu">
             <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
