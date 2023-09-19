@@ -21,7 +21,7 @@ const Home = () => {
       alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
       );
 
-      navigate("/createMap", {state: {name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme}});
+      navigate("/mapEditor", {state: {name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme}});
   }
 
   function menuContents() {

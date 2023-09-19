@@ -90,6 +90,7 @@
 
 .navButtons button {
   cursor: pointer;
+  border:none;
 }
 
 .linkitem {
