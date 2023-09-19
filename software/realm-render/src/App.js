@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Routes, Route}
 import Home from './pages';
 import MapEditor from './pages/mapEditor';
 import Join from './pages/join';
+import CreateMap from './pages/createMap';
 
 /**
  * Main function to return App component.
@@ -18,6 +19,7 @@ function App() {
         <Route path='/mapEditor' element={<MapEditor />} />
         <Route path='/index' element={<Home />} />
         <Route path='/join' element={<Join />} />
+        <Route path='/createMap' element={<CreateMap />} /> 
       </Routes>
     </Router>
   );
