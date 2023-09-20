@@ -18,7 +18,7 @@ const Home = () => {
 
   const handleSubmit = (event) => {
       event.preventDefault();
-      alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
+      alert(`Name: ${formData.name}, Width: ${formData.width}, Height: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
       );
 
       navigate("/mapEditor", {state: {name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme}});
