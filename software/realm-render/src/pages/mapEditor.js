@@ -140,7 +140,7 @@ const LoadMap = () => {
     maxScale: 2
   }
 
-  const seed = 'exampleSeed';
+  const seed = 'cock';
   const grid = createGrid(seed);
 
     return (
@@ -162,6 +162,10 @@ const LoadMap = () => {
                   <div className="CreateMap">
                   <h1>Create Map Here with Received Data</h1>
                   <div>{location.state.name}</div>
+                  <div>{location.state.theme}</div>
+                  <div>{location.state.width}</div>
+                  <div>{location.state.height}</div>
+                  <div>{location.state.players}</div>
               </div>
                 <div className="map-container">
                   {grid.map((row, rowIndex) => (
