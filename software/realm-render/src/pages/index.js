@@ -1,6 +1,6 @@
 // HOME PAGE index.js file
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import background from '../indexBackground.svg';
 import data from '../data.json'
 
@@ -9,7 +9,7 @@ const Home = () => {
   const [sliderValue, setValue] = useState(5); // example setting\
   const [jsonData] = useState(data);
   const [selectedItem, setSelectedItem] = useState(null);
-
+  const navigate = useNavigate();
 
   const toggleItemSelection = (index) => {
     // Toggle the selection for the clicked item
@@ -49,6 +49,13 @@ const Home = () => {
     );
   };
 
+
+  const handleLoad = (event) => {
+    event.preventDefault();
+    alert(`Index: ${selectedItem} Name: ${jsonData[selectedItem].name} Theme: ${jsonData[selectedItem].theme}`);
+
+    navigate("/mapEditor", {state: {index: selectedItem, action: "load"}});
+  }
 
   function menuContents() {
     if (menumode === 0) {
@@ -99,7 +106,10 @@ const Home = () => {
             {renderTable()}
             <div class="navButtons">
               <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
-              <div class="createButton" ><p class="text">Load</p><p class="plus">+</p></div>
+              {/* load a map editor with the selectedItem index*/}
+
+
+              <div class="createButton" onClick={handleLoad}><p class="text">Load</p><p class="plus">+</p></div>
             </div>
           </div>
         </div>
