@@ -1,6 +1,5 @@
 import React from "react";
 import '../styles/mapEditor.css';
-import { Link } from 'react-router-dom';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Tile from '../Model/Tile';
 import TileComponent from '../Model/TileComponent';
@@ -140,7 +139,7 @@ const LoadMap = () => {
     maxScale: 2
   }
 
-  const seed = 'cock';
+  const seed = 'exampleSeed';
   const grid = createGrid(seed);
 
     return (
@@ -161,11 +160,11 @@ const LoadMap = () => {
               <div className="viewPane">
                   <div className="CreateMap">
                   <h1>Create Map Here with Received Data</h1>
-                  <div>{location.state.name}</div>
-                  <div>{location.state.theme}</div>
-                  <div>{location.state.width}</div>
-                  <div>{location.state.height}</div>
-                  <div>{location.state.players}</div>
+                  <div>{state.name}</div>
+                  <div>{state.theme}</div>
+                  <div>{state.width}</div>
+                  <div>{state.height}</div>
+                  <div>{state.players}</div>
               </div>
                 <div className="map-container">
                   {grid.map((row, rowIndex) => (
