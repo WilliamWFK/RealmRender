@@ -60,7 +60,6 @@ const Home = () => {
       alert("Please select a save to load");
       return;
     }
-    
   }
 
   function menuContents() {
@@ -113,8 +112,6 @@ const Home = () => {
             <div class="navButtons">
               <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
               {/* load a map editor with the selectedItem index*/}
-
-
               <div class="createButton" onClick={handleLoad}><p class="text">Load</p><p class="plus">+</p></div>
             </div>
           </div>

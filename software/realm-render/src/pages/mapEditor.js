@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import '../styles/mapEditor.css';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Tile from '../Model/Tile';
 import TileComponent from '../Model/TileComponent';
 import seedrandom from 'seedrandom';
+import data from '../data.json'
 
 const LoadMap = () => {
+  const location = useLocation();
+  const { state } = location;
+  const [jsonData] = useState(data);
+
+  useEffect(() => {
+    if (state.action === 'load') {
+      alert('Map loaded successfully!');
+      //parse the json data map into an array
+      
+
+    }
+    else if(state.action === 'create') {
+      alert('Map created successfully!');
+    }
+  }, [state.action]);
 
   const createRoom = (grid, startX, startY, roomWidth, roomHeight) => {
     for (let x = startX; x < startX + roomWidth; x++) {
@@ -140,7 +156,7 @@ const LoadMap = () => {
   const seed = 'exampleSeed';
   const grid = createGrid(seed);
 
-    return (
+    return (    
       <TransformWrapper
         initialScale={2}
         options={transformOptions}
