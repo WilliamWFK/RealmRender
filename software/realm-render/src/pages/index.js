@@ -8,7 +8,17 @@ const Home = () => {
   const [menumode, setMenumode] = useState(0);
   const [sliderValue, setValue] = useState(5); // example setting\
   const [jsonData] = useState(data);
+  const [selectedItem, setSelectedItem] = useState(null);
 
+
+  const toggleItemSelection = (index) => {
+    // Toggle the selection for the clicked item
+    if (selectedItem === index) {
+      setSelectedItem(null); // Deselect if already selected
+    } else {
+      setSelectedItem(index); // Select the new item
+    }
+  };
 
   const renderTable = () => {
     return (
@@ -17,6 +27,7 @@ const Home = () => {
           <tr>
             <th>Save Name</th>
             <th>Save Theme</th>
+            <th>Selected</th>
           </tr>
         </thead>
         <tbody>
@@ -24,6 +35,13 @@ const Home = () => {
             <tr key={index}>
               <td>{item.name}</td>
               <td>{item.theme}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedItem === index}
+                  onChange={() => toggleItemSelection(index)}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
