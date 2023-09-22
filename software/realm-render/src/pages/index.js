@@ -52,9 +52,15 @@ const Home = () => {
 
   const handleLoad = (event) => {
     event.preventDefault();
-    alert(`Index: ${selectedItem} Name: ${jsonData[selectedItem].name} Theme: ${jsonData[selectedItem].theme}`);
+    if (selectedItem !== null && selectedItem >= 0 && selectedItem < jsonData.length) {
+      alert(`Index: ${selectedItem} Name: ${jsonData[selectedItem].name} Theme: ${jsonData[selectedItem].theme}`);
 
-    navigate("/mapEditor", {state: {index: selectedItem, action: "load"}});
+      navigate("/mapEditor", {state: {index: selectedItem, action: "load"}});
+    } else {
+      alert("Please select a save to load");
+      return;
+    }
+    
   }
 
   function menuContents() {
