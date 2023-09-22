@@ -2,10 +2,35 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import background from '../indexBackground.svg';
+import data from '../data.json'
 
 const Home = () => {
   const [menumode, setMenumode] = useState(0);
-  const [sliderValue, setValue] = useState(5); // example setting
+  const [sliderValue, setValue] = useState(5); // example setting\
+  const [jsonData] = useState(data);
+
+
+  const renderTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Save Name</th>
+            <th>Save Theme</th>
+          </tr>
+        </thead>
+        <tbody>
+          {jsonData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.name}</td>
+              <td>{item.theme}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
 
   function menuContents() {
     if (menumode === 0) {
@@ -52,7 +77,8 @@ const Home = () => {
           </div>
           <div class="menuBackdrop loadForm">
             <h1>Load</h1>
-            <textarea id="pasteBox" name="pasteBox" rows="4"></textarea>
+            {/* Create a table that displays all the saves from data.json*/}
+            {renderTable()}
             <div class="navButtons">
               <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
               <div class="createButton" ><p class="text">Load</p><p class="plus">+</p></div>
