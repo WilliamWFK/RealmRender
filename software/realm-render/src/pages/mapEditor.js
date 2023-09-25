@@ -1,12 +1,14 @@
 import React from "react";
 import '../styles/mapEditor.css';
-import { Link } from 'react-router-dom';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Tile from '../Model/Tile';
 import TileComponent from '../Model/TileComponent';
 import seedrandom from 'seedrandom';
+import { useLocation } from 'react-router-dom';
 
 const LoadMap = () => {
+  const location = useLocation();
+  const { state } = location;
 
   const createRoom = (grid, startX, startY, roomWidth, roomHeight) => {
     for (let x = startX; x < startX + roomWidth; x++) {
@@ -156,16 +158,24 @@ const LoadMap = () => {
             </div> */}
             <TransformComponent>
               <div className="viewPane">
-              <div className="map-container">
-                {grid.map((row, rowIndex) => (
-                  <div key={rowIndex} className="grid-row">
-                    {row.map((tile, columnIndex) => (
-                      <TileComponent key={columnIndex} tile={tile} />
-                    ))}
-                  </div>
-                ))}
+                  <div className="CreateMap">
+                  <h1>Create Map Here with Received Data</h1>
+                  <div>{state.name}</div>
+                  <div>{state.theme}</div>
+                  <div>{state.width}</div>
+                  <div>{state.height}</div>
+                  <div>{state.players}</div>
               </div>
-            </div>
+                <div className="map-container">
+                  {grid.map((row, rowIndex) => (
+                    <div key={rowIndex} className="grid-row">
+                      {row.map((tile, columnIndex) => (
+                        <TileComponent key={columnIndex} tile={tile} />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </TransformComponent>
           </React.Fragment>
         )}
