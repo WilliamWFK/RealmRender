@@ -52,10 +52,16 @@ class Map {
             // Place the room within the section
             for (let x = sectionX; x < sectionX + sectionWidth; x++) {
                 for (let y = sectionY; y < sectionY + sectionHeight; y++) {
-                    this.tiles[x][y] = room.tiles[x - sectionX][y - sectionY];
+
+                    const roomX = x - sectionX;
+                    const roomY = y - sectionY;
+                    // Check if the relative positions are within the room's dimensions
+                    if (roomX >= 0 && roomX < room.roomWidth && roomY >= 0 && roomY < room.roomHeight) {
+                        this.tiles[x][y] = room.tiles[roomX][roomY];
+                    }
                 }
             }
-            
+
             sectionX += sectionWidth;
             if (sectionX >= this.width) {
                 sectionX = 0;

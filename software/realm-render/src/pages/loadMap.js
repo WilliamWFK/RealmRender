@@ -10,8 +10,8 @@ import Map from "../Model/Map";
 const createGrid = (width, height) => {
   console.log('hello create grid');
   const map = new Map(width, height);
-  const room1 = new SquareRoom(width/3, height/3);
-  const room2 = new TshapeRoom(width/3, height/3);
+  const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
+  const room2 = new TshapeRoom(width/3 - 2, height/3 - 2);
   const rooms = [room1, room2];
   map.setRooms(rooms);
   const grid = map.tiles;
