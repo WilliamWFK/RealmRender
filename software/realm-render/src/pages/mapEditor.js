@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 import '../styles/mapEditor.css';
-import { Link } from 'react-router-dom';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Tile from '../Model/Tile';
+import { default as Player } from '../Model/Player';
 import TileComponent from '../Model/TileComponent';
 import seedrandom from 'seedrandom';
+let players = [];
 
 const LoadMap = () => {
 
@@ -131,6 +132,50 @@ const LoadMap = () => {
     return grid;
   };
 
+  /**
+   * This is the code for handling player interaction with the map.
+   * 
+   */
+let scale = 0;
+
+const updateScale = (stats) => {
+  scale = stats.scale;
+  console.log(scale);
+}
+
+  let mousecoords = React.useMemo(() => {
+    return {x:0, y:0};
+  }, []);
+  const [isDragging, setIsDragging] = React.useState(false);
+  const [pressedPlayer, setPressedPlayer] = React.useState(false);
+  const handleMouseDown = React.useCallback(() => setIsDragging(true), []);
+  const handleMouseUp = React.useCallback(() => {setIsDragging(false);setPressedPlayer(false)}, []);
+  const handleMouseMove = React.useCallback(() => {
+    if (isDragging && pressedPlayer) {
+      let playerDiv = document.getElementById("player").innerHTML;
+      let id = playerDiv.split("alt=\"")[1].split("\"")[0];
+      var player = JSON.parse(JSON.stringify(players[id]));
+      console.log(scale);
+      player.x = mousecoords.x;
+      player.y = mousecoords.y;
+      players[id] = player;
+    }
+  }, [isDragging, pressedPlayer, mousecoords, scale]);
+
+  function onPress(){
+    console.log("Pressed!");
+    //disables dragging for react zoom-pan-pinch library
+    handleMouseDown();
+    setPressedPlayer(true);
+  }
+
+  window.onload = function() {
+    window.addEventListener("mousemove", (e) => {
+      mousecoords.x = e.clientX;
+      mousecoords.y = e.clientY;
+  });
+}
+
   const transformOptions = {
     initialScale: 1,
     minScale: 0.5,
@@ -139,38 +184,42 @@ const LoadMap = () => {
 
   const seed = 'exampleSeed';
   const grid = createGrid(seed);
+  const player = new Player(1000,300, "blue", "player1", 0);
+  players.push(player);
 
     return (
-      <TransformWrapper
-        initialScale={2}
-        options={transformOptions}
-        initialPositionX={0}
-        initialPositionY={0}
-      >
-        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-          <React.Fragment>
-            {/* <div className="tools">
-              <button onClick={() => zoomIn()}>+</button>
-              <button onClick={() => zoomOut()}>-</button>
-              <button onClick={() => resetTransform()}>x</button>
-            </div> */}
-            <TransformComponent>
-              <div className="viewPane">
-              <div className="map-container">
-                {grid.map((row, rowIndex) => (
-                  <div key={rowIndex} className="grid-row">
-                    {row.map((tile, columnIndex) => (
-                      <TileComponent key={columnIndex} tile={tile} />
-                    ))}
-                  </div>
-                ))}
+      <div onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseMove={handleMouseMove}>
+        <TransformWrapper
+          disabled={isDragging}
+          initialScale={2}
+          options={transformOptions}
+          onZoomChange={updateScale}
+        >
+          {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+            <React.Fragment>
+              {/* <div className="tools">
+                <button onClick={() => zoomIn()}>+</button>
+                <button onClick={() => zoomOut()}>-</button>
+                <button onClick={() => resetTransform()}>x</button>
+              </div> */}
+              <TransformComponent>
+                <div className="viewPane">
+                <div className="map-container">
+                  {grid.map((row, rowIndex) => (
+                    <div key={rowIndex} className="grid-row">
+                      {row.map((tile, columnIndex) => (
+                        <TileComponent key={columnIndex} tile={tile} />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+                <div id="player" style={{top: players[player.id].y, left: players[player.id].x}} onMouseDown={onPress}><img src="TilesImg/player1.png" alt={players[player.id].id}></img></div>
               </div>
-            </div>
-            </TransformComponent>
-          </React.Fragment>
-        )}
-      </TransformWrapper>
+              </TransformComponent>
+            </React.Fragment>
+          )}
+        </TransformWrapper>
+      </div>
     );
   };
-
 export default LoadMap;

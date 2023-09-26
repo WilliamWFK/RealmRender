@@ -29,3 +29,12 @@
   width: 100vw;
   height: 100vh;
 }
+
+#player {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
