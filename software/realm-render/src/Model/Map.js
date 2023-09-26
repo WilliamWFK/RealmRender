@@ -32,6 +32,7 @@ class Map {
             const row = [];
             for (let y = 0; y < height; y++) {
                 const tile = new Tile(x, y, 0, "", "nothing");
+                tile.setDirections("wall", "wall", "wall", "wall");
                 tile.selectImage();
                 row.push(tile);
             }

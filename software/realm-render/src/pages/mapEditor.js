@@ -6,34 +6,14 @@ import seedrandom from 'seedrandom';
 import { useLocation } from 'react-router-dom';
 import { SquareRoom, TshapeRoom } from "../Model/BasicRooms";
 import Map from "../Model/Map";
+import { useEffect } from 'react';
 
-const createGrid = (width, height, seed) => {
-  console.log('hello create grid');
-  const map = new Map(width, height);
-  const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
-  const room2 = new TshapeRoom(width/3 - 2, height/3 - 2);
-  const rooms = [room1, room2];
-  map.setRooms(rooms);
-  const grid = map.tiles;
-//   for (let x = 0; x < sectionWidth; x++) {
-//     for (let y = 0; y < sectionHeight; y++) {
-//         const testTile = this.tiles[x][y];
-//         console.log(`Tile at (${x}, ${y}):`);
-//         console.log(`  Type: ${testTile.type}`);
-//         console.log(`  Contents: ${testTile.contents}`);
-//         console.log(`  Directions:`, testTile.directions);
-// // Add more properties as needed
-//     }
-// }
-
-  return grid;
-};
 
 const LoadMap = () => {
   const location = useLocation();
   const { state } = location;
 
-  const createGrid = (width, height) => {
+  const createGrid = (width, height, seed) => {
     console.log('hello create grid');
     const map = new Map(width, height);
     const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
@@ -52,7 +32,13 @@ const LoadMap = () => {
   }
 
   const seed = 'exampleSeed';
-  const grid = createGrid(state.width+10, state.height+10, seed);
+  const grid = createGrid(state.width, state.height, seed);
+
+  const containerStyles = {
+    '--columns': state.width,
+    '--rows': state.height,
+  };
+  
 
     return (
       <TransformWrapper
@@ -78,7 +64,7 @@ const LoadMap = () => {
                   <div>{state.height}</div>
                   <div>{state.players}</div>
               </div>
-                <div className="map-container">
+                <div className="map-container" style={containerStyles}>
                   {grid.map((row, rowIndex) => (
                     <div key={rowIndex} className="grid-row">
                       {row.map((tile, columnIndex) => (
@@ -92,7 +78,7 @@ const LoadMap = () => {
           </React.Fragment>
         )}
       </TransformWrapper>
-    );
-  };
+   );
+};
 
 export default LoadMap;
