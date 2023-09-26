@@ -1,6 +1,7 @@
 .map-container {
   display: grid;
-  grid-template-columns: repeat(20, 32px);
+  grid-template-columns: repeat(var(--columns, 1), 32px);
+  grid-template-rows: repeat(var(--rows, 1), 32px);
   margin: auto auto;
   width: fit-content;
 }
