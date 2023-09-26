@@ -42,6 +42,11 @@ class Map {
 
     placeRooms(){
         console.log('hello create place room');
+        this.tiles = new Array(this.width);
+        for (let x = 0; x < this.width; x++) {
+            this.tiles[x] = new Array(this.height);
+        }
+
         const sectionWidth = this.width/3;
         const sectionHeight = this.height/3;
         let sectionX = 0;
@@ -55,13 +60,14 @@ class Map {
 
                     const roomX = x - sectionX;
                     const roomY = y - sectionY;
+                    console.log(`x: ${x}, y: ${y}, roomX: ${roomX}, roomY: ${roomY}`);
                     // Check if the relative positions are within the room's dimensions
                     if (roomX >= 0 && roomX < room.roomWidth && roomY >= 0 && roomY < room.roomHeight) {
                         this.tiles[x][y] = room.tiles[roomX][roomY];
                     }
                 }
             }
-            
+
             sectionX += sectionWidth;
             if (sectionX >= this.width) {
                 sectionX = 0;
