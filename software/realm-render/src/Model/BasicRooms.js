@@ -1,4 +1,4 @@
-import Room from './Room'; 
+import Room from './Room';
 import Tile from '../Model/Tile';
 
 class SquareRoom extends Room {
@@ -82,6 +82,81 @@ class TshapeRoom extends Room {
     }
 }
 
+class LShapedRoom extends Room {
+    constructor(width, height, orientation) {
+        super(width, height);
+        console.log('Creating L-shaped room');
+        this.name = "L-Shaped Room";
+        this.description = "An L-shaped room with walls forming an L shape.";
+        this.tiles = this.createLShapedTiles(orientation);
+    }
+
+    createLShapedTiles(orientation) {
+        console.log('Creating L-shaped room tiles');
+        const lShapedTiles = [];
+        const startX = 0;
+        const startY = 0;
+        for (let x = 0; x < this.roomWidth; x++) {
+            const row = [];
+            for (let y = 0; y < this.roomHeight; y++) {
+                const tile = new Tile(x, y, 0, "", "nothing");
+
+                // Customize tile directions based on the L-shape orientation
+                switch (orientation) {
+                    case 0: // L shape facing right
+                        if (x === startX || (y === startY && x <= Math.floor(this.roomWidth / 2))) {
+                            tile.setDirections("wall", "wall", "empty", "empty");
+                        } else if (y === startY || x === this.roomWidth - 1 || y === this.roomHeight - 1) {
+                            tile.setDirections("wall", "wall", "wall", "wall");
+                        } else {
+                            tile.setDirections("empty", "empty", "empty", "empty");
+                        }
+                        break;
+                    case 1: // L shape facing down
+                        if (x === startX || (y === this.roomHeight - 1 && x <= Math.floor(this.roomWidth / 2))) {
+                            tile.setDirections("wall", "wall", "empty", "empty");
+                        } else if (x === startX || y === startY || y === this.roomHeight - 1) {
+                            tile.setDirections("wall", "wall", "wall", "wall");
+                        } else {
+                            tile.setDirections("empty", "empty", "empty", "empty");
+                        }
+                        break;
+                    case 2: // L shape facing left
+                        if (x === startX || (y === this.roomHeight - 1 && x >= Math.floor(this.roomWidth / 2))) {
+                            tile.setDirections("empty", "empty", "wall", "wall");
+                        } else if (x === this.roomWidth - 1 || y === startY || y === this.roomHeight - 1) {
+                            tile.setDirections("wall", "wall", "wall", "wall");
+                        } else {
+                            tile.setDirections("empty", "empty", "empty", "empty");
+                        }
+                        break;
+                    case 3: // L shape facing up
+                        if (x === startX || (y === startY && x >= Math.floor(this.roomWidth / 2))) {
+                            tile.setDirections("empty", "empty", "wall", "wall");
+                        } else if (y === startY || x === startX || x === this.roomWidth - 1) {
+                            tile.setDirections("wall", "wall", "wall", "wall");
+                        } else {
+                            tile.setDirections("empty", "empty", "empty", "empty");
+                        }
+                        break;
+                    default:
+                        console.error('Invalid orientation. Please provide a value between 0 and 3.');
+                        return;
+                }
+                tile.selectImage();
+                row.push(tile);
+            }
+            lShapedTiles.push(row);
+        }
+        return lShapedTiles;
+    }
+}
 
 
-export {SquareRoom, TshapeRoom};
+
+
+
+
+
+
+export {SquareRoom, TshapeRoom, LShapedRoom};
