@@ -96,6 +96,53 @@ class LshapeRoom extends Room {
         // Create a grid of Tile objects for the square room
         const tTiles = [];
         const startX = 0, startY = 0
+        let stickWidth = Math.floor(Math.random() * (this.roomWidth/2-1) + 1);
+        let stickHeight = Math.floor(Math.random() * (this.roomHeight/2-1) + 1);
+        let baseWidth = Math.floor(Math.random() * (this.roomWidth) + this.roomWidth/2);
+        let baseHeight = Math.floor(Math.random() * (this.roomHeight/2-1) + 1);
+        console.log("stick width: " + stickWidth, "stick height: " + stickHeight, "base width: " + baseWidth, "base height: " + baseHeight);
+        console.log(this.roomWidth, this.roomHeight);
+        console.log(this.roomWidth/2, this.roomHeight/2);
+        for (let x = 0; x < this.roomWidth; x++) {
+            const row = [];
+            for (let y = 0; y < this.roomHeight; y++) {
+                const tile = new Tile(x, y, 0, "", "nothing");
+                if (x === startX || x === startX + this.roomWidth - 1 || y === startY || y === startY + this.roomHeight - 1) {
+                    tile.setDirections("wall", "wall", "wall", "wall");
+                } else {
+                    tile.setDirections("empty", "empty", "empty", "empty");
+                }
+
+                if( y < this.roomHeight/2){
+                    //do the stick
+                    //check if roomHeight/2 - stickHeight <= y 
+                    if((this.roomHeight/2 - stickHeight) > y){
+                        //set the tile to a wall
+                        tile.setDirections("wall", "wall", "wall", "wall");
+                    }else{
+                        //check if x <= stickWidth
+                        if(x > 0){
+                            if(x > stickWidth){
+                                //set the tile to a wall
+                                tile.setDirections("wall", "wall", "wall", "wall");
+                            }else{
+                                tile.setDirections("empty", "empty", "empty", "empty");
+                            }
+                        }else {
+                            tile.setDirections("wall", "wall", "wall", "wall");
+                        }
+                    }
+                    
+                }
+                else{
+                    //do the base
+                }
+
+                tile.selectImage();
+                row.push(tile);
+            }
+            tTiles.push(row)
+        }
 
         return tTiles;
     }
