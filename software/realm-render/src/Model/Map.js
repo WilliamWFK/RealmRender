@@ -61,7 +61,7 @@ class Map {
                     }
                 }
             }
-
+            
             sectionX += sectionWidth;
             if (sectionX >= this.width) {
                 sectionX = 0;
