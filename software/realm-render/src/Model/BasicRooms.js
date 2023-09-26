@@ -56,9 +56,9 @@ class TshapeRoom extends Room {
                 // Customize tile directions as needed
                 if (x === startX) {
                     tile.setDirections("wall", "wall", "wall", "wall");
-                } else if (x >= startX + this.roomWidth/4 && x <= startX + this.roomWidth - 1 && y === startY + (this.roomHeight/2 - 3)){
+                } else if (x >= startX + this.roomWidth/4 && x <= startX + this.roomWidth - 1 && y === startY + (this.roomHeight/2 - Math.round(this.roomWidth/4))){
                     tile.setDirections("wall", "wall", "wall", "wall");
-                } else if (x >= startX + this.roomWidth/4 && x <= startX + this.roomWidth - 1 && y === startY + this.roomHeight - (1 + (this.roomWidth/2 ) - 3)){
+                } else if (x >= startX + this.roomWidth/4 && x <= startX + this.roomWidth - 1 && y === startY + this.roomHeight - (1 + (this.roomWidth/2 ) - Math.round(this.roomWidth/4))){
                     tile.setDirections("wall", "wall", "wall", "wall");
                 } else if (x >= startX && x <= startX + this.roomWidth/4 && y === startY + this.roomHeight - 1){
                     tile.setDirections("wall", "wall", "wall", "wall");
