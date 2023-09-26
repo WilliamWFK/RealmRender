@@ -1,5 +1,7 @@
 import Room from './Room'; 
 import Tile from '../Model/Tile';
+import { rotate2DArray } from './ArrayUtils';
+
 
 class SquareRoom extends Room {
     constructor(width, height) {
@@ -77,8 +79,13 @@ class TshapeRoom extends Room {
             }
             tTiles.push(row)
         }
+        let tilesCopy = [...tTiles];
+        //rotate the 2d array of tiles x times
+        for(let i = 0; i < Math.floor(Math.random() * 4); i++){
+            tilesCopy = rotate2DArray(tilesCopy); // Rotate the copied array
+        }
 
-        return tTiles;
+        return tilesCopy;
     }
 }
 
@@ -92,14 +99,15 @@ class LshapeRoom extends Room {
         this.tiles = this.createLshapeTiles();
     }
 
+
     createLshapeTiles() {
         // Create a grid of Tile objects for the square room
         const tTiles = [];
         const startX = 0, startY = 0
         let stickWidth = Math.floor(Math.random() * (this.roomWidth/2-1) + 1);
         let stickHeight = Math.floor(Math.random() * (this.roomHeight/2-1) + 1);
-        let baseWidth = Math.floor(Math.random() * (this.roomWidth) + this.roomWidth/2);
-        let baseHeight = Math.floor(Math.random() * (this.roomHeight/2-1) + 1);
+        let baseWidth = Math.floor(Math.random() * (this.roomWidth - this.roomWidth / 2 - 1)) + this.roomWidth / 2;
+        let baseHeight = Math.floor(Math.random() * (this.roomHeight/2-2) + 2);
         console.log("stick width: " + stickWidth, "stick height: " + stickHeight, "base width: " + baseWidth, "base height: " + baseHeight);
         console.log(this.roomWidth, this.roomHeight);
         console.log(this.roomWidth/2, this.roomHeight/2);
@@ -112,15 +120,12 @@ class LshapeRoom extends Room {
                 } else {
                     tile.setDirections("empty", "empty", "empty", "empty");
                 }
-
                 if( y < this.roomHeight/2){
                     //do the stick
-                    //check if roomHeight/2 - stickHeight <= y 
                     if((this.roomHeight/2 - stickHeight) > y){
                         //set the tile to a wall
                         tile.setDirections("wall", "wall", "wall", "wall");
                     }else{
-                        //check if x <= stickWidth
                         if(x > 0){
                             if(x > stickWidth){
                                 //set the tile to a wall
@@ -131,20 +136,41 @@ class LshapeRoom extends Room {
                         }else {
                             tile.setDirections("wall", "wall", "wall", "wall");
                         }
-                    }
-                    
+                    } 
                 }
                 else{
                     //do the base
+                    
+                    //check if the tile is in the base
+                    if(y > (this.roomHeight - baseHeight)){
+                        //set the tile to a wall
+                        tile.setDirections("wall", "wall", "wall", "wall");
+                    }
+                    else{
+                        if(x > 0){
+                            if(x > baseWidth){
+                                //set the tile to a wall
+                                tile.setDirections("wall", "wall", "wall", "wall");
+                            }else{
+                                tile.setDirections("empty", "empty", "empty", "empty");
+                            }
+                        }else {
+                            tile.setDirections("wall", "wall", "wall", "wall");
+                        }
+                    }
                 }
-
                 tile.selectImage();
                 row.push(tile);
             }
             tTiles.push(row)
         }
+        let tilesCopy = [...tTiles];
+        //rotate the 2d array of tiles x times
+        for(let i = 0; i < Math.floor(Math.random() * 4); i++){
+            tilesCopy = rotate2DArray(tilesCopy); // Rotate the copied array
+        }
 
-        return tTiles;
+        return tilesCopy;
     }
 }
 

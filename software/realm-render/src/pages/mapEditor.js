@@ -19,7 +19,7 @@ const LoadMap = () => {
     const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
     const room2 = new TshapeRoom(width/3 - 2, height/3 - 2);
     const room3 = new LshapeRoom(width/3 - 2, height/3 - 2);
-    const rooms = [room1, room3];
+    const rooms = [room1, room3, room2];
     map.setRooms(rooms);
     const grid = map.tiles;
 
