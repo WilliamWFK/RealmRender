@@ -82,6 +82,23 @@ class TshapeRoom extends Room {
     }
 }
 
+class LshapeRoom extends Room {
+    constructor(width, height) {
+        super(width, height); // Call the constructor of the base Room class
+        console.log('hello create Lroom');
+        // Customize properties for your square room
+        this.name = "Lshape Room";
+        this.description = "A L shaped room with walls on all sides.";
+        this.tiles = this.createLshapeTiles();
+    }
 
+    createLshapeTiles() {
+        // Create a grid of Tile objects for the square room
+        const tTiles = [];
+        const startX = 0, startY = 0
 
-export {SquareRoom, TshapeRoom};
+        return tTiles;
+    }
+}
+
+export {SquareRoom, TshapeRoom, LshapeRoom};
