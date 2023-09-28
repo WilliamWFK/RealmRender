@@ -4,7 +4,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import TileComponent from '../Model/TileComponent';
 import seedrandom from 'seedrandom';
 import { useLocation } from 'react-router-dom';
-import { SquareRoom, TshapeRoom, LshapeRoom } from "../Model/BasicRooms";
+import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom, PlusShapeRoom, HoleShapeRoom } from "../Model/BasicRooms";
 import Map from "../Model/Map";
 import { useEffect } from 'react';
 
@@ -18,8 +18,11 @@ const LoadMap = () => {
     const map = new Map(width, height);
     const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
     const room2 = new TshapeRoom(width/3 - 2, height/3 - 2);
-    const room3 = new LshapeRoom(width/3 - 2, height/3 - 2);
-    const rooms = [room1, room3, room2];
+    const room3 = new LShapeRoom(width/3 - 2, height/3 - 2);
+    const room4 = new RectShapeRoom(width/3 - 2, height/3 - 2);
+    const room5 = new PlusShapeRoom(width/3 - 2, height/3 - 2);
+    const room6 = new HoleShapeRoom(width/3 - 2, height/3 - 2);
+    const rooms = [room6, room5, room4];
     map.setRooms(rooms);
     const grid = map.tiles;
 
