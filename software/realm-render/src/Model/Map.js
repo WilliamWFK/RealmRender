@@ -5,9 +5,12 @@
  * and each tile will have a type with various items possiblys
  * Map is currently unused in the current build.
  */
-import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom, PlusShapeRoom, HoleShapeRoom } from "../Model/BasicRooms";
+import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom} from "../Model/BasicRooms";
 import Tile from '../Model/Tile';
 import seedrandom from 'seedrandom';
+
+
+
 class Map {
     constructor(width, height, seed) {
         this.tiles = [];
@@ -75,19 +78,28 @@ class Map {
         this.tiles = newTiles;
     }
 
+    
+
+
+
     createGrid = (width, height) => {
         // Set the size and shape of the rooms
         // determine if big/medium/small
         // if big then size is = 3-2
         // if med then = 5-4
 
-        const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
-        const room2 = new TshapeRoom(width/3 - 2, height/3 - 2);
-        const room3 = new LShapeRoom(width/3 - 2, height/3 - 2);
-        const room4 = new RectShapeRoom(width/3 - 2, height/3 - 2);
-        const room5 = new PlusShapeRoom(width/3 - 2, height/3 - 2);
-        const room6 = new HoleShapeRoom(width/3 - 2, height/3 - 2);
-        this.rooms = [room6, room5, room4, room3, room2, room1];
+
+
+
+        const rooms = [
+            new SquareRoom(width, height, "medium"),
+            new TshapeRoom(width, height, "medium"),
+            new LShapeRoom(width, height, "medium"),
+            new RectShapeRoom(width, height, "medium"),
+            // new PlusShapeRoom(width, height, "medium"),
+            // new HoleShapeRoom(width, height, "medium"),
+        ];
+        this.rooms = rooms;
         this.placeRooms();
       };
 }
