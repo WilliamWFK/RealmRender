@@ -103,34 +103,6 @@ class Map {
     }
 
 
-
-
-//Create spawn Room
-
-//     while (sectionX < this.width && sectionY < this.height){
-//         const room = this.rooms[Math.floor(random() * this.rooms.length)]
-
-//         // Place the room within the section
-//         for (let x = sectionX; x < sectionX + sectionWidth; x++) {
-//             for (let y = sectionY; y < sectionY + sectionHeight; y++) {
-
-//                 const roomX = x - sectionX;
-//                 const roomY = y - sectionY;
-//                 // Check if the relative positions are within the room's dimensions
-//                 if (roomX >= 0 && roomY >= 0  &&  roomX < room.roomWidth &&  roomY < room.roomHeight) {
-//                     this.tiles[x][y] = room.tiles[roomX][roomY];
-//                 }
-//             }
-//         }
-//         sectionX += sectionWidth;
-//         if (sectionX >= this.width) {
-//             sectionX = 0;
-//             sectionY += sectionHeight;
-//         }
-//     }
-
-
-
     createGrid = (width, height) => {
         // Set the size and shape of the rooms
         // determine if big/medium/small
