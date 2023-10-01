@@ -5,25 +5,26 @@
  * and each tile will have a type with various items possiblys
  * Map is currently unused in the current build.
  */
-import { SquareRoom, TshapeRoom } from "../Model/BasicRooms";
+import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom, PlusShapeRoom, HoleShapeRoom } from "../Model/BasicRooms";
 import Tile from '../Model/Tile';
-
+import seedrandom from 'seedrandom';
 class Map {
-    constructor(width, height) {
-        console.log('hello create map');
+    constructor(width, height, seed) {
         this.tiles = [];
         this.rooms = [];
         this.width = width;
         this.height = height;
         this.gmView = false;
+        this.seed = seed;
         this.makeEmptyMap(this.width, this.height);
+        this.createGrid(this.width, this.height)
     }
 
     /**
      * creates an empty map
-     * 
-     * @param {int} width 
-     * @param {int} height 
+     *
+     * @param {int} width
+     * @param {int} height
      */
     makeEmptyMap(width, height){
         console.log('hello create empty');
@@ -42,13 +43,13 @@ class Map {
     }
 
     placeRooms(){
-        console.log('hello create place room');
+        const random = seedrandom(this.seed);
         const sectionWidth = this.width/3;
         const sectionHeight = this.height/3;
         let sectionX = 0;
         let sectionY = 0;
         while (sectionX < this.width && sectionY < this.height){
-            const room = this.rooms[Math.floor(Math.random() * this.rooms.length)]
+            const room = this.rooms[Math.floor(random() * this.rooms.length)]
 
             // Place the room within the section
             for (let x = sectionX; x < sectionX + sectionWidth; x++) {
@@ -62,29 +63,33 @@ class Map {
                     }
                 }
             }
-
             sectionX += sectionWidth;
             if (sectionX >= this.width) {
                 sectionX = 0;
                 sectionY += sectionHeight;
             }
-            
         }
-        
-
     }
 
     setTiles(newTiles){
         this.tiles = newTiles;
     }
 
-    setRooms(newRooms){
-        console.log('hello set rooms');
-        this.rooms = newRooms;
-        console.log('Rooms:', this.rooms);
+    createGrid = (width, height) => {
+        // Set the size and shape of the rooms
+        // determine if big/medium/small
+        // if big then size is = 3-2
+        // if med then = 5-4
+
+        const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
+        const room2 = new TshapeRoom(width/3 - 2, height/3 - 2);
+        const room3 = new LShapeRoom(width/3 - 2, height/3 - 2);
+        const room4 = new RectShapeRoom(width/3 - 2, height/3 - 2);
+        const room5 = new PlusShapeRoom(width/3 - 2, height/3 - 2);
+        const room6 = new HoleShapeRoom(width/3 - 2, height/3 - 2);
+        this.rooms = [room6, room5, room4, room3, room2, room1];
         this.placeRooms();
-    }
+      };
 }
 
 export default Map
-

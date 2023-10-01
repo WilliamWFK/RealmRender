@@ -2,9 +2,7 @@ import React from "react";
 import '../styles/mapEditor.css';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import TileComponent from '../Model/TileComponent';
-import seedrandom from 'seedrandom';
 import { useLocation } from 'react-router-dom';
-import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom, PlusShapeRoom, HoleShapeRoom } from "../Model/BasicRooms";
 import Map from "../Model/Map";
 import { useEffect } from 'react';
 
@@ -13,22 +11,6 @@ const LoadMap = () => {
   const location = useLocation();
   const { state } = location;
 
-  const createGrid = (width, height, seed) => {
-    console.log('hello create grid');
-    const map = new Map(width, height);
-    const room1 = new SquareRoom(width/3 - 2, height/3 - 2);
-    const room2 = new TshapeRoom(width/3 - 2, height/3 - 2);
-    const room3 = new LShapeRoom(width/3 - 2, height/3 - 2);
-    const room4 = new RectShapeRoom(width/3 - 2, height/3 - 2);
-    const room5 = new PlusShapeRoom(width/3 - 2, height/3 - 2);
-    const room6 = new HoleShapeRoom(width/3 - 2, height/3 - 2);
-    const rooms = [room6, room5, room4];
-    map.setRooms(rooms);
-    const grid = map.tiles;
-
-    return grid;
-  };
-
   const transformOptions = {
     initialScale: 1,
     minScale: 0.5,
@@ -36,13 +18,14 @@ const LoadMap = () => {
   }
 
   const seed = 'exampleSeed';
-  const grid = createGrid(state.width, state.height, seed);
+  const map = new Map(state.width, state.height, seed);
+  const grid = map.tiles;
 
   const containerStyles = {
     '--columns': state.width,
     '--rows': state.height,
   };
-  
+
 
     return (
       <TransformWrapper
