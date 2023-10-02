@@ -34,10 +34,18 @@ class Room {
 
         //randomly selects a tile from edge wall tiles
         this.exits.up.push(edgeWallTiles.up[Math.floor(Math.random() * edgeWallTiles.up.length)]);
-        console.log("in exit test", typeof edgeWallTiles.up[Math.floor(Math.random() * edgeWallTiles.up.length)]);
+        console.log("in exit test", this.exits.up);
         this.exits.right.push(edgeWallTiles.right[Math.floor(Math.random() * edgeWallTiles.right.length)]);
         this.exits.down.push(edgeWallTiles.down[Math.floor(Math.random() * edgeWallTiles.down.length)]);
         this.exits.left.push(edgeWallTiles.left[Math.floor(Math.random() * edgeWallTiles.left.length)]);
+
+        for (let exitDirection in this.exits) {
+            const exitTiles = this.exits[exitDirection];
+            for (let i = 0; i < exitTiles.length; i++) {
+                const tile = exitTiles[i];
+                this.tiles[tile.x][tile.y].setType("door");
+            }
+        }
     }
 
     findEdges(){

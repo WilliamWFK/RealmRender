@@ -25,11 +25,10 @@ class SquareRoom extends Room {
                 const tile = new Tile(x, y, 0, "", "nothing");
                 // Customize tile directions as needed
                 if (x === startX || x === startX + this.roomWidth - 1 || y === startY || y === startY + this.roomHeight - 1) {
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 } else {
-                    tile.setDirections("empty", "empty", "empty", "empty");
+                    tile.setType("floor")
                 }
-                tile.selectImage();
                 row.push(tile);
             }
             squareTiles.push(row)
@@ -59,22 +58,22 @@ class TshapeRoom extends Room {
                 const tile = new Tile(x, y, 0, "", "nothing");
                 // Customize tile directions as needed
                 if (x === startX) {
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 } else if (x >= startX + this.roomWidth/4 && x <= startX + this.roomWidth - 1 && y === startY + (this.roomHeight/2 - Math.round(this.roomWidth/4))){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 } else if (x >= startX + this.roomWidth/4 && x <= startX + this.roomWidth - 1 && y === startY + this.roomHeight - (1 + (this.roomWidth/2 ) - Math.round(this.roomWidth/4))){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 } else if (x >= startX && x <= startX + this.roomWidth/4 && y === startY + this.roomHeight - 1){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 } else if (x >= startX && x <= startX + this.roomWidth/4 &&  y === startY){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 } else {
-                    tile.setDirections("empty", "empty", "empty", "empty");
+                    tile.setType("floor")
                 }
                 if (x === Math.round(startX + this.roomWidth/4) && y <= startY + (this.roomHeight/2 - Math.round(this.roomHeight/3))){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 } else if (x === Math.round(startX + this.roomWidth/4) && y >= startY + this.roomHeight - (1 + (this.roomWidth/2 - Math.round(this.roomHeight/3)))){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 }
                 tile.selectImage();
                 row.push(tile);
@@ -123,17 +122,17 @@ class LShapeRoom extends Room {
                     //do the stick
                     if((this.roomHeight/2 - stickHeight) > y){
                         //set the tile to a wall
-                        tile.setDirections("wall", "wall", "wall", "wall");
+                        tile.setType("wall")
                     }else{
                         if(x > 0){
                             if(x > stickWidth){
                                 //set the tile to a wall
-                                tile.setDirections("wall", "wall", "wall", "wall");
+                                tile.setType("wall")
                             }else{
-                                tile.setDirections("empty", "empty", "empty", "empty");
+                                tile.setType("floor")
                             }
                         }else {
-                            tile.setDirections("wall", "wall", "wall", "wall");
+                            tile.setType("wall")
                         }
                     } 
                 }
@@ -143,18 +142,18 @@ class LShapeRoom extends Room {
                     //check if the tile is in the base
                     if(y > (this.roomHeight - baseHeight)){
                         //set the tile to a wall
-                        tile.setDirections("wall", "wall", "wall", "wall");
+                        tile.setType("wall")
                     }
                     else{
                         if(x > 0){
                             if(x > baseWidth){
                                 //set the tile to a wall
-                                tile.setDirections("wall", "wall", "wall", "wall");
+                                tile.setType("wall")
                             }else{
-                                tile.setDirections("empty", "empty", "empty", "empty");
+                                tile.setType("floor")
                             }
                         }else {
-                            tile.setDirections("wall", "wall", "wall", "wall");
+                            tile.setType("wall")
                         }
                     }
                 }
@@ -198,12 +197,12 @@ class RectShapeRoom extends Room {
             for (let y = 0; y < this.roomHeight; y++) {
                 const tile = new Tile(x, y, 0, "", "nothing");
                 if(x === 0 || x === this.roomWidth-1 || y === 0 || y === this.roomHeight-1){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 }
                 if(x > 0 && x < width && y > 0 && y < height){
-                    tile.setDirections("empty", "empty", "empty", "empty");
+                    tile.setType("floor")
                 }else{
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 }
                 tile.selectImage();
                 row.push(tile);
@@ -239,23 +238,23 @@ class PlusShapeRoom extends Room {
                 const tile = new Tile(x, y, 0, "", "nothing");
                 //create a room where there are walls on the outside and a plus shape in the middle
                 if(x === 0 || x === this.roomWidth-1 || y === 0 || y === this.roomHeight-1){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 }
                 //if the roomWidth is odd, then the middle tile will be empty
                 if(x === Math.round(this.roomWidth/2)-1 || y === Math.round(this.roomHeight/2)-1){
-                    tile.setDirections("empty", "empty", "empty", "empty");
+                    tile.setType("floor")
                 }else{
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 }
                 //if the roomWidth is even the middle 2 tiles will be empty
                 if(this.roomWidth % 2 === 0){
                     if(x === Math.round(this.roomWidth/2) || y === Math.round(this.roomHeight/2)){
-                        tile.setDirections("empty", "empty", "empty", "empty");
+                        tile.setType("floor")
                     }
                 }
                 //add empty square in the center of the room that is half the size of the room
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
-                    tile.setDirections("empty", "empty", "empty", "empty");
+                    tile.setType("floor")
                 }
                 
 
@@ -289,17 +288,17 @@ class HoleShapeRoom extends Room {
 
                 //create a room where there is a center pillar which acts as a wall
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 }else{
-                    tile.setDirections("empty", "empty", "empty", "empty");
+                    tile.setType("floor")
                 }
                 //set the corner tiles to be walls 
                 if(x === 0 && y === 0 || x === 0 && y === this.roomHeight-1 || x === this.roomWidth-1 && y === 0 || x === this.roomWidth-1 && y === this.roomHeight-1){
-                    tile.setDirections("wall", "wall", "wall", "wall");
+                    tile.setType("wall")
                 }
                 //set the corner of the center pillar to be empty
                 if(x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) || x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1 || x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) || x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1){
-                    tile.setDirections("empty", "empty", "empty", "empty");
+                    tile.setType("floor")
                 }
                 
                 
