@@ -47,6 +47,7 @@ class Map {
     placeRooms() {
         const random = seedrandom(this.seed);
         const spawnRoom = new SquareRoom(this.width, this.height, "medium");
+        //spawnRoom.addExits();
         const spawnRoomStartX = Math.floor((this.width - spawnRoom.roomWidth) / 2);
         const spawnRoomStartY = this.height - spawnRoom.roomHeight;
         
@@ -58,13 +59,15 @@ class Map {
         //topRoom.addExits();
         
         const placeRoom = (room, startX, startY) => {
+            room.globalX = startX;
+            room.globalY = startY;
             for (let x = startX; x < startX + room.roomWidth; x++) {
                 for (let y = startY; y < startY + room.roomHeight; y++) {
                     const roomX = x - startX;
                     const roomY = y - startY;
-                    this.tiles[x][y] = room.tiles[roomX][roomY];
-                    this.tiles[x][y].x = x;
-                    this.tiles[x][y].y = y;
+                    this.tiles[x][y].theme = room.tiles[roomX][roomY].theme;
+                    this.tiles[x][y].contents = room.tiles[roomX][roomY].contents;
+                    this.tiles[x][y].setType(room.tiles[roomX][roomY].type);
                 }
             }
         };
@@ -74,34 +77,49 @@ class Map {
         placeRoom(spawnRoom, spawnRoomStartX, spawnRoomStartY);
     
         // Determine the coordinates for the exits of the spawn room.
-        const spawnRoomUpExitX = spawnRoom.exits.up[0].x;
-        const spawnRoomUpExitY = spawnRoom.exits.up[0].y;
+        const spawnRoomUpExit = spawnRoom.getGlobalExitCoordinates("up", 0)
+        const topRoomStartX = spawnRoomUpExit.x - topRoom.exits.down[0].x;
+        const topRoomStartY = spawnRoomUpExit.y - topRoom.exits.down[0].y;
+        placeRoom(topRoom, topRoomStartX, topRoomStartY);
+
+        
+        const spawnRoomLeftExit = spawnRoom.getGlobalExitCoordinates("left", 0)
+        const leftRoomStartX = spawnRoomLeftExit.x - leftRoom.exits.right[0].x;
+        const leftRoomStartY = spawnRoomLeftExit.y - leftRoom.exits.right[0].y;
+        placeRoom(leftRoom, leftRoomStartX, leftRoomStartY);
+
+        //const spawnRoomRightExit = spawnRoom.getGlobalExitCoordinates("right", 0)
+        //const rightRoomStartX = spawnRoomRightExit.x - rightRoom.exits.left[0].x;
+        //const rightRoomStartY = spawnRoomRightExit.y - rightRoom.exits.left[0].y;
+        //placeRoom(rightRoom, rightRoomStartX, rightRoomStartY);
+        
+
     
         // Determine the coordinates for the exits of the left room.
-        const leftRoomRightExitX = leftRoom.exits.right[0].x;
-        const leftRoomRightExitY = leftRoom.exits.right[0].y;
+        //const leftRoomRightExitX = leftRoom.exits.right[0].x;
+        //const leftRoomRightExitY = leftRoom.exits.right[0].y;
     
         // Calculate and place the left room.
-        const leftRoomStartX = spawnRoomStartX + spawnRoomUpExitX - leftRoomRightExitX;
-        const leftRoomStartY = spawnRoomStartY + spawnRoomUpExitY - leftRoomRightExitY;
+        //const leftRoomStartX = spawnRoomStartX + spawnRoomUpExitX - leftRoomRightExitX;
+        //const leftRoomStartY = spawnRoomStartY + spawnRoomUpExitY - leftRoomRightExitY;
         //placeRoom(leftRoom, leftRoomStartX, leftRoomStartY);
     
         // Determine the coordinates for the exits of the right room.
-        const rightRoomLeftExitX = rightRoom.exits.left[0].x;
-        const rightRoomLeftExitY = rightRoom.exits.left[0].y;
+        //const rightRoomLeftExitX = rightRoom.exits.left[0].x;
+        //const rightRoomLeftExitY = rightRoom.exits.left[0].y;
     
         // Calculate and place the right room.
-        const rightRoomStartX = spawnRoomStartX + spawnRoomUpExitX - rightRoomLeftExitX;
-        const rightRoomStartY = spawnRoomStartY + spawnRoomUpExitY - rightRoomLeftExitY;
+        //const rightRoomStartX = spawnRoomStartX + spawnRoomUpExitX - rightRoomLeftExitX;
+        //const rightRoomStartY = spawnRoomStartY + spawnRoomUpExitY - rightRoomLeftExitY;
         //placeRoom(rightRoom, rightRoomStartX, rightRoomStartY);
     
         // Determine the coordinates for the exits of the top room.
-        const topRoomDownExitX = topRoom.exits.down[0].x;
-        const topRoomDownExitY = topRoom.exits.down[0].y;
+        //const topRoomDownExitX = topRoom.exits.down[0].x;
+        //const topRoomDownExitY = topRoom.exits.down[0].y;
     
         // Calculate and place the top room.
-        const topRoomStartX = spawnRoomStartX + spawnRoomUpExitX - topRoomDownExitX;
-        const topRoomStartY = spawnRoomStartY + spawnRoomUpExitY - topRoomDownExitY;
+        //const topRoomStartX = spawnRoomStartX + spawnRoomUpExitX - topRoomDownExitX;
+        //const topRoomStartY = spawnRoomStartY + spawnRoomUpExitY - topRoomDownExitY;
         //placeRoom(topRoom, topRoomStartX, topRoomStartY);
     }
 
