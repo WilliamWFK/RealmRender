@@ -17,6 +17,17 @@ class Tile {
         this.selectImage();
     }
 
+    isWall() {
+      // Check if all directions are "wall"
+      return (
+        this.directions.up === "wall" &&
+        this.directions.right === "wall" &&
+        this.directions.down === "wall" &&
+        this.directions.left === "wall"
+        );
+    }
+    
+
     //used for setting the edges of the tile
     setDirections(up, right, down, left) {
         this.directions = {
