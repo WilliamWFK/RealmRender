@@ -15,7 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path='/' element={<Home />} />
-        <Route path='/mapEditor' element={<MapEditor />} />
+        <Route path='/mapEditor' element={<Test />} />
         <Route path='/index' element={<Home />} />
         <Route path='/join' element={<Join />} />
         <Route path='/createMap' element={<CreateMap />} /> 
