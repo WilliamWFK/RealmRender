@@ -11,6 +11,7 @@ class SquareRoom extends Room {
         this.name = "Square Room";
         this.description = "A square room with walls on all sides.";
         this.tiles = this.createSquareTiles();
+        this.addExits();
     }
 
     createSquareTiles() {
@@ -45,6 +46,7 @@ class TshapeRoom extends Room {
         this.name = "Tshape Room";
         this.description = "A T shaped room with walls on all sides.";
         this.tiles = this.createTshapeTiles();
+        this.addExits();
     }
 
     createTshapeTiles() {
@@ -97,6 +99,7 @@ class LShapeRoom extends Room {
         this.name = "Lshape Room";
         this.description = "A L shaped room with walls on all sides.";
         this.tiles = this.createLshapeTiles();
+        this.addExits();
     }
 
 
@@ -178,6 +181,7 @@ class RectShapeRoom extends Room {
         this.name = "Rectshape Room";
         this.description = "A Rectangle shaped room with walls on all sides.";
         this.tiles = this.createRectshapeTiles();
+        this.addExits();
     }
 
 
@@ -224,6 +228,7 @@ class PlusShapeRoom extends Room {
         this.name = "Plusshape Room";
         this.description = "A Plus shaped room with walls on all sides.";
         this.tiles = this.createPlusshapeTiles();
+        this.addExits();
     }
 
     createPlusshapeTiles() {
@@ -272,6 +277,7 @@ class HoleShapeRoom extends Room {
         this.name = "HoleShape Room";
         this.description = "A Hole shaped room with walls on all sides.";
         this.tiles = this.createHoleshapeTiles();
+        this.addExits();
     }
 
     createHoleshapeTiles() {

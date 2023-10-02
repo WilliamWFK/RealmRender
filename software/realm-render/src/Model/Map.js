@@ -54,6 +54,12 @@ class Map {
 
         // Place the spawn room at the bottom middle
         const spawnRoom = new SquareRoom(this.width, this.height, "medium");
+        const test = spawnRoom.tiles[0][0];
+        const exitTile = spawnRoom.exits.left[0];
+        console.log("test type", typeof test);
+        console.log("test x,y", test.x, test.y);
+        console.log("exitTile type", typeof exitTile);
+        console.log("exit x,y", exitTile.x, exitTile.y)
 
         const spawnRoomStartX = Math.floor((this.width - spawnRoom.roomWidth) / 2);
         const spawnRoomStartY = this.height - spawnRoom.roomHeight;
