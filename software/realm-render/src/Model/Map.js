@@ -74,19 +74,47 @@ class Map {
 
     
         // Place the spawn room first.
-        placeRoom(spawnRoom, spawnRoomStartX, spawnRoomStartY);
-    
-        // Determine the coordinates for the exits of the spawn room.
-        const spawnRoomUpExit = spawnRoom.getGlobalExitCoordinates("up", 0)
-        const topRoomStartX = spawnRoomUpExit.x - topRoom.exits.down[0].x;
-        const topRoomStartY = spawnRoomUpExit.y - topRoom.exits.down[0].y;
-        placeRoom(topRoom, topRoomStartX, topRoomStartY);
-
         
-        const spawnRoomLeftExit = spawnRoom.getGlobalExitCoordinates("left", 0)
-        const leftRoomStartX = spawnRoomLeftExit.x - leftRoom.exits.right[0].x;
-        const leftRoomStartY = spawnRoomLeftExit.y - leftRoom.exits.right[0].y;
-        placeRoom(leftRoom, leftRoomStartX, leftRoomStartY);
+
+
+        //Write a recursive function to place the rooms in the correct locations, and generate rooms from the left and right rooms like the spawn rooms
+        
+        let Depth = 0;
+        
+        const placeRoomRecursively = (parentRoom, startX, startY) => {
+            placeRoom(parentRoom, startX, startY);
+
+            // Determine the coordinates for the exits of the parent room
+            const upExit = parentRoom.getGlobalExitCoordinates("up", 0);
+            const leftExit = parentRoom.getGlobalExitCoordinates("left", 0);
+            const rightExit = parentRoom.getGlobalExitCoordinates("right", 0);
+
+            // Generate adjacent rooms
+            const topRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+            const topRoomStartX = upExit.x - topRoom.exits.down[0].x;
+            const topRoomStartY = upExit.y - topRoom.exits.down[0].y;
+
+            const leftRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+            const leftRoomStartX = leftExit.x - leftRoom.exits.right[0].x;
+            const leftRoomStartY = leftExit.y - leftRoom.exits.right[0].y;
+
+            const rightRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+            const rightRoomStartX = rightExit.x - rightRoom.exits.left[0].x;
+            const rightRoomStartY = rightExit.y - rightRoom.exits.left[0].y;
+
+            // Recursively place the adjacent rooms (add conditions to stop recursion as needed)
+            Depth = Depth + 1;
+            if(Depth >= 4){
+                return;
+            }
+            placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+            placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
+            placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+            
+            
+        };
+
+        placeRoomRecursively(spawnRoom, spawnRoomStartX, spawnRoomStartY);
 
         //const spawnRoomRightExit = spawnRoom.getGlobalExitCoordinates("right", 0)
         //const rightRoomStartX = spawnRoomRightExit.x - rightRoom.exits.left[0].x;
@@ -160,9 +188,12 @@ class Map {
 
         const rooms = [
             new SquareRoom(width, height, "medium"),
-            new TshapeRoom(width, height, "medium"),
-            new LShapeRoom(width, height, "medium"),
-            new RectShapeRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            //new TshapeRoom(width, height, "medium"),
+            //new LShapeRoom(width, height, "medium"),
+            //new RectShapeRoom(width, height, "medium"),
             // new PlusShapeRoom(width, height, "medium"),
             // new HoleShapeRoom(width, height, "medium"),
         ];

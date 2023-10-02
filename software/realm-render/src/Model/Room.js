@@ -44,6 +44,7 @@ class Room {
       
     addExits(){
         const edgeWallTiles = this.findEdges()
+        
 
         //randomly selects a tile from edge wall tiles
         this.exits.up.push(edgeWallTiles.up[Math.floor(Math.random() * edgeWallTiles.up.length)]);
@@ -70,14 +71,14 @@ class Room {
         };
     
         // Iterate through the top row
-        for (let x = 0; x < this.roomWidth; x++) {
+        for (let x = 1; x < this.roomWidth-1; x++) {
           if (this.tiles[x][0].isWall) {
             edgeWallTiles.up.push(this.tiles[x][0]);
           }
         }
     
         // Iterate through the bottom row
-        for (let x = 0; x < this.roomWidth; x++) {
+        for (let x = 1; x < this.roomWidth-1; x++) {
           if (this.tiles[x][this.roomHeight - 1].isWall) {
             edgeWallTiles.down.push(this.tiles[x][this.roomHeight - 1]);
           }
