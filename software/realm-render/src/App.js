@@ -1,11 +1,10 @@
 import React from 'react';
 import './styles/App.css';
-import {BrowserRouter as Router, Routes, Route}
+import { BrowserRouter as Router, Routes, Route }
   from 'react-router-dom';
 import Home from './pages';
-import MapEditor from './pages/mapEditor';
 import Join from './pages/join';
-import Test from './pages/test';
+import MapEditor from './pages/mapEditor';
 
 /**
  * Main function to return App component.
@@ -16,7 +15,7 @@ function App() {
     <Router>
       <Routes>
         <Route exact path='/' element={<Home />} />
-        <Route path='/mapEditor' element={<Test />} />
+        <Route path='/mapEditor' element={<MapEditor />} />
         <Route path='/index' element={<Home />} />
         <Route path='/join' element={<Join />} />
       </Routes>
