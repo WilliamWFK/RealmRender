@@ -28,7 +28,8 @@ class Tile {
      * */
     selectImage(){
       this.rotate = 0;
-      this.image = this.imageStart;
+      console.log(this.theme);
+      this.image = this.imageStart + this.theme + "/";
       if (this.type === "wall"){
         this.image += "tileURDL.png";
       } else if (this.type === "door"){

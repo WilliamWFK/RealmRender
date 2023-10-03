@@ -7,7 +7,7 @@ const Home = () => {
   const [menumode, setMenumode] = useState(0);
   //const [sliderValue, setValue] = useState(5); // example setting
 
-  const [formData, setFormData] = useState({name: "",width: 30,height: 30, players: 2, theme: "Space"});
+  const [formData, setFormData] = useState({name: "",width: 30,height: 30, players: 2, theme: "Atlantis"});
 
   const handleChange = (event) => {
       const { name, value } = event.target;
@@ -56,7 +56,7 @@ const Home = () => {
                 <div class = "formInput">
                   <label htmlFor="theme">Theme:</label>
                   <select id="theme" name="theme" value={formData.theme} onChange={handleChange}>
-                    <option value="Space">Space</option>
+                    <option value="Atlantis">Atlantis</option>
                     <option value="Fantasy">Fantasy</option>
                   </select>
                 </div>

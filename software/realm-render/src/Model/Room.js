@@ -7,11 +7,12 @@ const medium = (dimension) => {
 class Room {
     globalX;
     globalY;
-    constructor(width, height, size) {
+    constructor(width, height, size, theme) {
         this.id = 0;
         
         this.name = "";
         this.description = "";
+        this.theme = theme;
         this.exits = {
             left: [],
             right: [],
@@ -107,6 +108,10 @@ class Room {
 
     setCharacters(newChara){
         this.characters = newChara;
+    }
+
+    getTheme(){
+        return this.theme;
     }
 }
 

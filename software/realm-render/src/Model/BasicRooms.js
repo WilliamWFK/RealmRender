@@ -4,8 +4,8 @@ import { rotate2DArray } from './ArrayUtils';
 
 
 class SquareRoom extends Room {
-    constructor(width, height, size) {
-        super(width, height, size); // Call the constructor of the base Room class
+    constructor(width, height, size, theme) {
+        super(width, height, size, theme); // Call the constructor of the base Room class
         console.log('hello create sqRoom');
         // Customize properties for your square room
         this.name = "Square Room";
@@ -22,7 +22,7 @@ class SquareRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
                 // Customize tile directions as needed
                 if (x === startX || x === startX + this.roomWidth - 1 || y === startY || y === startY + this.roomHeight - 1) {
                     tile.setType("wall")
@@ -38,8 +38,8 @@ class SquareRoom extends Room {
 }
 
 class TshapeRoom extends Room {
-    constructor(width, height, size) {
-        super(width, height, size); // Call the constructor of the base Room class
+    constructor(width, height, size, theme) {
+        super(width, height, size, theme); // Call the constructor of the base Room class
         console.log('hello create Troom');
         // Customize properties for your square room
         this.name = "Tshape Room";
@@ -55,7 +55,7 @@ class TshapeRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
                 // Customize tile directions as needed
                 if (x === startX) {
                     tile.setType("wall")
@@ -91,8 +91,8 @@ class TshapeRoom extends Room {
 }
 
 class LShapeRoom extends Room {
-    constructor(width, height, size) {
-        super(width, height, size); // Call the constructor of the base Room class
+    constructor(width, height, size, theme) {
+        super(width, height, size, theme); // Call the constructor of the base Room class
         console.log('hello create Lroom');
         // Customize properties for your square room
         this.name = "Lshape Room";
@@ -116,7 +116,7 @@ class LShapeRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
 
                 if( y < this.roomHeight/2){
                     //do the stick
@@ -173,8 +173,8 @@ class LShapeRoom extends Room {
 }
 
 class RectShapeRoom extends Room {
-    constructor(width, height, size) {
-        super(width, height, size); // Call the constructor of the base Room class
+    constructor(width, height, size, theme) {
+        super(width, height, size, theme); // Call the constructor of the base Room class
         console.log('hello create Rectroom');
         // Customize properties for your square room
         this.name = "Rectshape Room";
@@ -195,7 +195,7 @@ class RectShapeRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
                 if(x === 0 || x === this.roomWidth-1 || y === 0 || y === this.roomHeight-1){
                     tile.setType("wall")
                 }
@@ -220,8 +220,8 @@ class RectShapeRoom extends Room {
 }
 
 class PlusShapeRoom extends Room {
-    constructor(width, height, size) {
-        super(width, height, size); // Call the constructor of the base Room class
+    constructor(width, height, size, theme) {
+        super(width, height, size, theme); // Call the constructor of the base Room class
         console.log('hello create Plusroom');
         // Customize properties for your square room
         this.name = "Plusshape Room";
@@ -235,7 +235,7 @@ class PlusShapeRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
                 //create a room where there are walls on the outside and a plus shape in the middle
                 if(x === 0 || x === this.roomWidth-1 || y === 0 || y === this.roomHeight-1){
                     tile.setType("wall")
@@ -269,8 +269,8 @@ class PlusShapeRoom extends Room {
 }
 
 class HoleShapeRoom extends Room {
-    constructor(width, height, size) {
-        super(width, height, size); // Call the constructor of the base Room class
+    constructor(width, height, size, theme) {
+        super(width, height, size, theme); // Call the constructor of the base Room class
         console.log('hello create HoleRoom');
         // Customize properties for your square room
         this.name = "HoleShape Room";
@@ -284,7 +284,7 @@ class HoleShapeRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");  
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");  
 
                 //create a room where there is a center pillar which acts as a wall
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
@@ -293,11 +293,11 @@ class HoleShapeRoom extends Room {
                     tile.setType("floor")
                 }
                 //set the corner tiles to be walls 
-                if(x === 0 && y === 0 || x === 0 && y === this.roomHeight-1 || x === this.roomWidth-1 && y === 0 || x === this.roomWidth-1 && y === this.roomHeight-1){
+                if((x === 0 && y === 0) || (x === 0 && y === this.roomHeight-1) || (x === this.roomWidth-1 && y === 0) || (x === this.roomWidth-1 && y === this.roomHeight-1)){
                     tile.setType("wall")
                 }
                 //set the corner of the center pillar to be empty
-                if(x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) || x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1 || x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) || x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1){
+                if((x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4)) || (x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1) || (x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4)) || (x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1)){
                     tile.setType("floor")
                 }
                 

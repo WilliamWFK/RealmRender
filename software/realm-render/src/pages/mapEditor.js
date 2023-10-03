@@ -18,7 +18,7 @@ const LoadMap = () => {
   }
 
   const seed = 'exampleSeed';
-  const map = new Map(state.width, state.height, seed);
+  const map = new Map(state.width, state.height, seed, state.theme);
   const grid = map.tiles;
 
   const containerStyles = {
