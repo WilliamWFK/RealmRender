@@ -7,7 +7,9 @@ let players = [];
 let activePlayer = -1;
 let prevX = -1;
 let prevY = -1;
-let tileSize = 10;
+let mapX = 0;
+let mapY = 0;
+let tileSize = 30;
 
 function sketch(p5) {
 
@@ -26,8 +28,11 @@ function sketch(p5) {
       } else {
         p5.fill(50, 50, 200);
       }
-      p5.rect(this.x * tileSize, this.y * tileSize, tileSize);
-
+      p5.rect((this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize);
+    }
+    on(x, y) {
+      // return if x and y is on tile
+      return p5.dist(this.x + mapX, this.y + mapY, x, y) <= tileSize;
     }
   }
 
@@ -39,12 +44,12 @@ function sketch(p5) {
 
     draw() {
       p5.fill(255, 0, 0);
-      p5.circle(this.x, this.y, tileSize);
+      p5.circle(this.x + mapX * tileSize, this.y + mapY * tileSize, tileSize);
     }
 
     on(x, y) {
       // return if x and y is on player including the circle radius
-      return p5.dist(this.x, this.y, x, y) <= tileSize;
+      return p5.dist(this.x + mapX, this.y + mapY, x, y) <= tileSize;
     }
   }
 
@@ -57,7 +62,7 @@ function sketch(p5) {
     // draw players
     players.forEach(p => p.draw());
 
-    p5.frameRate(24);
+    p5.frameRate(20);
 
   }
 
@@ -67,17 +72,28 @@ function sketch(p5) {
     let x = Math.floor(p5.mouseX / tileSize);
     let y = Math.floor(p5.mouseY / tileSize);
 
-    let tile = mapped.find(t => t.x === x && t.y === y);
+    //zoom in
+    let tile = mapped.find(t => t.x + mapX === x && t.y + mapY === y);
+    if (p5.mouseX > 5000) {
+      tileSize *= 1.1;
+      players.forEach(p => {
+        p.x += (tileSize * 0.11)
+        p.y += (tileSize * 0.11)
+      })
+    }
+    //zoom out
+    else if (p5.mouseX > 5000) {
+      tileSize /= 1.1;
+      players.forEach(p => {
+        p.x -= (tileSize * 0.09)
+        p.y -= (tileSize * 0.09)
+      })
 
-    if (tile) {
+    }
+    else if (tile) {
       tile.type = "selected";
     }
-
-    if (p5.mouseX < 20 && p5.mouseY < 20) {
-      tileSize += 10;
-    }
   }
-
 
   p5.mousePressed = () => {
     if (prevX == -1 && prevY == -1) {
@@ -86,7 +102,7 @@ function sketch(p5) {
     }
 
     players.forEach(p => {
-      if (p.on(p5.mouseX, p5.mouseY)) {
+      if (p.on(p5.mouseX + mapX * tileSize, p5.mouseY + mapY * tileSize)) {
         activePlayer = p;
       }
     })
@@ -101,15 +117,8 @@ function sketch(p5) {
       activePlayer.x = p5.mouseX;
       activePlayer.y = p5.mouseY;
     } else {
-      players.forEach(p => {
-        p.x += (p5.mouseX - prevX) / tileSize;
-        p.y += (p5.mouseY - prevY) / tileSize;
-      });
-
-      mapped.forEach(t => {
-        t.x += (p5.mouseX - prevX) / tileSize;
-        t.y += (p5.mouseY - prevY) / tileSize;
-      });
+      mapX += (p5.mouseX - prevX) / tileSize;
+      mapY += (p5.mouseY - prevY) / tileSize;
       prevX = p5.mouseX;
       prevY = p5.mouseY;
     }
@@ -118,14 +127,30 @@ function sketch(p5) {
   p5.mouseReleased = () => {
     prevX = -1;
     prevY = -1;
+
+    // if (activePlayer != -1) {
+    //   let x = 50;
+    //   let y = 50;
+    //   mapped.find(t => t.x === x && t.y === y);
+    //   activePlayer.x = x;
+    //   activePlayer.y = y;
+    // }
+    // activePlayer = -1;
+    if (activePlayer != -1) {
+      activePlayer.x = snapGrid(activePlayer.x + mapX) - (tileSize / 2);
+      activePlayer.y = snapGrid(activePlayer.y + mapY) - (tileSize / 2);
+    }
   }
 
+  function snapGrid(x) {
+    return Math.ceil(x / tileSize) * tileSize;
+  }
 
   function setup() {
 
     // create map and players
     const cols = 80;
-    const rows = 80;
+    const rows = 45;
 
     for (let col = 0; col < cols; col++) {
       for (let row = 0; row < rows; row++) {
@@ -136,12 +161,8 @@ function sketch(p5) {
     players.push(new Player(40, 40));
   }
 
-
-
-
-
   p5.setup = () => {
-    p5.createCanvas(400, 400);
+    p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
     setup();
   }
 
