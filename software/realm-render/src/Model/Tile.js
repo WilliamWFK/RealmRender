@@ -54,6 +54,12 @@ class Tile {
         else this.image += "chest1.png";
       } else if (this.type === "floor"){
         this.image += "tile.png";   
+      } else if (this.type === "BigObject"){
+        this.contents = "BigObject";
+        this.image = this.image + "objects/";
+        let rand = Math.floor(Math.random()*100) +1;
+        if(rand <= 50) this.image += "big_object1.png";
+        else this.image += "big_object2.png";
       }
       else {
         this.image += "background.png"

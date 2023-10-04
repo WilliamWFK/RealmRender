@@ -35,7 +35,13 @@ export function decorateFloorTiles(array) {
                         console.log("put chest here");
                         decoratedArray[col][row].setType("chest")};
                 }
-
+                if(!array[col][row+1].isWall() && !array[col][row-1].isWall() && !array[col+1][row].isWall() && !array[col-1][row].isWall()){
+                    let rand = Math.floor(Math.random()*100) +1;
+                    if(rand <= 3){
+                        console.log("put objects here");
+                        decoratedArray[col][row].setType("BigObject");
+                    } 
+                }
             }
         }
     }
