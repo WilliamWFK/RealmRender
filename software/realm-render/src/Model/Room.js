@@ -7,7 +7,7 @@ const medium = (dimension) => {
 class Room {
     constructor(width, height, size) {
         this.id = 0;
-        
+
         this.name = "";
         this.description = "";
         this.exits = {
@@ -47,35 +47,35 @@ class Room {
           down: [],
           left: []
         };
-    
+
         // Iterate through the top row
         for (let x = 0; x < this.roomWidth; x++) {
           if (this.tiles[x][0].isWall) {
             edgeWallTiles.up.push(this.tiles[x][0]);
           }
         }
-    
+
         // Iterate through the bottom row
         for (let x = 0; x < this.roomWidth; x++) {
           if (this.tiles[x][this.roomHeight - 1].isWall) {
             edgeWallTiles.down.push(this.tiles[x][this.roomHeight - 1]);
           }
         }
-    
+
         // Iterate through the left column
         for (let y = 1; y < this.roomHeight - 1; y++) {
           if (this.tiles[0][y].isWall) {
             edgeWallTiles.left.push(this.tiles[0][y]);
           }
         }
-    
+
         // Iterate through the right column
         for (let y = 1; y < this.roomHeight - 1; y++) {
           if (this.tiles[this.roomWidth - 1][y].isWall) {
             edgeWallTiles.right.push(this.tiles[this.roomWidth - 1][y]);
           }
         }
-    
+
         return edgeWallTiles;
     }
 

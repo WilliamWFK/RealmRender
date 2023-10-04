@@ -1,4 +1,4 @@
-import Room from './Room'; 
+import Room from './Room';
 import Tile from '../Model/Tile';
 import { rotate2DArray } from './ArrayUtils';
 
@@ -106,7 +106,7 @@ class LShapeRoom extends Room {
     createLshapeTiles() {
         // Create a grid of Tile objects for the square room
         const tTiles = [];
-        
+
         let stickWidth = Math.floor(Math.random() * (this.roomWidth/2-1) + 1);
         let stickHeight = Math.floor(Math.random() * (this.roomHeight/2-1) + 1);
         let baseWidth = Math.floor(Math.random() * (this.roomWidth - this.roomWidth / 2 - 1)) + this.roomWidth / 2;
@@ -135,11 +135,11 @@ class LShapeRoom extends Room {
                         }else {
                             tile.setDirections("wall", "wall", "wall", "wall");
                         }
-                    } 
+                    }
                 }
                 else{
                     //do the base
-                    
+
                     //check if the tile is in the base
                     if(y > (this.roomHeight - baseHeight)){
                         //set the tile to a wall
@@ -209,7 +209,7 @@ class RectShapeRoom extends Room {
                 row.push(tile);
             }
             tTiles.push(row)
-        }   
+        }
         let tilesCopy = [...tTiles];
         //rotate the 2d array of tiles x times
         for(let i = 0; i < Math.floor(Math.random() * 4); i++){
@@ -257,9 +257,9 @@ class PlusShapeRoom extends Room {
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
                     tile.setDirections("empty", "empty", "empty", "empty");
                 }
-                
 
-                
+
+
                 tile.selectImage();
                 row.push(tile);
             }
@@ -285,7 +285,7 @@ class HoleShapeRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");  
+                const tile = new Tile(x, y, 0, "", "nothing");
 
                 //create a room where there is a center pillar which acts as a wall
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
@@ -293,7 +293,7 @@ class HoleShapeRoom extends Room {
                 }else{
                     tile.setDirections("empty", "empty", "empty", "empty");
                 }
-                //set the corner tiles to be walls 
+                //set the corner tiles to be walls
                 if(x === 0 && y === 0 || x === 0 && y === this.roomHeight-1 || x === this.roomWidth-1 && y === 0 || x === this.roomWidth-1 && y === this.roomHeight-1){
                     tile.setDirections("wall", "wall", "wall", "wall");
                 }
@@ -301,8 +301,8 @@ class HoleShapeRoom extends Room {
                 if(x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) || x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1 || x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) || x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1){
                     tile.setDirections("empty", "empty", "empty", "empty");
                 }
-                
-                
+
+
                 tile.selectImage();
                 row.push(tile);
             }

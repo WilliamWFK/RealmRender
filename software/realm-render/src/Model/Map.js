@@ -51,14 +51,14 @@ class Map {
         spawnRoom.addExits();
         const spawnRoomStartX = Math.floor((this.width - spawnRoom.roomWidth) / 2);
         const spawnRoomStartY = this.height - spawnRoom.roomHeight;
-        
+
         const leftRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
         leftRoom.addExits();
         const rightRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
         rightRoom.addExits();
         const topRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
         topRoom.addExits();
-        
+
         const placeRoom = (room, startX, startY) => {
             for (let x = startX; x < startX + room.roomWidth; x++) {
                 for (let y = startY; y < startY + room.roomHeight; y++) {
@@ -68,36 +68,36 @@ class Map {
                 }
             }
         };
-    
+
         // Place the spawn room first.
         placeRoom(spawnRoom, spawnRoomStartX, spawnRoomStartY);
-    
+
         // Determine the coordinates for the exits of the spawn room.
         const spawnRoomUpExitX = spawnRoom.exits.up[0].x;
         const spawnRoomUpExitY = spawnRoom.exits.up[0].y;
-    
+
         // Determine the coordinates for the exits of the left room.
         const leftRoomRightExitX = leftRoom.exits.right[0].x;
         const leftRoomRightExitY = leftRoom.exits.right[0].y;
-    
+
         // Calculate and place the left room.
         const leftRoomStartX = spawnRoomStartX + spawnRoomUpExitX - leftRoomRightExitX;
         const leftRoomStartY = spawnRoomStartY + spawnRoomUpExitY - leftRoomRightExitY;
         placeRoom(leftRoom, leftRoomStartX, leftRoomStartY);
-    
+
         // Determine the coordinates for the exits of the right room.
         const rightRoomLeftExitX = rightRoom.exits.left[0].x;
         const rightRoomLeftExitY = rightRoom.exits.left[0].y;
-    
+
         // Calculate and place the right room.
         const rightRoomStartX = spawnRoomStartX + spawnRoomUpExitX - rightRoomLeftExitX;
         const rightRoomStartY = spawnRoomStartY + spawnRoomUpExitY - rightRoomLeftExitY;
         placeRoom(rightRoom, rightRoomStartX, rightRoomStartY);
-    
+
         // Determine the coordinates for the exits of the top room.
         const topRoomDownExitX = topRoom.exits.down[0].x;
         const topRoomDownExitY = topRoom.exits.down[0].y;
-    
+
         // Calculate and place the top room.
         const topRoomStartX = spawnRoomStartX + spawnRoomUpExitX - topRoomDownExitX;
         const topRoomStartY = spawnRoomStartY + spawnRoomUpExitY - topRoomDownExitY;

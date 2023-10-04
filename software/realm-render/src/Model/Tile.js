@@ -26,7 +26,7 @@ class Tile {
         this.directions.left === "wall"
         );
     }
-    
+
 
     //used for setting the edges of the tile
     setDirections(up, right, down, left) {

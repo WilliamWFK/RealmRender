@@ -13,7 +13,7 @@ const Home = () => {
       const { name, value } = event.target;
       setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
@@ -75,15 +75,15 @@ const Home = () => {
                   <input type="range" min="1" max="6" defaultValue={formData.players} onChange={(e) =>setFormData({ ...formData, players: parseInt(e.target.value) })} id="players" name="players"></input>
                 </div>
 
-                
-                
+
+
                 <div class="navButtons">
                   <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
                   <button type="submit" class="createButton"><p class="text">Create</p><p class="plus">+</p></button>
                 </div>
               </form>
             </div>
-            
+
           </div>
           <div class="menuBackdrop mainMenu">
             <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
