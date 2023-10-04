@@ -46,18 +46,17 @@ class Tile {
         else if(rand <= 80) this.image += "object3.png";
         else if(rand <= 90) this.image += "object4.png";
         else this.image += "object5.png";
-      
-
-        
       } else if (this.type === "chest"){
         this.contents = "chest";
         this.image = this.image + "chests/";
         let rand = Math.floor(Math.random()*100) +1;
         if(rand <=50) this.image += "chest.png";
         else this.image += "chest1.png";
-      }  
+      } else if (this.type === "floor"){
+        this.image += "tile.png";   
+      }
       else {
-        this.image += "tile.png"
+        this.image += "background.png"
       }//tile.png
     }
 }

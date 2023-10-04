@@ -36,8 +36,8 @@ class Map {
         for (let x = 0; x < width; x++) {
             const row = [];
             for (let y = 0; y < height; y++) {
-                const tile = new Tile(x, y, 0, "", "nothing");
-                tile.setType("floor")
+                const tile = new Tile(x, y, 0, theme, "nothing");
+                tile.setType("nothing")
                 row.push(tile);
             }
             newMap.push(row)
