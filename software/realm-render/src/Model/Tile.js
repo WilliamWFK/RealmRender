@@ -41,11 +41,14 @@ class Tile {
         this.contents = "object";
         this.image = this.image + "objects/";
         let rand = Math.floor(Math.random()*100) +1;
-        if(rand <= 30) this.image += "blackjar.png";
-        else if(rand <= 60) this.image += "crate.png";
-        else if(rand <= 80) this.image += "vase.png";
-        else if(rand <= 90) this.image += "brokenbarrel.png";
-        else this.image += "vial.png";
+        if(rand <= 30) this.image += "object1.png";
+        else if(rand <= 60) this.image += "object2.png";
+        else if(rand <= 80) this.image += "object3.png";
+        else if(rand <= 90) this.image += "object4.png";
+        else this.image += "object5.png";
+      
+
+        
       } else if (this.type === "chest"){
         this.contents = "chest";
         this.image = this.image + "chests/";

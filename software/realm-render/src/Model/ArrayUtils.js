@@ -31,7 +31,7 @@ export function decorateFloorTiles(array) {
                         console.log("put objects here");
                         decoratedArray[col][row].setType("object");
                     } 
-                    else if(rand <= 40) {
+                    else if(rand <= 34) {
                         console.log("put chest here");
                         decoratedArray[col][row].setType("chest")};
                 }

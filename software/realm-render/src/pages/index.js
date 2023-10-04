@@ -57,7 +57,7 @@ const Home = () => {
                   <label htmlFor="theme">Theme:</label>
                   <select id="theme" name="theme" value={formData.theme} onChange={handleChange}>
                     <option value="Atlantis">Atlantis</option>
-                    <option value="Fantasy">Fantasy</option>
+                    <option value="Grasslands">Grasslands</option>
                   </select>
                 </div>
 
