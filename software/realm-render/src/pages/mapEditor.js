@@ -9,10 +9,12 @@ let prevX = -1;
 let prevY = -1;
 let mapX = 0;
 let mapY = 0;
-let tileSize = 30;
+let tileSize = 32;
+let wallImg;
+let floorImg;
+let playerImg;
 
 function sketch(p5) {
-
   class Tile {
     constructor(x, y, type) {
       this.x = x;
@@ -22,13 +24,10 @@ function sketch(p5) {
 
     draw() {
       if (this.type == "floor") {
-        p5.fill(150, 150, 150);
-      } else if (this.type == "selected") {
-        p5.fill(0, 255, 0);
+        p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else {
-        p5.fill(50, 50, 200);
+        p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       }
-      p5.rect((this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize);
     }
     on(x, y) {
       // return if x and y is on tile
@@ -44,13 +43,11 @@ function sketch(p5) {
     }
 
     draw() {
-      p5.fill(255, 0, 0);
-      p5.circle(this.x + mapX * tileSize, this.y + mapY * tileSize, tileSize);
+      p5.image(playerImg, (this.x + mapX * tileSize) - tileSize / 2, (this.y + mapY * tileSize) - tileSize / 2, tileSize, tileSize);
     }
 
     on(x, y) {
       // return if x and y is on player including the circle radius
-      console.log(this.x + ", " + this.y + ", " + x + ", " + y)
       return p5.dist(this.x, this.y, x, y) <= tileSize;
     }
   }
@@ -64,36 +61,18 @@ function sketch(p5) {
     // draw players
     players.forEach(p => p.draw());
 
-    p5.frameRate(20);
+    p5.frameRate(60);
 
   }
 
   // detect mouse clicks
   p5.mouseClicked = () => {
-    /**console.log("mouse clicked");
-    console.log("mouse pos at: " + p5.mouseX + ", " + p5.mouseY);*/
     let x = Math.floor(p5.mouseX / tileSize);
     let y = Math.floor(p5.mouseY / tileSize);
 
     //zoom in
     let tile = mapped.find(t => t.x + mapX === x && t.y + mapY === y);
-    if (p5.mouseX > 2000) {
-      tileSize *= 1.1;
-      players.forEach(p => {
-        p.x += (tileSize * 0.11)
-        p.y += (tileSize * 0.11)
-      })
-    }
-    //zoom out
-    else if (p5.mouseX < 50) {
-      tileSize /= 1.1;
-      players.forEach(p => {
-        p.x -= (tileSize * 0.09)
-        p.y -= (tileSize * 0.09)
-      })
-
-    }
-    else if (tile) {
+    if (tile) {
       tile.type = "selected";
     }
   }
@@ -105,9 +84,6 @@ function sketch(p5) {
     }
 
     players.forEach(p => {
-      /**console.log("press pos at: " + (p5.mouseX + (-(mapX) * tileSize)) + ", " + (p5.mouseY + (-(mapY) * tileSize)));
-      console.log("player pos at: " + p.x + ", " + p.y);
-      console.log("map pos at: " + mapX + ", " + mapY);*/
       if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize))) {
         activePlayer = p;
       }
@@ -120,8 +96,8 @@ function sketch(p5) {
 
   p5.mouseDragged = () => {
     if (activePlayer != -1) {
-      activePlayer.x = p5.mouseX+ (-(mapX) * tileSize);
-      activePlayer.y = p5.mouseY+ (-(mapY) * tileSize);
+      activePlayer.x = p5.mouseX + (-(mapX) * tileSize);
+      activePlayer.y = p5.mouseY + (-(mapY) * tileSize);
     } else {
       mapX += (p5.mouseX - prevX) / tileSize;
       mapY += (p5.mouseY - prevY) / tileSize;
@@ -133,18 +109,9 @@ function sketch(p5) {
   p5.mouseReleased = () => {
     prevX = -1;
     prevY = -1;
-
-    // if (activePlayer != -1) {
-    //   let x = 50;
-    //   let y = 50;
-    //   mapped.find(t => t.x === x && t.y === y);
-    //   activePlayer.x = x;
-    //   activePlayer.y = y;
-    // }
-    // activePlayer = -1;
     if (activePlayer != -1) {
-      activePlayer.x = snapGrid(activePlayer.x + mapX) - (tileSize / 2);
-      activePlayer.y = snapGrid(activePlayer.y + mapY) - (tileSize / 2);
+      activePlayer.x = snapGrid(activePlayer.x + mapX + (tileSize / 2)) - (tileSize / 2);
+      activePlayer.y = snapGrid(activePlayer.y + mapY + (tileSize / 2)) - (tileSize / 2);
       players.forEach(p => {
         if(p.id == activePlayer.id) {
           p.x = activePlayer.x;
@@ -155,11 +122,15 @@ function sketch(p5) {
   }
 
   function snapGrid(x) {
-    return Math.ceil(x / tileSize) * tileSize;
+    return Math.round(x / tileSize) * tileSize;
   }
-
+  function preload(){
+    wallImg = p5.loadImage("TilesImg/tileURDL.png");
+    floorImg = p5.loadImage("TilesImg/tile.png");
+    playerImg = p5.loadImage("TilesImg/player1.png");
+  }
   function setup() {
-
+    preload();
     // create map and players
     const cols = 80;
     const rows = 45;
@@ -175,6 +146,28 @@ function sketch(p5) {
 
   p5.setup = () => {
     p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
+    let zoomInButton = p5.createButton("+");
+    let zoomOutButton = p5.createButton("-");
+
+    zoomInButton.position(10, 10);
+    zoomOutButton.position(10, 120);
+
+    zoomInButton.size(100, 100);
+    zoomOutButton.size(100, 100);
+    zoomInButton.mousePressed(() => {
+      tileSize *= 1.1;
+      players.forEach(p => {
+        p.x *= 1.1;
+        p.y *= 1.1;
+      });
+    });
+    zoomOutButton.mousePressed(() => {
+      tileSize *= 0.9;
+      players.forEach(p => {
+        p.x *= 0.9;
+        p.y *= 0.9;
+      });
+    });
     setup();
   }
 
