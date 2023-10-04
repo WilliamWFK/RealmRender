@@ -32,12 +32,13 @@ function sketch(p5) {
     }
     on(x, y) {
       // return if x and y is on tile
-      return p5.dist(this.x + mapX, this.y + mapY, x, y) <= tileSize;
+      return p5.dist(this.x, this.y, x, y) <= tileSize;
     }
   }
 
   class Player {
-    constructor(x, y) {
+    constructor(id, x, y) {
+      this.id = id;
       this.x = x;
       this.y = y;
     }
@@ -49,7 +50,8 @@ function sketch(p5) {
 
     on(x, y) {
       // return if x and y is on player including the circle radius
-      return p5.dist(this.x + mapX, this.y + mapY, x, y) <= tileSize;
+      console.log(this.x + ", " + this.y + ", " + x + ", " + y)
+      return p5.dist(this.x, this.y, x, y) <= tileSize;
     }
   }
 
@@ -68,13 +70,14 @@ function sketch(p5) {
 
   // detect mouse clicks
   p5.mouseClicked = () => {
-    console.log("mouse clicked");
+    /**console.log("mouse clicked");
+    console.log("mouse pos at: " + p5.mouseX + ", " + p5.mouseY);*/
     let x = Math.floor(p5.mouseX / tileSize);
     let y = Math.floor(p5.mouseY / tileSize);
 
     //zoom in
     let tile = mapped.find(t => t.x + mapX === x && t.y + mapY === y);
-    if (p5.mouseX > 5000) {
+    if (p5.mouseX > 2000) {
       tileSize *= 1.1;
       players.forEach(p => {
         p.x += (tileSize * 0.11)
@@ -82,7 +85,7 @@ function sketch(p5) {
       })
     }
     //zoom out
-    else if (p5.mouseX > 5000) {
+    else if (p5.mouseX < 50) {
       tileSize /= 1.1;
       players.forEach(p => {
         p.x -= (tileSize * 0.09)
@@ -102,20 +105,23 @@ function sketch(p5) {
     }
 
     players.forEach(p => {
-      if (p.on(p5.mouseX + mapX * tileSize, p5.mouseY + mapY * tileSize)) {
+      /**console.log("press pos at: " + (p5.mouseX + (-(mapX) * tileSize)) + ", " + (p5.mouseY + (-(mapY) * tileSize)));
+      console.log("player pos at: " + p.x + ", " + p.y);
+      console.log("map pos at: " + mapX + ", " + mapY);*/
+      if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize))) {
         activePlayer = p;
       }
     })
 
-    if (!players.some(p => p.on(p5.mouseX, p5.mouseY))) {
+    if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize)))) {
       activePlayer = -1;
     }
   }
 
   p5.mouseDragged = () => {
     if (activePlayer != -1) {
-      activePlayer.x = p5.mouseX;
-      activePlayer.y = p5.mouseY;
+      activePlayer.x = p5.mouseX+ (-(mapX) * tileSize);
+      activePlayer.y = p5.mouseY+ (-(mapY) * tileSize);
     } else {
       mapX += (p5.mouseX - prevX) / tileSize;
       mapY += (p5.mouseY - prevY) / tileSize;
@@ -139,6 +145,12 @@ function sketch(p5) {
     if (activePlayer != -1) {
       activePlayer.x = snapGrid(activePlayer.x + mapX) - (tileSize / 2);
       activePlayer.y = snapGrid(activePlayer.y + mapY) - (tileSize / 2);
+      players.forEach(p => {
+        if(p.id == activePlayer.id) {
+          p.x = activePlayer.x;
+          p.y = activePlayer.y;
+        }
+      });
     }
   }
 
@@ -158,7 +170,7 @@ function sketch(p5) {
         mapped.push(new Tile(col, row, type))
       }
     }
-    players.push(new Player(40, 40));
+    players.push(new Player(0, 40, 40));
   }
 
   p5.setup = () => {
