@@ -21,9 +21,9 @@ class Map {
 
     /**
      * creates an empty map
-     * 
-     * @param {int} width 
-     * @param {int} height 
+     *
+     * @param {int} width
+     * @param {int} height
      */
     makeEmptyMap(width, height){
         console.log('hello create empty');
@@ -68,9 +68,9 @@ class Map {
                 sectionX = 0;
                 sectionY += sectionHeight;
             }
-            
+
         }
-        
+
 
     }
 

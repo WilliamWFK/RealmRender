@@ -38,7 +38,7 @@ const LoadMap = () => {
     '--columns': state.width,
     '--rows': state.height,
   };
-  
+
 
     return (
       <TransformWrapper

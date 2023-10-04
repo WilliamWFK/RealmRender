@@ -1,4 +1,4 @@
-import Room from './Room'; 
+import Room from './Room';
 import Tile from '../Model/Tile';
 
 class SquareRoom extends Room {
