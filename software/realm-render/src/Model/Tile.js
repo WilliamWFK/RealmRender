@@ -34,7 +34,21 @@ class Tile {
         this.image += "tileURDL.png";
       } else if (this.type === "door"){
         this.image += "door.png"
-      } else {
+      } else if (this.type === "object"){
+        this.image = this.image + "objects/";
+        let rand = Math.floor(Math.random()*100) +1;
+        if(rand <= 30) this.image += "blackjar.png";
+        else if(rand <= 60) this.image += "crate.png";
+        else if(rand <= 80) this.image += "vase.png";
+        else if(rand <= 90) this.image += "brokenbarrel.png";
+        else this.image += "vial.png";
+      } else if (this.type === "chest"){
+        this.image = this.image + "chests/";
+        let rand = Math.floor(Math.random()*100) +1;
+        if(rand <=50) this.image += "chest.png";
+        else this.image += "chest1.png";
+      }  
+      else {
         this.image += "tile.png"
       }//tile.png
     }
