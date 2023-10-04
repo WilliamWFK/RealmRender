@@ -20,7 +20,7 @@ class Map {
         this.gmView = false;
         this.seed = seed;
         this.theme = theme;
-        this.makeEmptyMap(this.width, this.height);
+        this.makeEmptyMap(this.width, this.height, this.theme);
         this.createGrid(this.width, this.height);
     }
 
@@ -30,7 +30,7 @@ class Map {
      * @param {int} width
      * @param {int} height
      */
-    makeEmptyMap(width, height){
+    makeEmptyMap(width, height, theme){
         console.log('hello create empty');
         const newMap = []
         for (let x = 0; x < width; x++) {

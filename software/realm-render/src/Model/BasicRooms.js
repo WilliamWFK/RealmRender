@@ -1,6 +1,6 @@
 import Room from './Room'; 
 import Tile from '../Model/Tile';
-import { rotate2DArray } from './ArrayUtils';
+import { rotate2DArray, decorateFloorTiles } from './ArrayUtils';
 
 
 class SquareRoom extends Room {
@@ -33,7 +33,11 @@ class SquareRoom extends Room {
             }
             squareTiles.push(row)
         }
-        return squareTiles;
+        let tilesCopy = [...squareTiles];
+        tilesCopy = decorateFloorTiles(tilesCopy);
+        console.log(tilesCopy);
+        
+        return tilesCopy;
     }
 }
 

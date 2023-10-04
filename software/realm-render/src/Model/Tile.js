@@ -16,6 +16,9 @@ class Tile {
       // Check if all directions are "wall"
       return (this.type === "wall")
     }
+    isFloor(){
+      return (this.type === "floor")
+    }
     
     setType(newType){
       this.type = newType; 
@@ -35,6 +38,7 @@ class Tile {
       } else if (this.type === "door"){
         this.image += "door.png"
       } else if (this.type === "object"){
+        this.contents = "object";
         this.image = this.image + "objects/";
         let rand = Math.floor(Math.random()*100) +1;
         if(rand <= 30) this.image += "blackjar.png";
@@ -43,6 +47,7 @@ class Tile {
         else if(rand <= 90) this.image += "brokenbarrel.png";
         else this.image += "vial.png";
       } else if (this.type === "chest"){
+        this.contents = "chest";
         this.image = this.image + "chests/";
         let rand = Math.floor(Math.random()*100) +1;
         if(rand <=50) this.image += "chest.png";
