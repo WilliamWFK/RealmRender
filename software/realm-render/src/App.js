@@ -18,7 +18,6 @@ function App() {
         <Route path='/mapEditor' element={<MapEditor />} />
         <Route path='/index' element={<Home />} />
         <Route path='/join' element={<Join />} />
-        <Route path='/createMap' element={<CreateMap />} /> 
       </Routes>
     </Router>
   );
