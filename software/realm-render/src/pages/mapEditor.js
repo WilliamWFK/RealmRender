@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Player from "../Model/Player";
+import Tile from "../Model/Tile";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
@@ -15,51 +17,14 @@ let floorImg;
 let playerImg;
 
 function sketch(p5) {
-  class Tile {
-    constructor(x, y, type) {
-      this.x = x;
-      this.y = y;
-      this.type = type;
-    }
-
-    draw() {
-      if (this.type == "floor") {
-        p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
-      } else {
-        p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
-      }
-    }
-    on(x, y) {
-      // return if x and y is on tile
-      return p5.dist(this.x, this.y, x, y) <= tileSize;
-    }
-  }
-
-  class Player {
-    constructor(id, x, y) {
-      this.id = id;
-      this.x = x;
-      this.y = y;
-    }
-
-    draw() {
-      p5.image(playerImg, (this.x + mapX * tileSize) - tileSize / 2, (this.y + mapY * tileSize) - tileSize / 2, tileSize, tileSize);
-    }
-
-    on(x, y) {
-      // return if x and y is on player including the circle radius
-      return p5.dist(this.x, this.y, x, y) <= tileSize;
-    }
-  }
-
   function draw() {
     p5.background(220);
 
     // draw map
-    mapped.forEach(t => t.draw());
+    mapped.forEach(t => t.draw(p5, tileSize, mapX, mapY));
 
     // draw players
-    players.forEach(p => p.draw());
+    players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
 
     p5.frameRate(60);
 
@@ -84,12 +49,12 @@ function sketch(p5) {
     }
 
     players.forEach(p => {
-      if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize))) {
+      if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
         activePlayer = p;
       }
     })
 
-    if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize)))) {
+    if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
       activePlayer = -1;
     }
   }
@@ -138,10 +103,10 @@ function sketch(p5) {
     for (let col = 0; col < cols; col++) {
       for (let row = 0; row < rows; row++) {
         let type = Math.random() > 0.5 ? "floor" : "wall";
-        mapped.push(new Tile(col, row, type))
+        mapped.push(new Tile(col, row, type, floorImg, wallImg))
       }
     }
-    players.push(new Player(0, 40, 40));
+    players.push(new Player(0, 40, 40, playerImg));
   }
 
   p5.setup = () => {
@@ -174,8 +139,6 @@ function sketch(p5) {
   p5.draw = () => {
     draw();
   };
-
-
 }
 
 export default function MapEditor() {

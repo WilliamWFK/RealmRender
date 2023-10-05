@@ -1,20 +1,21 @@
+
 class Tile {
     imageStart = "TilesImg/tile";
     image;
     rotate;
-    constructor(x, y, z, type, contents) {
+    constructor(x, y, type, floorImg, wallImg) {
         this.x = x;
         this.y = y;
-        this.z = z;
         this.type = type;       // Thematic type of tile
-        this.contents = contents; // What's on the tile
         this.directions = { //to tell whats edges are made of
             up: "empty",
             right: "empty",
             down: "empty",
             left: "empty"
         };
-        this.selectImage();
+        this.floorImg = floorImg;
+        this.wallImg = wallImg;
+        /**this.selectImage();*/
     }
 
     isWall() {
@@ -56,6 +57,17 @@ class Tile {
     //set Left
     setLeft(newDir) {
       this.directions.left = newDir;
+    }
+    draw(p5, tileSize, mapX, mapY){
+      if (this.type == "floor") {
+        p5.image(this.floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+      } else {
+        p5.image(this.wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+      }
+    }
+
+    on(x, y, p5, tileSize){
+      return p5.dist(this.x, this.y, x, y) <= tileSize;
     }
 
     /**
