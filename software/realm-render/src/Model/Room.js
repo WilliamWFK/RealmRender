@@ -7,7 +7,6 @@ const medium = (dimension) => {
 class Room {
     constructor(width, height, size) {
         this.id = 0;
-
         this.name = "";
         this.description = "";
         this.exits = {

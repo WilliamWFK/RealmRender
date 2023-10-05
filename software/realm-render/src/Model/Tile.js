@@ -1,9 +1,8 @@
-
 class Tile {
     imageStart = "TilesImg/tile";
     image;
     rotate;
-    constructor(x, y, type, floorImg, wallImg) {
+    constructor(x, y, type) {
         this.x = x;
         this.y = y;
         this.type = type;       // Thematic type of tile
@@ -13,8 +12,6 @@ class Tile {
             down: "empty",
             left: "empty"
         };
-        this.floorImg = floorImg;
-        this.wallImg = wallImg;
         /**this.selectImage();*/
     }
 
@@ -58,11 +55,14 @@ class Tile {
     setLeft(newDir) {
       this.directions.left = newDir;
     }
-    draw(p5, tileSize, mapX, mapY){
+    setType(type){
+      this.type = type;
+    }
+    draw(p5, tileSize, mapX, mapY, floorImg, wallImg){
       if (this.type == "floor") {
-        p5.image(this.floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+        p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else {
-        p5.image(this.wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+        p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       }
     }
 
