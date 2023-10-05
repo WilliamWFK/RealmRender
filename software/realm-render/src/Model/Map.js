@@ -116,6 +116,8 @@ class Map {
 
         placeRoomRecursively(spawnRoom, spawnRoomStartX, spawnRoomStartY);
 
+        
+
         //const spawnRoomRightExit = spawnRoom.getGlobalExitCoordinates("right", 0)
         //const rightRoomStartX = spawnRoomRightExit.x - rightRoom.exits.left[0].x;
         //const rightRoomStartY = spawnRoomRightExit.y - rightRoom.exits.left[0].y;
