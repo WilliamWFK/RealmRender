@@ -58,6 +58,7 @@ const Home = () => {
                   <select id="theme" name="theme" value={formData.theme} onChange={handleChange}>
                     <option value="Atlantis">Atlantis</option>
                     <option value="Grasslands">Grasslands</option>
+                    <option value="SciFi">SciFi</option>
                   </select>
                 </div>
 
