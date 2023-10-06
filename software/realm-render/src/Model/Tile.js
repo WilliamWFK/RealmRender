@@ -4,6 +4,7 @@ class Tile {
     rotate;
     constructor(x, y, type, theme) {
         this.x = x;
+        this.image = "";
         this.y = y;
         this.type = type;       // Thematic type of tile
         this.directions = { //to tell whats edges are made of
@@ -19,6 +20,10 @@ class Tile {
     isWall() {
       // Check if all directions are "wall"
       return (this.type === "wall")
+    }
+
+    isFloor() {
+      return (this.type === "floor")
     }
 
 
@@ -53,15 +58,17 @@ class Tile {
     }
     setType(type){
       this.type = type;
+      this.selectImage();
     }
     draw(p5, tileSize, mapX, mapY, floorImg, wallImg, doorImg){
-      if (this.type == "floor") {
+      /*if (this.type == "floor") {
         p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else if(this.type == "door"){
         p5.image(doorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else {
         p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
-      }
+      }*/
+      p5.image(this.image, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
     }
 
     on(x, y, p5, tileSize){

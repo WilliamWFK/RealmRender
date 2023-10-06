@@ -141,55 +141,10 @@ const LoadMap = () => {
       draw();
     };
   }
-
-  const seed = 'exampleSeed';
-  const map = new Map(state.width, state.height, seed, state.theme);
-  const grid = map.tiles;
-
-  const containerStyles = {
-    '--columns': state.width,
-    '--rows': state.height,
-  };
-
-
-    return (
-      <TransformWrapper
-        initialScale={2}
-        options={transformOptions}
-        initialPositionX={0}
-        initialPositionY={0}
-      >
-        {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
-          <React.Fragment>
-            {/* <div className="tools">
-              <button onClick={() => zoomIn()}>+</button>
-              <button onClick={() => zoomOut()}>-</button>
-              <button onClick={() => resetTransform()}>x</button>
-            </div> */}
-            <TransformComponent>
-              <div className="viewPane">
-                  <div className="CreateMap">
-                  <h1>Create Map Here with Received Data</h1>
-                  <div>{state.name}</div>
-                  <div>{state.theme}</div>
-                  <div>{state.width}</div>
-                  <div>{state.height}</div>
-                  <div>{state.players}</div>
-              </div>
-                <div className="map-container" style={containerStyles}>
-                  {grid.map((row, rowIndex) => (
-                    <div key={rowIndex} className="grid-row">
-                      {row.map((tile, columnIndex) => (
-                        <TileComponent key={columnIndex} tile={tile} />
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </TransformComponent>
-          </React.Fragment>
-        )}
-      </TransformWrapper>
-   );
+  return (
+    <div>
+      <ReactP5Wrapper sketch={sketch} />
+    </div>
+  );
 };
 export default LoadMap;
