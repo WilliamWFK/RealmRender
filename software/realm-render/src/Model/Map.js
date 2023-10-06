@@ -22,6 +22,7 @@ class Map {
         this.seed = seed;
         this.makeEmptyMap(this.width, this.height);
         this.createGrid(this.width, this.height);
+
     }
 
     /**
@@ -73,12 +74,27 @@ class Map {
             }
         };
 
+        //True if out of bounds
         const boundryCheckRoom = (room, startX, startY) => {
-            if(startX < 0 || startY < 0 || startX + room.roomWidth > this.width || startY + room.roomHeight > this.height){
-                return false;
-            }
-            return true;
+                return (startX < 0 || startY < 0 || startX + room.roomWidth > this.width || startY + room.roomHeight > this.height);
         };
+
+        //True if overlapping
+        const overlappingRooms = (room, startX, startY) => {
+
+
+            for (let x = startX +1; x < startX + room.roomWidth -1; x++) {
+                for (let y = startY+1; y < startY + room.roomHeight -1; y++) {
+                    console.log(typeof this.tiles[0][0])
+                    console.log(typeof this.tiles[x][y])
+                    if(this.tiles[x][y].type !== "floor"){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+
 
 
         // Place the spawn room first.
@@ -99,34 +115,96 @@ class Map {
             const upExit = parentRoom.getGlobalExitCoordinates("up", 0);
             const leftExit = parentRoom.getGlobalExitCoordinates("left", 0);
             const rightExit = parentRoom.getGlobalExitCoordinates("right", 0);
+            const downExit = parentRoom.getGlobalExitCoordinates("down", 0);
 
             // Generate adjacent rooms
-            const topRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
-            const topRoomStartX = upExit.x - topRoom.exits.down[0].x;
-            const topRoomStartY = upExit.y - topRoom.exits.down[0].y;
+            let topRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+            let topRoomStartX = upExit.x - topRoom.exits.down[0].x;
+            let topRoomStartY = upExit.y - topRoom.exits.down[0].y;
+            for(let i = 0; i < 20; i++){
+                topRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+                topRoomStartX = upExit.x - topRoom.exits.down[0].x;
+                topRoomStartY = upExit.y - topRoom.exits.down[0].y;
+                if(!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
+                    if(!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)){
+                        break;
+                    }
+                }
+            }
 
-            const leftRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
-            const leftRoomStartX = leftExit.x - leftRoom.exits.right[0].x;
-            const leftRoomStartY = leftExit.y - leftRoom.exits.right[0].y;
 
-            const rightRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
-            const rightRoomStartX = rightExit.x - rightRoom.exits.left[0].x;
-            const rightRoomStartY = rightExit.y - rightRoom.exits.left[0].y;
+
+
+
+            let leftRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+            let leftRoomStartX = leftExit.x - leftRoom.exits.right[0].x;
+            let leftRoomStartY = leftExit.y - leftRoom.exits.right[0].y;
+            for(let i = 0; i < 20; i++){
+                leftRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+                leftRoomStartX = leftExit.x - leftRoom.exits.right[0].x;
+                leftRoomStartY = leftExit.y - leftRoom.exits.right[0].y;
+                if(!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
+                    if(!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)){
+                        break;
+                    }
+                }
+            }
+
+
+            let rightRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+            let rightRoomStartX = rightExit.x - rightRoom.exits.left[0].x;
+            let rightRoomStartY = rightExit.y - rightRoom.exits.left[0].y;
+            for(let i = 0; i < 20; i++){
+                rightRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+                rightRoomStartX = rightExit.x - rightRoom.exits.left[0].x;
+                rightRoomStartY = rightExit.y - rightRoom.exits.left[0].y;
+                if(!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
+                    if(!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)){
+                        break;
+                    }
+                }
+            }
+
+            let downRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+            let downRoomStartX = downExit.x - downRoom.exits.up[0].x;
+            let downRoomStartY = downExit.y - downRoom.exits.up[0].y;
+            for(let i = 0; i < 20; i++){
+                downRoom = this.rooms[Math.floor(Math.random() * this.rooms.length)];
+                downRoomStartX = downExit.x - downRoom.exits.up[0].x;
+                downRoomStartY = downExit.y - downRoom.exits.up[0].y;
+                if(!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)){
+                    if(!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)){
+                        break;
+                    }
+                }
+            }
+
 
             // Recursively place the adjacent rooms (add conditions to stop recursion as needed)
             Depth = Depth + 1;
-            if(Depth >= 4){
+            if(Depth >= 70){
                 return;
             }
 
-            if(boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
-                placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+            if(!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
+                if(!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)){
+                    placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+                }
             }
-            if(boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
-                placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
+            if(!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
+                if(!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)){
+                    placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
             }
-            if(boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
-                placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+            }
+            if(!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
+                if(!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)){
+                    placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+                }
+            }
+            if(!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)){
+                if(!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)){
+                    placeRoomRecursively(downRoom, downRoomStartX, downRoomStartY);
+                }
             }
 
 
@@ -212,6 +290,30 @@ class Map {
             new SquareRoom(width, height, "medium"),
             new SquareRoom(width, height, "medium"),
             new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+            new SquareRoom(width, height, "medium"),
+
+
             //new TshapeRoom(width, height, "medium"),
             //new LShapeRoom(width, height, "medium"),
             //new RectShapeRoom(width, height, "medium"),
