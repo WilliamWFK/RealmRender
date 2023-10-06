@@ -30,7 +30,7 @@ class Room {
             this.roomHeight = height;
         }
     }
-
+    
     //find exits x and y for the global map scale.
     getGlobalExitCoordinates(exitDirection, exitIndex) {
         const exitTile = this.exits[exitDirection][exitIndex];
@@ -38,12 +38,13 @@ class Room {
         console.log("global X, y", this.globalX, this.globalY)
         console.log("global X, y", this.globalX + exitTile.x, this.globalY + exitTile.y)
         console.log("global X, y", exitTile.x, exitTile.y)
-
+        
         return { x: this.globalX + exitTile.x, y: this.globalY + exitTile.y };
     }
-
+      
     addExits(){
         const edgeWallTiles = this.findEdges()
+        
 
 
         //randomly selects a tile from edge wall tiles
