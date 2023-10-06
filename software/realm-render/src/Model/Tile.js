@@ -2,7 +2,7 @@ class Tile {
     imageStart = "TilesImg/tile";
     image;
     rotate;
-    constructor(x, y, type) {
+    constructor(x, y, type, theme) {
         this.x = x;
         this.y = y;
         this.type = type;       // Thematic type of tile
@@ -12,6 +12,7 @@ class Tile {
             down: "empty",
             left: "empty"
         };
+        this.theme = theme;     // Theme of tile
         /**this.selectImage();*/
     }
 
@@ -58,9 +59,11 @@ class Tile {
     setType(type){
       this.type = type;
     }
-    draw(p5, tileSize, mapX, mapY, floorImg, wallImg){
+    draw(p5, tileSize, mapX, mapY, floorImg, wallImg, doorImg){
       if (this.type == "floor") {
         p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+      } else if(this.type == "door"){
+        p5.image(doorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else {
         p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       }

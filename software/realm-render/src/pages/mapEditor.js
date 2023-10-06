@@ -17,6 +17,7 @@ const LoadMap = () => {
   let tileSize = 32;
   let wallImg;
   let floorImg;
+  let doorImg;
   let playerImg;
 
   function sketch(p5) {
@@ -24,7 +25,7 @@ const LoadMap = () => {
       p5.background(220);
 
       // draw map
-      mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY, floorImg, wallImg)));
+      mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY, floorImg, wallImg, doorImg)));
 
       // draw players
       players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
@@ -95,6 +96,7 @@ const LoadMap = () => {
     function preload(theme){
       wallImg = p5.loadImage("TilesImg/tileURDL.png");
       floorImg = p5.loadImage("TilesImg/tile.png");
+      doorImg = p5.loadImage("TilesImg/door.png");
       playerImg = p5.loadImage("TilesImg/player1.png");
     }
     function setup() {
