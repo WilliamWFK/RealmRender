@@ -14,6 +14,7 @@ import seedrandom from 'seedrandom';
 class Map {
     constructor(width, height, seed) {
         this.tiles = [];
+        this.tilesOccupied = [];
         this.rooms = [];
         this.width = width;
         this.height = height;
@@ -72,6 +73,13 @@ class Map {
             }
         };
 
+        const boundryCheckRoom = (room, startX, startY) => {
+            if(startX < 0 || startY < 0 || startX + room.roomWidth > this.width || startY + room.roomHeight > this.height){
+                return false;
+            }
+            return true;
+        };
+
 
         // Place the spawn room first.
 
@@ -83,6 +91,9 @@ class Map {
 
         const placeRoomRecursively = (parentRoom, startX, startY) => {
             placeRoom(parentRoom, startX, startY);
+
+
+
 
             // Determine the coordinates for the exits of the parent room
             const upExit = parentRoom.getGlobalExitCoordinates("up", 0);
@@ -107,9 +118,17 @@ class Map {
             if(Depth >= 4){
                 return;
             }
-            placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
-            placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
-            placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+
+            if(boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
+                placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+            }
+            if(boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
+                placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
+            }
+            if(boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
+                placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+            }
+
 
 
         };
