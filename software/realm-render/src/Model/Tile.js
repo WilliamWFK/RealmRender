@@ -2,27 +2,70 @@ class Tile {
     imageStart = "TilesImg/";
     image;
     rotate;
-    constructor(x, y, z, theme, contents) {
+    constructor(x, y, type, theme) {
         this.x = x;
         this.y = y;
-        this.z = z;
-        this.theme = theme;       // Thematic type of tile
-        this.contents = contents; // What's on the tile
-        this.type = "floor"   //type of tile floor, wall, door etc
-        this.selectImage();
+        this.type = type;       // Thematic type of tile
+        this.directions = { //to tell whats edges are made of
+            up: "empty",
+            right: "empty",
+            down: "empty",
+            left: "empty"
+        };
+        this.theme = theme;     // Theme of tile
+        /**this.selectImage();*/
     }
 
     isWall() {
       // Check if all directions are "wall"
       return (this.type === "wall")
     }
-    isFloor(){
-      return (this.type === "floor")
+
+
+    //used for setting the edges of the tile
+    setDirections(up, right, down, left) {
+        this.directions = {
+          up: up,
+          right: right,
+          down: down,
+          left: left
+        };
     }
-    
-    setType(newType){
-      this.type = newType; 
-      this.selectImage();
+
+    //set Up
+    setUp(newDir) {
+      this.directions.up = newDir;
+    }
+
+    //set Right
+    setRight(newDir) {
+      this.directions.right = newDir;
+    }
+
+    //set Down
+    setDown(newDir) {
+      this.directions.down = newDir;
+    }
+
+    //set Left
+    setLeft(newDir) {
+      this.directions.left = newDir;
+    }
+    setType(type){
+      this.type = type;
+    }
+    draw(p5, tileSize, mapX, mapY, floorImg, wallImg, doorImg){
+      if (this.type == "floor") {
+        p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+      } else if(this.type == "door"){
+        p5.image(doorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+      } else {
+        p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+      }
+    }
+
+    on(x, y, p5, tileSize){
+      return p5.dist(this.x, this.y, x, y) <= tileSize;
     }
 
     /**

@@ -1,4 +1,4 @@
-import Room from './Room'; 
+import Room from './Room';
 import Tile from '../Model/Tile';
 import { rotate2DArray, decorateFloorTiles } from './ArrayUtils';
 
@@ -109,7 +109,7 @@ class LShapeRoom extends Room {
     createLshapeTiles() {
         // Create a grid of Tile objects for the square room
         const tTiles = [];
-        
+
         let stickWidth = Math.floor(Math.random() * (this.roomWidth/2-1) + 1);
         let stickHeight = Math.floor(Math.random() * (this.roomHeight/2-1) + 1);
         let baseWidth = Math.floor(Math.random() * (this.roomWidth - this.roomWidth / 2 - 1)) + this.roomWidth / 2;
@@ -138,11 +138,11 @@ class LShapeRoom extends Room {
                         }else {
                             tile.setType("wall")
                         }
-                    } 
+                    }
                 }
                 else{
                     //do the base
-                    
+
                     //check if the tile is in the base
                     if(y > (this.roomHeight - baseHeight)){
                         //set the tile to a wall
@@ -212,7 +212,7 @@ class RectShapeRoom extends Room {
                 row.push(tile);
             }
             tTiles.push(row)
-        }   
+        }
         let tilesCopy = [...tTiles];
         //rotate the 2d array of tiles x times
         for(let i = 0; i < Math.floor(Math.random() * 4); i++){
@@ -260,9 +260,9 @@ class PlusShapeRoom extends Room {
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
                     tile.setType("floor")
                 }
-                
 
-                
+
+
                 tile.selectImage();
                 row.push(tile);
             }
@@ -304,8 +304,8 @@ class HoleShapeRoom extends Room {
                 if((x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4)) || (x === Math.round(this.roomWidth/4) && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1) || (x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4)) || (x === Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) - 1 && y === Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2) - 1)){
                     tile.setType("floor")
                 }
-                
-                
+
+
                 tile.selectImage();
                 row.push(tile);
             }

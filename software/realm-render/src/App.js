@@ -1,10 +1,10 @@
 import React from 'react';
 import './styles/App.css';
-import {BrowserRouter as Router, Routes, Route}
+import { BrowserRouter as Router, Routes, Route }
   from 'react-router-dom';
 import Home from './pages';
-import MapEditor from './pages/mapEditor';
 import Join from './pages/join';
+import MapEditor from './pages/mapEditor';
 
 /**
  * Main function to return App component.

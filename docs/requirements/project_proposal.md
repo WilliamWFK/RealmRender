@@ -12,10 +12,10 @@ D&D includes all sorts of maps and dungeons. These challenging places offer big 
 
 ### Client
 
-**Craig Watterson**  
-Victoria University of Wellington, Cotton Building, Room 253  
-**Phone:** +64 4 886 5333  
-**Email:** craig.watterson@vuw.ac.nz  
+**Craig Watterson**
+Victoria University of Wellington, Cotton Building, Room 253
+**Phone:** +64 4 886 5333
+**Email:** craig.watterson@vuw.ac.nz
 
 ### 1.1 Purpose
 
@@ -35,7 +35,7 @@ To create a D&D map generator that can generate psuedo random maps with specifie
 - Map should be resizable and functional on all devices.
 - The user should be able to print the map on standard sized paper.
 - The user should be able to edit the map precisely.
-  
+
 #### The Game Master Map Controller of the Program should meet the Following Goals
 - The screen should be able to display all tiles and entities.
 - GM should be able to control the zoom level
@@ -91,7 +91,7 @@ By delivering these core features, the MVP serves as a functional D&D Battle Map
 - **Full Map**  The game master is able to see the map in it's entirety.
 
 - **Monster Stats**  The game master is able to see the monster stats of monsters inside the level.
-  
+
 - **Item Stats**  The game master is able to see the item stats of items inside the level.
 
 - **Player Stats**  The game master is able to see the players stats of players inside the level.
@@ -102,7 +102,7 @@ By delivering these core features, the MVP serves as a functional D&D Battle Map
 
 - **View control** The players can see where their player is (and has been, and other players have been) based on fog of war settings. They will be able to zoom in and out.
 
-#### 1.3.3 User characteristics   
+#### 1.3.3 User characteristics
 
 The client, Craig Watterson, wants the system for his personal use. So, the main focus is on tailoring the system to match his characteristics, which are assumed to be similar to a typical user.
 
@@ -134,7 +134,7 @@ The system will include entity stats. However, player tiles and statistics won't
 
 [1] [Jackbox](https://www.jackboxgames.com/what-is-jackbox/)
 
-## 3. Specific requirements  
+## 3. Specific requirements
 
 ### 3.1 External interfaces
 
@@ -148,19 +148,19 @@ The player's view must display what the game master chooses to display. This mea
 
 ### 3.2.1 Generate Maps
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Create a map of tiles for the Dungeons and Dragons tabletop & digital game.
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 The game master benefits by reducing map creation time. An automatic tool generates dungeons for them.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 Algorithm to generate a map with the specified parameters
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 A sensical map is generated that fulfils the users criteria
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 - Maps will be in battle map form, not artistically drawn.
 - Possibility of generating similar maps if using duplicate prefabs.
 
@@ -168,19 +168,19 @@ A sensical map is generated that fulfils the users criteria
 
 ### 3.2.2 Edit Maps
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Allow the user to precisely edit pre-generated maps.
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 User can customise a map to their specific liking.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 Map editor screen that the user can use to edit their map precisely
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 When the map editor has full control over all elements of the map
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 - Predefined set of monsters and items required.
 - Screen needed for data display.
 
@@ -188,19 +188,19 @@ When the map editor has full control over all elements of the map
 
 ### 3.2.3 View Player Maps
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Enable players to view their map while Game Master uses "Change Visibility."
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 Players get unspoiled experiences. GMs edit before player encounters.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 Create a netcode interaction that allows the GM to change the player's displayed map.
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 Player ability to view the map. GM ability to update the map
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 Dependent on 3.2.3 fog of war settings.
 Complex problem of writing net code.
 
@@ -208,19 +208,19 @@ Complex problem of writing net code.
 
 ### 3.2.7 Pick Map Theme and Level
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Generate thematically consistent maps for storytelling.
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 GM and players benefit. Storytelling becomes immersive.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 ...
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 ...
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 - Dependent on Game Master assignment.
 - Relies on implemented features.
 
@@ -228,76 +228,76 @@ GM and players benefit. Storytelling becomes immersive.
 
 ### 3.2.8 Populate Map
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Semi-randomly populate maps with themed monsters and items.
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 Both players and GMs benefit. Streamlined gameplay.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 ...
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 ...
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 ...
 
 ---
 
 ### 3.2.10 Choose View (GM Or Player)
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Allow users to choose between GM and player views.
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 Users decide their responsibilities during the game.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 ...
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 ...
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 ...
 
 ---
 
 ### 3.2.11 Save Game (GM)
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Enable GM to store the generated map for later use.
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 Both GM and players benefit. Save progress for unfinished games.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 ...
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 ...
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 ...
 
 ---
 
 ### 3.2.12 Load Game (GM)
 
-**Goal of the Use Case**  
+**Goal of the Use Case**
 Allow GM to load a previously saved game.
 
-**Beneficiaries of the Outcome**  
+**Beneficiaries of the Outcome**
 Both GM and players benefit. Resume from where they left off.
 
-**Approach to Achieve the Use Case**  
+**Approach to Achieve the Use Case**
 ...
 
-**Verification of the Requirement**  
+**Verification of the Requirement**
 ...
 
-**Limitations to Achieving the Use Case**  
+**Limitations to Achieving the Use Case**
 ...
 
 ---
@@ -366,57 +366,57 @@ No supporting information provided.
 
 ### 4.1 Generating Maps
 
-**Verification Approach:**  
+**Verification Approach:**
 Evaluate randomly generated maps to ensure diversity and complexity align with campaign settings and scenarios.
 
 ### 4.2 Viewing Player Maps
 
-**Verification Approach:**  
+**Verification Approach:**
 Confirm players accurately view assigned maps without discrepancies.
 
 ### 4.3 Changing Visibility
 
-**Verification Approach:**  
+**Verification Approach:**
 Test by playthrough: Validate immediate and accurate updates in visibility for players upon Game Master's tile selection.
 
 ### 4.4 Viewing Data
 
-**Verification Approach:**  
+**Verification Approach:**
 Check if map-generated monsters' stats are visible, aiding Game Master's calculation during encounters.
 
 ### 4.5 Viewing Full Maps
 
-**Verification Approach:**  
+**Verification Approach:**
 Test map generation and display for full map visibility after program execution.
 
 ### 4.6 Choosing Map Theme
 
-**Verification Approach:**  
+**Verification Approach:**
 Confirm alignment of generated monsters and their genre with chosen map theme.
 
 ### 4.7 Populating Maps
 
-**Verification Approach:**  
+**Verification Approach:**
 Check if "generate monsters" and "generate items" populate dungeon with appropriate monsters.
 
 ### 4.8 Exiting Game
 
-**Verification Approach:**  
+**Verification Approach:**
 Manual test: Verify no persistent display or application after exit, and monitor resource usage.
 
 ### 4.9 Choosing View
 
-**Verification Approach:**  
+**Verification Approach:**
 Ensure view selection results in intended display (Player view or GM view).
 
 ### 4.10 Saving Game
 
-**Verification Approach:**  
+**Verification Approach:**
 Test save function by confirming parser file accurately represents room layouts, monsters, entrance/exit rooms, and themes.
 
 ### 4.11 Loading Game
 
-**Verification Approach:**  
+**Verification Approach:**
 Verify saved game by comparing reloaded state with original saved data.
 
 ## 5. Development schedule.

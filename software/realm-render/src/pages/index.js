@@ -13,12 +13,12 @@ const Home = () => {
       const { name, value } = event.target;
       setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
       event.preventDefault();
-      alert(`Name: ${formData.name}, Width: ${formData.width}, Height: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
+      alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
       );
 
       navigate("/mapEditor", {state: {name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme}});
@@ -76,15 +76,15 @@ const Home = () => {
                   <input type="range" min="1" max="6" defaultValue={formData.players} onChange={(e) =>setFormData({ ...formData, players: parseInt(e.target.value) })} id="players" name="players"></input>
                 </div>
 
-                
-                
+
+
                 <div class="navButtons">
                   <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
                   <button type="submit" class="createButton"><p class="text">Create</p><p class="plus">+</p></button>
                 </div>
               </form>
             </div>
-            
+
           </div>
           <div class="menuBackdrop mainMenu">
             <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
