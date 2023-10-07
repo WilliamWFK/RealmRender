@@ -1,7 +1,7 @@
 import Tile from '../Model/Tile';
 
 const medium = (dimension) => {
-    return (dimension/ 3) - 2;
+    return (dimension/ 9) - 2;
 };
 
 class Room {
