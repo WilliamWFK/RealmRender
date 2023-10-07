@@ -12,7 +12,7 @@ import seedrandom from 'seedrandom';
 
 
 class Map {
-    constructor(width, height, seed) {
+    constructor(width, height, seed, theme) {
         this.tiles = [];
         this.tilesOccupied = [];
         this.rooms = [];
@@ -20,6 +20,7 @@ class Map {
         this.height = height;
         this.gmView = false;
         this.seed = seed;
+        this.theme = theme;
         this.makeEmptyMap(this.width, this.height);
         this.createGrid(this.width, this.height);
 
@@ -31,14 +32,13 @@ class Map {
      * @param {int} width
      * @param {int} height
      */
-    makeEmptyMap(width, height){
+    makeEmptyMap(width, height, theme){
         console.log('hello create empty');
         const newMap = []
         for (let x = 0; x < width; x++) {
             const row = [];
             for (let y = 0; y < height; y++) {
-                const tile = new Tile(x, y, "", "nothing");
-                tile.setType("floor")
+                const tile = new Tile(x, y, "", theme);
                 row.push(tile);
             }
             newMap.push(row)
@@ -48,7 +48,7 @@ class Map {
 
     placeRooms() {
         const random = seedrandom(this.seed);
-        const spawnRoom = new SquareRoom(this.width, this.height, "medium");
+        const spawnRoom = new SquareRoom(this.width, this.height, "medium", this.theme);
         //spawnRoom.addExits();
         const spawnRoomStartX = Math.floor((this.width - spawnRoom.roomWidth) / 2);
         const spawnRoomStartY = this.height - spawnRoom.roomHeight;
@@ -87,7 +87,7 @@ class Map {
                 for (let y = startY+1; y < startY + room.roomHeight -1; y++) {
                     console.log(typeof this.tiles[0][0])
                     console.log(typeof this.tiles[x][y])
-                    if(this.tiles[x][y].type !== "floor"){
+                    if(this.tiles[x][y].type !== ""){
                         return true;
                     }
                 }
@@ -182,7 +182,7 @@ class Map {
 
             // Recursively place the adjacent rooms (add conditions to stop recursion as needed)
             Depth = Depth + 1;
-            if(Depth >= 70){
+            if(Depth >= 25){
                 return;
             }
 
@@ -286,34 +286,18 @@ class Map {
         // if med then = 5-4
 
         const rooms = [
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-            new SquareRoom(width, height, "medium"),
-
-
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
+            new SquareRoom(width, height, "medium", this.theme),
             //new TshapeRoom(width, height, "medium"),
             //new LShapeRoom(width, height, "medium"),
             //new RectShapeRoom(width, height, "medium"),

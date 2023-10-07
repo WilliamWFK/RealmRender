@@ -1,17 +1,18 @@
 import Tile from '../Model/Tile';
 
 const medium = (dimension) => {
-    return (dimension/ 6) - 2;
+    return (dimension/ 9) - 2;
 };
 
 class Room {
     globalX;
     globalY;
-    constructor(width, height, size) {
+    constructor(width, height, size, theme) {
         this.id = 0;
 
         this.name = "";
         this.description = "";
+        this.theme = theme;
         this.exits = {
             left: [],
             right: [],
@@ -108,6 +109,10 @@ class Room {
 
     setCharacters(newChara){
         this.characters = newChara;
+    }
+
+    getTheme(){
+        return this.theme;
     }
 }
 

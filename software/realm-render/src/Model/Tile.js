@@ -4,6 +4,7 @@ class Tile {
     rotate;
     constructor(x, y, type, theme) {
         this.x = x;
+        this.image = "";
         this.y = y;
         this.type = type;       // Thematic type of tile
         this.directions = { //to tell whats edges are made of
@@ -18,7 +19,11 @@ class Tile {
 
     isWall() {
       // Check if all directions are "wall"
-      return (this.type === "wall")
+      return (this.type === "wall");
+    }
+
+    isFloor() {
+      return (this.type ==="floor");
     }
 
 
@@ -53,15 +58,20 @@ class Tile {
     }
     setType(type){
       this.type = type;
+      this.selectImage();
     }
-    draw(p5, tileSize, mapX, mapY, floorImg, wallImg, doorImg){
-      if (this.type == "floor") {
+    setImage(image){
+      this.image = image;
+    }
+    draw(p5, tileSize, mapX, mapY){
+      /*if (this.type == "floor") {
         p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else if(this.type == "door"){
         p5.image(doorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else {
         p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
-      }
+      }*/
+      p5.image(this.image, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
     }
 
     on(x, y, p5, tileSize){
@@ -73,15 +83,31 @@ class Tile {
      * also used for updating the image being shown currently
      * */
     selectImage(){
-      this.rotate = 0;
-      this.image = this.imageStart;
-      if (this.type === "wall"){
-        this.image += "tileURDL.png";
+      if(this.type === "floor"){
+        this.image = "floor-0";
+      } else if (this.type === "wall"){
+        this.image = "wall-0";
       } else if (this.type === "door"){
-        this.image += "door.png"
-      } else {
-        this.image += "tile.png"
-      }//tile.png
+        this.image = "door-0";
+      } else if (this.type === "object"){
+        let rand = Math.floor(Math.random()*100) +1;
+        if(rand <= 30) this.image = "object-0";
+        else if(rand <= 60) this.image = "object-1";
+        else if(rand <= 80) this.image = "object-2";
+        else if(rand <= 90) this.image = "object-3";
+        else this.image = "object-4";
+      } else if (this.type === "chest"){
+        let rand = Math.floor(Math.random()*100) +1;
+        if(rand <=50) this.image = "chest-0";
+        else this.image = "chest-1";
+      } else if (this.type === "BigObject"){
+        let rand = Math.floor(Math.random()*100) +1;
+        if(rand <= 50) this.image = "big_object-0";
+        else this.image = "big_object-1";
+      }
+      else {
+        this.image = "background-0";
+      }
     }
 }
 

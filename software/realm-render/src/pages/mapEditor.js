@@ -15,9 +15,19 @@ const LoadMap = () => {
   let mapX = 0;
   let mapY = 0;
   let tileSize = 32;
-  let wallImg;
-  let floorImg;
-  let doorImg;
+  let chest1;
+  let chest2;
+  let big_object1;
+  let big_object2;
+  let object1;
+  let object2;
+  let object3;
+  let object4;
+  let object5;
+  let floor;
+  let wall;
+  let door;
+  let background;
   let playerImg;
 
   function sketch(p5) {
@@ -25,7 +35,7 @@ const LoadMap = () => {
       p5.background(220);
 
       // draw map
-      mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY, floorImg, wallImg, doorImg)));
+      mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
 
       // draw players
       players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
@@ -93,20 +103,106 @@ const LoadMap = () => {
     function snapGrid(x) {
       return Math.round(x / tileSize) * tileSize;
     }
+
     function preload(theme){
-      wallImg = p5.loadImage("TilesImg/tileURDL.png");
-      floorImg = p5.loadImage("TilesImg/tile.png");
-      doorImg = p5.loadImage("TilesImg/door.png");
+      //load all images for drawing
+      let path = "TilesImg/" + theme + "/";
+      //loading chests
+      chest1 = p5.loadImage(path + "chests/chest.png");
+      chest2 = p5.loadImage(path + "chests/chest1.png");
+      //loading small objects
+      object1 = p5.loadImage(path + "objects/object1.png");
+      object2 = p5.loadImage(path + "objects/object2.png");
+      object3 = p5.loadImage(path + "objects/object3.png");
+      object4 = p5.loadImage(path + "objects/object4.png");
+      object5 = p5.loadImage(path + "objects/object5.png");
+      //loading big objects
+      big_object1 = p5.loadImage(path + "objects/big_object1.png");
+      big_object2 = p5.loadImage(path + "objects/big_object2.png");
+      //loading base tiles
+      floor = p5.loadImage(path + "tile.png");
+      wall = p5.loadImage(path + "tileURDL.png");
+      door = p5.loadImage(path + "door.png");
+      background = p5.loadImage(path + "background.png");
+      //load player
       playerImg = p5.loadImage("TilesImg/player1.png");
+    }
+
+    function storeImage(tile){
+      let type = tile.image.split("-");
+      switch(type[0]){
+        case "big_object":
+          switch(type[1]){
+            case "0":
+              tile.setImage(big_object1);
+              break;
+            case "1":
+              tile.setImage(big_object2);
+              break;
+            default:
+              tile.setImage(big_object1);
+          }
+        case "object":
+          switch(type[1]){
+            case "0":
+              tile.setImage(object1);
+              break;
+            case "1":
+              tile.setImage(object2);
+              break;
+            case "2":
+              tile.setImage(object3);
+              break;
+            case "3":
+              tile.setImage(object4);
+              break;
+            case "4":
+              tile.setImage(object5);
+              break;
+            default:
+              tile.setImage(object1);
+              break;
+          }
+          break;
+        case "chest":
+          switch(type[1]){
+            case "0":
+              tile.setImage(chest1);
+              break;
+            case "1":
+              tile.setImage(chest2);
+              break;
+            default:
+              tile.setImage(chest1);
+              break;
+          }
+          break;
+        case "floor":
+          tile.setImage(floor);
+          break;
+        case "wall":
+          tile.setImage(wall);
+          break;
+        case "door":
+          tile.setImage(door);
+          break;
+        case "background":
+          tile.setImage(background);
+          break;
+        default:
+          tile.setImage(background);
+          break;
+      }
     }
     function setup() {
       const seed = 'exampleSeed';
-      preload(state.theme);
       mapObj = new Map(state.width, state.height, seed);
       mapped = mapObj.tiles;
+      preload(state.theme);
       // create map and players
       const cols = 80;
       const rows = 45;
+      mapped.forEach(r => r.forEach(t => storeImage(t)));
       players.push(new Player(0, 40, 40, playerImg));
     }
 
