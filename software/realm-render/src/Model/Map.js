@@ -46,6 +46,7 @@ class Map {
         this.tiles = newMap;
     }
 
+
     placeRooms() {
         const random = seedrandom(this.seed);
         const spawnRoom = new SquareRoom(this.width, this.height, "medium", this.theme);
@@ -106,6 +107,7 @@ class Map {
         let Depth = 0;
 
         const placeRoomRecursively = (parentRoom, startX, startY) => {
+
             placeRoom(parentRoom, startX, startY);
 
 
@@ -186,26 +188,45 @@ class Map {
                 return;
             }
 
-            if(!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
-                if(!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)){
-                    placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+            const actions = [
+                () => {
+                  if(!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
+                    if(!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)){
+                      placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+                    }
+                  }
+                },
+                () => {
+                  if(!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
+                    if(!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)){
+                      placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
+                    }
+                  }
+                },
+                () => {
+                  if(!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
+                    if(!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)){
+                      placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+                    }
+                  }
+                },
+                () => {
+                  if(!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)){
+                    if(!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)){
+                      placeRoomRecursively(downRoom, downRoomStartX, downRoomStartY);
+                    }
+                  }
                 }
-            }
-            if(!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
-                if(!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)){
-                    placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
-            }
-            }
-            if(!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
-                if(!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)){
-                    placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
-                }
-            }
-            if(!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)){
-                if(!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)){
-                    placeRoomRecursively(downRoom, downRoomStartX, downRoomStartY);
-                }
-            }
+              ];
+
+              // Fisher-Yates Shuffle
+              for (let i = actions.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [actions[i], actions[j]] = [actions[j], actions[i]];
+              }
+
+              // Execute randomized actions
+              actions.forEach((action) => action());
 
 
 
@@ -214,68 +235,12 @@ class Map {
         placeRoomRecursively(spawnRoom, spawnRoomStartX, spawnRoomStartY);
 
 
-
-        //const spawnRoomRightExit = spawnRoom.getGlobalExitCoordinates("right", 0)
-        //const rightRoomStartX = spawnRoomRightExit.x - rightRoom.exits.left[0].x;
-        //const rightRoomStartY = spawnRoomRightExit.y - rightRoom.exits.left[0].y;
-        //placeRoom(rightRoom, rightRoomStartX, rightRoomStartY);
-
-
-
-        // Determine the coordinates for the exits of the left room.
-        //const leftRoomRightExitX = leftRoom.exits.right[0].x;
-        //const leftRoomRightExitY = leftRoom.exits.right[0].y;
-
-        // Calculate and place the left room.
-        //const leftRoomStartX = spawnRoomStartX + spawnRoomUpExitX - leftRoomRightExitX;
-        //const leftRoomStartY = spawnRoomStartY + spawnRoomUpExitY - leftRoomRightExitY;
-        //placeRoom(leftRoom, leftRoomStartX, leftRoomStartY);
-
-        // Determine the coordinates for the exits of the right room.
-        //const rightRoomLeftExitX = rightRoom.exits.left[0].x;
-        //const rightRoomLeftExitY = rightRoom.exits.left[0].y;
-
-        // Calculate and place the right room.
-        //const rightRoomStartX = spawnRoomStartX + spawnRoomUpExitX - rightRoomLeftExitX;
-        //const rightRoomStartY = spawnRoomStartY + spawnRoomUpExitY - rightRoomLeftExitY;
-        //placeRoom(rightRoom, rightRoomStartX, rightRoomStartY);
-
-        // Determine the coordinates for the exits of the top room.
-        //const topRoomDownExitX = topRoom.exits.down[0].x;
-        //const topRoomDownExitY = topRoom.exits.down[0].y;
-
-        // Calculate and place the top room.
-        //const topRoomStartX = spawnRoomStartX + spawnRoomUpExitX - topRoomDownExitX;
-        //const topRoomStartY = spawnRoomStartY + spawnRoomUpExitY - topRoomDownExitY;
-        //placeRoom(topRoom, topRoomStartX, topRoomStartY);
     }
 
 
 
 
-//Create spawn Room
 
-//     while (sectionX < this.width && sectionY < this.height){
-//         const room = this.rooms[Math.floor(random() * this.rooms.length)]
-
-//         // Place the room within the section
-//         for (let x = sectionX; x < sectionX + sectionWidth; x++) {
-//             for (let y = sectionY; y < sectionY + sectionHeight; y++) {
-
-//                 const roomX = x - sectionX;
-//                 const roomY = y - sectionY;
-//                 // Check if the relative positions are within the room's dimensions
-//                 if (roomX >= 0 && roomY >= 0  &&  roomX < room.roomWidth &&  roomY < room.roomHeight) {
-//                     this.tiles[x][y] = room.tiles[roomX][roomY];
-//                 }
-//             }
-//         }
-//         sectionX += sectionWidth;
-//         if (sectionX >= this.width) {
-//             sectionX = 0;
-//             sectionY += sectionHeight;
-//         }
-//     }
 
 
 
