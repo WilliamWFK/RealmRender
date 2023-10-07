@@ -36,7 +36,7 @@ class SquareRoom extends Room {
         let tilesCopy = [...squareTiles];
         tilesCopy = decorateFloorTiles(tilesCopy);
         console.log(tilesCopy);
-        
+
         return tilesCopy;
     }
 }
@@ -261,9 +261,6 @@ class PlusShapeRoom extends Room {
                     tile.setType("floor")
                 }
 
-
-
-                tile.selectImage();
                 row.push(tile);
             }
             tTiles.push(row)
@@ -288,7 +285,7 @@ class HoleShapeRoom extends Room {
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");  
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
 
                 //create a room where there is a center pillar which acts as a wall
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
@@ -296,7 +293,7 @@ class HoleShapeRoom extends Room {
                 }else{
                     tile.setType("floor")
                 }
-                //set the corner tiles to be walls 
+                //set the corner tiles to be walls
                 if((x === 0 && y === 0) || (x === 0 && y === this.roomHeight-1) || (x === this.roomWidth-1 && y === 0) || (x === this.roomWidth-1 && y === this.roomHeight-1)){
                     tile.setType("wall")
                 }

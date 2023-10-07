@@ -19,11 +19,11 @@ class Tile {
 
     isWall() {
       // Check if all directions are "wall"
-      return (this.type === "wall")
+      return (this.type === "wall");
     }
 
     isFloor() {
-      return (this.type === "floor")
+      return (this.type ==="floor");
     }
 
 
@@ -60,7 +60,10 @@ class Tile {
       this.type = type;
       this.selectImage();
     }
-    draw(p5, tileSize, mapX, mapY, floorImg, wallImg, doorImg){
+    setImage(image){
+      this.image = image;
+    }
+    draw(p5, tileSize, mapX, mapY){
       /*if (this.type == "floor") {
         p5.image(floorImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       } else if(this.type == "door"){
@@ -80,40 +83,31 @@ class Tile {
      * also used for updating the image being shown currently
      * */
     selectImage(){
-      this.rotate = 0;
-      console.log(this.theme);
-      this.image = this.imageStart + this.theme + "/";
-      if (this.type === "wall"){
-        this.image += "tileURDL.png";
+      if(this.type === "floor"){
+        this.image = "floor-0";
+      } else if (this.type === "wall"){
+        this.image = "wall-0";
       } else if (this.type === "door"){
-        this.image += "door.png"
+        this.image = "door-0";
       } else if (this.type === "object"){
-        this.contents = "object";
-        this.image = this.image + "objects/";
         let rand = Math.floor(Math.random()*100) +1;
-        if(rand <= 30) this.image += "object1.png";
-        else if(rand <= 60) this.image += "object2.png";
-        else if(rand <= 80) this.image += "object3.png";
-        else if(rand <= 90) this.image += "object4.png";
-        else this.image += "object5.png";
+        if(rand <= 30) this.image = "object-0";
+        else if(rand <= 60) this.image = "object-1";
+        else if(rand <= 80) this.image = "object-2";
+        else if(rand <= 90) this.image = "object-3";
+        else this.image = "object-4";
       } else if (this.type === "chest"){
-        this.contents = "chest";
-        this.image = this.image + "chests/";
         let rand = Math.floor(Math.random()*100) +1;
-        if(rand <=50) this.image += "chest.png";
-        else this.image += "chest1.png";
-      } else if (this.type === "floor"){
-        this.image += "tile.png";   
+        if(rand <=50) this.image = "chest-0";
+        else this.image = "chest-1";
       } else if (this.type === "BigObject"){
-        this.contents = "BigObject";
-        this.image = this.image + "objects/";
         let rand = Math.floor(Math.random()*100) +1;
-        if(rand <= 50) this.image += "big_object1.png";
-        else this.image += "big_object2.png";
+        if(rand <= 50) this.image = "big_object-0";
+        else this.image = "big_object-1";
       }
       else {
-        this.image += "background.png"
-      }//tile.png
+        this.image = "background-0";
+      }
     }
 }
 

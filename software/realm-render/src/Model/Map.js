@@ -36,8 +36,7 @@ class Map {
         for (let x = 0; x < width; x++) {
             const row = [];
             for (let y = 0; y < height; y++) {
-                const tile = new Tile(x, y, 0, theme, "nothing");
-                tile.setType("nothing")
+                const tile = new Tile(x, y, "", theme);
                 row.push(tile);
             }
             newMap.push(row)
