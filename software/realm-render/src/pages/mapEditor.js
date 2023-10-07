@@ -141,7 +141,9 @@ const LoadMap = () => {
               break;
             default:
               tile.setImage(big_object1);
+              break;
           }
+          break;
         case "object":
           switch(type[1]){
             case "0":
