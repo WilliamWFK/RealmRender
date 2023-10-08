@@ -3,6 +3,7 @@ import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
+import '../styles/mapEditor.css';
 
 const LoadMap = () => {
   const { state } = useLocation();
@@ -92,7 +93,7 @@ const LoadMap = () => {
         activePlayer.x = snapGrid(activePlayer.x + mapX + (tileSize / 2)) - (tileSize / 2);
         activePlayer.y = snapGrid(activePlayer.y + mapY + (tileSize / 2)) - (tileSize / 2);
         players.forEach(p => {
-          if(p.id === activePlayer.id) {
+          if (p.id === activePlayer.id) {
             p.x = activePlayer.x;
             p.y = activePlayer.y;
           }
@@ -104,7 +105,7 @@ const LoadMap = () => {
       return Math.round(x / tileSize) * tileSize;
     }
 
-    function preload(theme){
+    function preload(theme) {
       //load all images for drawing
       let path = "TilesImg/" + theme + "/";
       //loading chests
@@ -128,11 +129,11 @@ const LoadMap = () => {
       playerImg = p5.loadImage("TilesImg/player1.png");
     }
 
-    function storeImage(tile){
+    function storeImage(tile) {
       let type = tile.image.split("-");
-      switch(type[0]){
+      switch (type[0]) {
         case "big_object":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(big_object1);
               break;
@@ -145,7 +146,7 @@ const LoadMap = () => {
           }
           break;
         case "object":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(object1);
               break;
@@ -167,7 +168,7 @@ const LoadMap = () => {
           }
           break;
         case "chest":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(chest1);
               break;
