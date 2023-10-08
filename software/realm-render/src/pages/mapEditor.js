@@ -210,7 +210,7 @@ const LoadMap = () => {
     }
 
     p5.setup = () => {
-      p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
+      p5.createCanvas(window.innerWidth, window.innerHeight);
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
 
@@ -241,7 +241,7 @@ const LoadMap = () => {
     };
   }
   return (
-    <div>
+    <div class="editorWrapper">
       <ReactP5Wrapper sketch={sketch} />
     </div>
   );
