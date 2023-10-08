@@ -1,8 +1,9 @@
+import seedrandom from "seedrandom";
 class Tile {
     imageStart = "TilesImg/";
     image;
     rotate;
-    constructor(x, y, type, theme) {
+    constructor(x, y, type, theme, seed) {
         this.x = x;
         this.image = "";
         this.y = y;
@@ -15,6 +16,7 @@ class Tile {
         };
         this.theme = theme;     // Theme of tile
         /**this.selectImage();*/
+        this.seed = seed;
     }
 
     isWall() {
@@ -83,6 +85,8 @@ class Tile {
      * also used for updating the image being shown currently
      * */
     selectImage(){
+      const random = seedrandom(this.seed);
+
       if(this.type === "floor"){
         this.image = "floor-0";
       } else if (this.type === "wall"){
@@ -90,18 +94,18 @@ class Tile {
       } else if (this.type === "door"){
         this.image = "door-0";
       } else if (this.type === "object"){
-        let rand = Math.floor(Math.random()*100) +1;
+        let rand = Math.floor(random()*100) +1;
         if(rand <= 30) this.image = "object-0";
         else if(rand <= 60) this.image = "object-1";
         else if(rand <= 80) this.image = "object-2";
         else if(rand <= 90) this.image = "object-3";
         else this.image = "object-4";
       } else if (this.type === "chest"){
-        let rand = Math.floor(Math.random()*100) +1;
+        let rand = Math.floor(random()*100) +1;
         if(rand <=50) this.image = "chest-0";
         else this.image = "chest-1";
       } else if (this.type === "BigObject"){
-        let rand = Math.floor(Math.random()*100) +1;
+        let rand = Math.floor(random()*100) +1;
         if(rand <= 50) this.image = "big_object-0";
         else this.image = "big_object-1";
       }
