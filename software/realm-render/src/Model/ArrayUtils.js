@@ -28,12 +28,13 @@ export function rotate2DArray(array) {
 //Function to decorate floor tiles with objects
 export function decorateFloorTiles(array, seed) {
     console.log("decorating floor tiles");
-    const numRows = array.length;
-    const numCols = array[0].length;
+    const numCols = array.length;
+    const numRows = array[0].length;
+    //const numCols = array[0].length;
     const decoratedArray = [...array];
     const random = seedrandom(seed);
 
-    for(let col = 1; col < numCols-1; col++){
+    for (let col = 1; col < numCols-1; col++) {
         for (let row = 1; row < numRows-1; row++) {
             if(array[col][row].isFloor()){
                 //check for adjacent walls

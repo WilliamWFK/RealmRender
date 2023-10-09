@@ -295,6 +295,15 @@ class Map {
             new SquareRoom(width, height, "large", this.theme, this.seed + 4),
             new SquareRoom(width, height, "large", this.theme, this.seed + 5),
 
+
+            new SquareRoom(width, height, "small", this.theme, this.seed),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 1),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 2),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 3),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 4),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 5),
+
+
             // new TshapeRoom(width, height, "medium"),
             // new LShapeRoom(width, height, "medium"),
             // new RectShapeRoom(width, height, "medium"),
