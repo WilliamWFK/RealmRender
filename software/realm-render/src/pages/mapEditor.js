@@ -8,14 +8,21 @@ import '../styles/mapEditor.css';
 const LoadMap = () => {
   const { state } = useLocation();
   let mapObj;
+  // tiles nand players
   let mapped = [];
   let players = [];
+  // active storage
   let activePlayer = -1;
   let prevX = -1;
   let prevY = -1;
   let mapX = 0;
   let mapY = 0;
+  // tile definition
   let tileSize = 32;
+  let maxTileSize = tileSize * 2;
+  let minTileSize = (window.innerHeight / state.height);
+  let minPan;
+  // image storage
   let chest1;
   let chest2;
   let big_object1;
@@ -34,6 +41,12 @@ const LoadMap = () => {
   function sketch(p5) {
     function draw() {
       p5.background(220);
+      minPan = (100 / tileSize) + 5;
+      mapX = Math.min((window.innerWidth / 2) / tileSize, mapX);
+      mapY = Math.min((window.innerHeight / 2) / tileSize, mapY);
+      mapX = Math.max(((state.width) * -1) + ((window.innerWidth / 2) / tileSize), mapX);
+      mapY = Math.max(((state.height) * -1) + ((window.innerHeight / 2) / tileSize), mapY);
+
 
       // draw map
       mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
@@ -81,6 +94,7 @@ const LoadMap = () => {
       } else {
         mapX += (p5.mouseX - prevX) / tileSize;
         mapY += (p5.mouseY - prevY) / tileSize;
+
         prevX = p5.mouseX;
         prevY = p5.mouseY;
       }
@@ -203,8 +217,6 @@ const LoadMap = () => {
       mapped = mapObj.tiles;
       preload(state.theme);
       // create map and players
-      const cols = 80;
-      const rows = 45;
       mapped.forEach(r => r.forEach(t => storeImage(t)));
       players.push(new Player(0, 40, 40, playerImg));
     }
@@ -220,18 +232,22 @@ const LoadMap = () => {
       zoomInButton.size(100, 100);
       zoomOutButton.size(100, 100);
       zoomInButton.mousePressed(() => {
-        tileSize *= 1.1;
-        players.forEach(p => {
-          p.x *= 1.1;
-          p.y *= 1.1;
-        });
+        if (tileSize < maxTileSize) {
+          tileSize *= 1.1;
+          players.forEach(p => {
+            p.x *= 1.1;
+            p.y *= 1.1;
+          });
+        }
       });
       zoomOutButton.mousePressed(() => {
-        tileSize *= 0.9;
-        players.forEach(p => {
-          p.x *= 0.9;
-          p.y *= 0.9;
-        });
+        if (tileSize > minTileSize) {
+          tileSize *= 0.9;
+          players.forEach(p => {
+            p.x *= 0.9;
+            p.y *= 0.9;
+          });
+        }
       });
       setup();
     }
