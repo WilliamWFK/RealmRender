@@ -290,7 +290,9 @@ const LoadMap = () => {
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
         console.log(screenWidth, screenHeight);
-        // After fully zoomed out, capture the content and export as PDF
+
+        
+
         html2canvas(pdfRef.current, {
           scrollX: 0,
           scrollY: 0,
@@ -301,11 +303,15 @@ const LoadMap = () => {
           const pdf = new jsPdf({
             orientation: 'landscape',
             unit: 'pt',
-            format: [canvas.height, canvas.width],
+            format: [595.276, 841.890],
           });
-          var width = pdf.internal.pageSize.getWidth();
+          //var width = state.width * tileSize;
+          //var height = state.height * tileSize;
+          console.log(state.width*tileSize);
+          console.log(pdf.internal.pageSize.getWidth());
+          var width = pdf.internal.pageSize.getWidth()+(state.width*tileSize)/2;
           var height = pdf.internal.pageSize.getHeight();
-          const imgX = 0;
+          const imgX = -65;
           const imgY = 0;
           pdf.addImage(imgData, 'PNG', imgX, imgY, width, height);
           pdf.save("download.pdf");
