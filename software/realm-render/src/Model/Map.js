@@ -33,7 +33,7 @@ class Map {
      * @param {int} width
      * @param {int} height
      */
-    makeEmptyMap(width, height, theme){
+    makeEmptyMap(width, height, theme) {
         console.log('hello create empty');
         const newMap = []
         for (let x = 0; x < width; x++) {
@@ -71,18 +71,18 @@ class Map {
 
         //True if out of bounds
         const boundryCheckRoom = (room, startX, startY) => {
-                return (startX < 0 || startY < 0 || startX + room.roomWidth > this.width || startY + room.roomHeight > this.height);
+            return (startX < 0 || startY < 0 || startX + room.roomWidth > this.width || startY + room.roomHeight > this.height);
         };
 
         //True if overlapping
         const overlappingRooms = (room, startX, startY) => {
 
 
-            for (let x = startX +1; x < startX + room.roomWidth -1; x++) {
-                for (let y = startY+1; y < startY + room.roomHeight -1; y++) {
+            for (let x = startX + 1; x < startX + room.roomWidth - 1; x++) {
+                for (let y = startY + 1; y < startY + room.roomHeight - 1; y++) {
                     console.log(typeof this.tiles[0][0])
                     console.log(typeof this.tiles[x][y])
-                    if(this.tiles[x][y].type !== ""){
+                    if (this.tiles[x][y].type !== "") {
                         return true;
                     }
                 }
@@ -126,12 +126,12 @@ class Map {
             let topRoom = this.rooms[Math.floor(random() * this.rooms.length)];
             let topRoomStartX = upExit.x - topRoom.exits.down[0].x;
             let topRoomStartY = upExit.y - topRoom.exits.down[0].y;
-            for(let i = 0; i < 20; i++){
+            for (let i = 0; i < 20; i++) {
                 topRoom = this.rooms[Math.floor(random() * this.rooms.length)];
                 topRoomStartX = upExit.x - topRoom.exits.down[0].x;
                 topRoomStartY = upExit.y - topRoom.exits.down[0].y;
-                if(!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
-                    if(!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)){
+                if (!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)) {
+                    if (!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)) {
 
                         break;
                     }
@@ -146,12 +146,12 @@ class Map {
             let leftRoom = this.rooms[Math.floor(random() * this.rooms.length)];
             let leftRoomStartX = leftExit.x - leftRoom.exits.right[0].x;
             let leftRoomStartY = leftExit.y - leftRoom.exits.right[0].y;
-            for(let i = 0; i < 20; i++){
+            for (let i = 0; i < 20; i++) {
                 leftRoom = this.rooms[Math.floor(random() * this.rooms.length)];
                 leftRoomStartX = leftExit.x - leftRoom.exits.right[0].x;
                 leftRoomStartY = leftExit.y - leftRoom.exits.right[0].y;
-                if(!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
-                    if(!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)){
+                if (!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)) {
+                    if (!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)) {
 
                         break;
                     }
@@ -162,12 +162,12 @@ class Map {
             let rightRoom = this.rooms[Math.floor(random() * this.rooms.length)];
             let rightRoomStartX = rightExit.x - rightRoom.exits.left[0].x;
             let rightRoomStartY = rightExit.y - rightRoom.exits.left[0].y;
-            for(let i = 0; i < 20; i++){
+            for (let i = 0; i < 20; i++) {
                 rightRoom = this.rooms[Math.floor(random() * this.rooms.length)];
                 rightRoomStartX = rightExit.x - rightRoom.exits.left[0].x;
                 rightRoomStartY = rightExit.y - rightRoom.exits.left[0].y;
-                if(!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
-                    if(!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)){
+                if (!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)) {
+                    if (!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)) {
 
                         break;
                     }
@@ -177,12 +177,12 @@ class Map {
             let downRoom = this.rooms[Math.floor(random() * this.rooms.length)];
             let downRoomStartX = downExit.x - downRoom.exits.up[0].x;
             let downRoomStartY = downExit.y - downRoom.exits.up[0].y;
-            for(let i = 0; i < 20; i++){
+            for (let i = 0; i < 20; i++) {
                 downRoom = this.rooms[Math.floor(random() * this.rooms.length)];
                 downRoomStartX = downExit.x - downRoom.exits.up[0].x;
                 downRoomStartY = downExit.y - downRoom.exits.up[0].y;
-                if(!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)){
-                    if(!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)){
+                if (!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)) {
+                    if (!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)) {
 
                         break;
                     }
@@ -192,53 +192,53 @@ class Map {
 
             // Recursively place the adjacent rooms (add conditions to stop recursion as needed)
             Depth = Depth + 1;
-            if(Depth >= 25){
+            if (Depth >= 30) {
                 return;
             }
 
             const actions = [
                 () => {
-                  if(!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)){
-                    if(!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)){
-                      usedExits.push(upExit);
-                      placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+                    if (!boundryCheckRoom(topRoom, topRoomStartX, topRoomStartY)) {
+                        if (!overlappingRooms(topRoom, topRoomStartX, topRoomStartY)) {
+                            usedExits.push(upExit);
+                            placeRoomRecursively(topRoom, topRoomStartX, topRoomStartY);
+                        }
                     }
-                  }
                 },
                 () => {
-                  if(!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)){
-                    if(!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)){
-                      usedExits.push(leftExit);
-                      placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
+                    if (!boundryCheckRoom(leftRoom, leftRoomStartX, leftRoomStartY)) {
+                        if (!overlappingRooms(leftRoom, leftRoomStartX, leftRoomStartY)) {
+                            usedExits.push(leftExit);
+                            placeRoomRecursively(leftRoom, leftRoomStartX, leftRoomStartY);
+                        }
                     }
-                  }
                 },
                 () => {
-                  if(!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)){
-                    if(!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)){
-                      usedExits.push(rightExit);
-                      placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+                    if (!boundryCheckRoom(rightRoom, rightRoomStartX, rightRoomStartY)) {
+                        if (!overlappingRooms(rightRoom, rightRoomStartX, rightRoomStartY)) {
+                            usedExits.push(rightExit);
+                            placeRoomRecursively(rightRoom, rightRoomStartX, rightRoomStartY);
+                        }
                     }
-                  }
                 },
                 () => {
-                  if(!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)){
-                    if(!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)){
-                      usedExits.push(downExit);
-                      placeRoomRecursively(downRoom, downRoomStartX, downRoomStartY);
+                    if (!boundryCheckRoom(downRoom, downRoomStartX, downRoomStartY)) {
+                        if (!overlappingRooms(downRoom, downRoomStartX, downRoomStartY)) {
+                            usedExits.push(downExit);
+                            placeRoomRecursively(downRoom, downRoomStartX, downRoomStartY);
+                        }
                     }
-                  }
                 }
-              ];
+            ];
 
-              // Fisher-Yates Shuffle
-              for (let i = actions.length - 1; i > 0; i--) {
+            // Fisher-Yates Shuffle
+            for (let i = actions.length - 1; i > 0; i--) {
                 const j = Math.floor(random() * (i + 1));
                 [actions[i], actions[j]] = [actions[j], actions[i]];
-              }
+            }
 
-              // Execute randomized actions
-              actions.forEach((action) => action());
+            // Execute randomized actions
+            actions.forEach((action) => action());
 
 
 
@@ -246,14 +246,14 @@ class Map {
 
         placeRoomRecursively(spawnRoom, spawnRoomStartX, spawnRoomStartY);
         //Check if the exit is a part of all exits but not a part of used exits replace with wall tile
-        for(let i = 0; i < allExits.length; i++){
+        for (let i = 0; i < allExits.length; i++) {
             let found = false;
-            for(let j = 0; j < usedExits.length; j++){
-                if(allExits[i].x === usedExits[j].x && allExits[i].y === usedExits[j].y){
+            for (let j = 0; j < usedExits.length; j++) {
+                if (allExits[i].x === usedExits[j].x && allExits[i].y === usedExits[j].y) {
                     found = true;
                 }
             }
-            if(!found){
+            if (!found) {
                 this.tiles[allExits[i].x][allExits[i].y].setType("wall");
             }
         }
@@ -276,26 +276,34 @@ class Map {
 
         const rooms = [
             new SquareRoom(width, height, "medium", this.theme, this.seed),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+1),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+2),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+3),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+4),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+5),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+6),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+7),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+8),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+9),
-            new SquareRoom(width, height, "medium", this.theme, this.seed+10),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 1),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 2),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 3),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 4),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 5),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 6),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 7),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 8),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 9),
+            new SquareRoom(width, height, "medium", this.theme, this.seed + 10),
 
-            //new TshapeRoom(width, height, "medium"),
-            //new LShapeRoom(width, height, "medium"),
-            //new RectShapeRoom(width, height, "medium"),
+
+            new SquareRoom(width, height, "large", this.theme, this.seed),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 1),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 2),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 3),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 4),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 5),
+
+            // new TshapeRoom(width, height, "medium"),
+            // new LShapeRoom(width, height, "medium"),
+            // new RectShapeRoom(width, height, "medium"),
             // new PlusShapeRoom(width, height, "medium"),
             // new HoleShapeRoom(width, height, "medium"),
         ];
         this.rooms = rooms;
         this.placeRooms();
-      };
+    };
 }
 
 export default Map
