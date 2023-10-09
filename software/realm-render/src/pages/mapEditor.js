@@ -384,7 +384,7 @@ const LoadMap = () => {
         html2canvas(pdfRef.current, {
           scrollX: 0,
           scrollY: 0,
-          width: screenWidth*0.70, 
+          width: screenWidth, 
           height: screenHeight,
         }).then(canvas => {
           const imgData = canvas.toDataURL('image/png');
@@ -395,8 +395,8 @@ const LoadMap = () => {
           });
           var width = pdf.internal.pageSize.getWidth();
           var height = pdf.internal.pageSize.getHeight();
-          const imgX = -130;
-          const imgY = 30;
+          const imgX = 0;
+          const imgY = 0;
           pdf.addImage(imgData, 'PNG', imgX, imgY, width, height);
           pdf.save("download.pdf");
         });
