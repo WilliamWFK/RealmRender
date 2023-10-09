@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import '../styles/PlayerStatistics.css';
 
 const PlayerStatistics = () => {
-  const [characterSheetOpen, setCharacterSheetOpen] = useState(false);
+  const [characterSheetOpen, setCharacterSheetOpen] = useState(true);
   const [characterData, setCharacterData] = useState({
     classLevel: 'MMOR Class, 1st',
     race: 'Elf',
@@ -25,10 +25,6 @@ const PlayerStatistics = () => {
     featuresTraits: 'Elf Weapon Training, Darkvision, Fey Ancestry, Trance'
   });
 
-  const handleButtonClick = () => {
-    setCharacterSheetOpen(true);
-  };
-
   const handleCharacterSheetClose = () => {
     setCharacterSheetOpen(false);
   };
@@ -39,7 +35,7 @@ const PlayerStatistics = () => {
 
   return (
     <div>
-      <button onClick={handleButtonClick}>Open Character Sheet</button>
+
       {characterSheetOpen && (
         <div className="character-sheet">
           <h1>Character Sheet</h1>

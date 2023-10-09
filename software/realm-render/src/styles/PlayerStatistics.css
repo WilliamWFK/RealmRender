@@ -5,6 +5,9 @@
     border-radius: 25px; /* Rounded corners */
     display: flex;
     flex-wrap: wrap;
+    top: 0;
+    right: -1350px;
+    background-color: aliceblue;
   }
 
   table {
@@ -27,7 +30,15 @@
   }
   .character-sheet {
     position: fixed;
-    right: 0;
-    top: 0;
+    /* set top and right to their max values
+    to position the element at the top right corner */
+
+    /* margin to create some space at the bottom */
+    margin-top: 10px;
+
+    /* padding to make the content appear inside the element */
+    padding: 20px;
+    /* give the element a background color */
+
     /* other styles */
   }

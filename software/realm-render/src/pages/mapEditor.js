@@ -75,8 +75,17 @@ const LoadMap = () => {
 
           activePlayer = p;
           if(p5.mouseButton === p5.RIGHT && isPlayerStatsVisible === false) {
+
             setPlayerStatsVisibility(true);
             console.log("Yay")
+
+
+          }
+          else if(p5.mouseButton === p5.RIGHT && isPlayerStatsVisible === true) {
+            setPlayerStatsVisibility(false);
+            console.log("Nay")
+
+
           }
         }
       })
@@ -87,6 +96,7 @@ const LoadMap = () => {
     }
 
     p5.mouseDragged = () => {
+
       if (activePlayer !== -1) {
         activePlayer.x = p5.mouseX + (-(mapX) * tileSize);
         activePlayer.y = p5.mouseY + (-(mapY) * tileSize);
@@ -99,6 +109,7 @@ const LoadMap = () => {
     }
 
     p5.mouseReleased = () => {
+
       prevX = -1;
       prevY = -1;
       if (activePlayer !== -1) {
