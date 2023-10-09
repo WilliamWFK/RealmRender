@@ -41,6 +41,20 @@ class Room {
       this.roomWidth = large(width) + variance;
       this.roomHeight = large(height) + variance;
     }
+    if (size === "small") {
+      let variance = Math.round(random());
+      //Pick a random dimension to make medium or large
+      let dimension = Math.round(random());
+      if (dimension === 0) {
+
+        this.roomWidth = medium(width) + variance - 4;
+        this.roomHeight = large(height) + variance - 2;
+      }
+      else {
+        this.roomWidth = large(width) + variance - 2;
+        this.roomHeight = medium(height) + variance - 4;
+      }
+    }
   }
 
   //find exits x and y for the global map scale.
@@ -94,7 +108,7 @@ class Room {
     // Iterate through the bottom row
     for (let x = 1; x < this.roomWidth - 1; x++) {
       if (this.tiles[x][this.roomHeight - 1].isWall) {
-        edgeWallTiles.down.push(this.tiles[x][this.roomWidth - 1]);
+        edgeWallTiles.down.push(this.tiles[x][this.roomHeight - 1]);
       }
     }
 
@@ -108,7 +122,7 @@ class Room {
     // Iterate through the right column
     for (let y = 1; y < this.roomHeight - 1; y++) {
       if (this.tiles[this.roomWidth - 1][y].isWall) {
-        edgeWallTiles.right.push(this.tiles[this.roomHeight - 1][y]);
+        edgeWallTiles.right.push(this.tiles[this.roomWidth - 1][y]);
       }
     }
 
