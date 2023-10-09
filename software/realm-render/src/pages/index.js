@@ -7,21 +7,21 @@ const Home = () => {
   const [menumode, setMenumode] = useState(0);
   //const [sliderValue, setValue] = useState(5); // example setting
 
-  const [formData, setFormData] = useState({name: "",width: 90,height: 90, players: 2, theme: "Atlantis"});
+  const [formData, setFormData] = useState({ name: "", width: 90, height: 90, players: 2, theme: "Atlantis" });
 
   const handleChange = (event) => {
-      const { name, value } = event.target;
-      setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
   };
 
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-      event.preventDefault();
-      alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
-      );
+    event.preventDefault();
+    alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
+    );
 
-      navigate("/mapEditor", {state: {name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme}});
+    navigate("/mapEditor", { state: { name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme } });
   }
 
   function menuContents() {
@@ -48,12 +48,12 @@ const Home = () => {
               */}
               {/* example settings end */}
               <form onSubmit={handleSubmit}>
-                <div class = "formInput">
+                <div class="formInput">
                   <label htmlFor="name">Name:</label>
-                  <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}/>
+                  <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
                 </div>
                 {/* Create a dropdown to select theme*/}
-                <div class = "formInput">
+                <div class="formInput">
                   <label htmlFor="theme">Theme:</label>
                   <select id="theme" name="theme" value={formData.theme} onChange={handleChange}>
                     <option value="Atlantis">Atlantis</option>
@@ -64,16 +64,16 @@ const Home = () => {
 
                 <div class="formInput">
                   <label htmlFor="width">Width: {formData.width}</label>
-                  <input type="range" min="90" max="90" step="3" defaultValue={formData.width} onChange={(e) =>setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
+                  <input type="range" min="30" max="90" step="3" defaultValue={formData.width} onChange={(e) => setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
                 </div>
                 <div class="formInput">
                   <label htmlFor="height">Height: {formData.height}</label>
-                  <input type="range" min="90" max="90" step="3" defaultValue={formData.height} onChange={(e) =>setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
+                  <input type="range" min="30" max="90" step="3" defaultValue={formData.height} onChange={(e) => setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
                 </div>
                 {/* Create a slider to select 1-6 players*/}
                 <div class="formInput">
                   <label htmlFor="players">Players: {formData.players}</label>
-                  <input type="range" min="1" max="6" defaultValue={formData.players} onChange={(e) =>setFormData({ ...formData, players: parseInt(e.target.value) })} id="players" name="players"></input>
+                  <input type="range" min="1" max="6" defaultValue={formData.players} onChange={(e) => setFormData({ ...formData, players: parseInt(e.target.value) })} id="players" name="players"></input>
                 </div>
 
 
