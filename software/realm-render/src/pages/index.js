@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import background from '../indexBackground.svg';
-import Statistics from '../Model/Statistics';  // adjust the path based on your folder structure
+import Statistics from '../Model/PlayerStatistics';  // adjust the path based on your folder structure
 
 
 const Home = () => {

@@ -1,28 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
-import '../styles/mapEditor.css';
+import PlayerStatistics from '../Model/PlayerStatistics'; // Import PlayerStatistics
+
 
 const LoadMap = () => {
   const { state } = useLocation();
+  const [isPlayerStatsVisible, setPlayerStatsVisibility] = useState(false);
+
   let mapObj;
-  // tiles nand players
   let mapped = [];
   let players = [];
-  // active storage
   let activePlayer = -1;
   let prevX = -1;
   let prevY = -1;
   let mapX = 0;
   let mapY = 0;
-  // tile definition
   let tileSize = 32;
-  let maxTileSize = tileSize * 2;
-  let minTileSize = (window.innerHeight / state.height);
-  let minPan;
-  // image storage
   let chest1;
   let chest2;
   let big_object1;
@@ -41,12 +37,6 @@ const LoadMap = () => {
   function sketch(p5) {
     function draw() {
       p5.background(220);
-      minPan = (100 / tileSize) + 5;
-      mapX = Math.min((window.innerWidth / 2) / tileSize, mapX);
-      mapY = Math.min((window.innerHeight / 2) / tileSize, mapY);
-      mapX = Math.max(((state.width) * -1) + ((window.innerWidth / 2) / tileSize), mapX);
-      mapY = Math.max(((state.height) * -1) + ((window.innerHeight / 2) / tileSize), mapY);
-
 
       // draw map
       mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
@@ -67,10 +57,14 @@ const LoadMap = () => {
       let tile = mapped.find(t => t.x + mapX === x && t.y + mapY === y);
       if (tile) {
         tile.type = "selected";
+
       }
+
+
     }
 
     p5.mousePressed = () => {
+
       if (prevX === -1 && prevY === -1) {
         prevX = p5.mouseX;
         prevY = p5.mouseY;
@@ -78,7 +72,12 @@ const LoadMap = () => {
 
       players.forEach(p => {
         if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
+
           activePlayer = p;
+          if(p5.mouseButton === p5.RIGHT && isPlayerStatsVisible === false) {
+            setPlayerStatsVisibility(true);
+            console.log("Yay")
+          }
         }
       })
 
@@ -94,7 +93,6 @@ const LoadMap = () => {
       } else {
         mapX += (p5.mouseX - prevX) / tileSize;
         mapY += (p5.mouseY - prevY) / tileSize;
-
         prevX = p5.mouseX;
         prevY = p5.mouseY;
       }
@@ -107,7 +105,7 @@ const LoadMap = () => {
         activePlayer.x = snapGrid(activePlayer.x + mapX + (tileSize / 2)) - (tileSize / 2);
         activePlayer.y = snapGrid(activePlayer.y + mapY + (tileSize / 2)) - (tileSize / 2);
         players.forEach(p => {
-          if (p.id === activePlayer.id) {
+          if(p.id === activePlayer.id) {
             p.x = activePlayer.x;
             p.y = activePlayer.y;
           }
@@ -119,7 +117,7 @@ const LoadMap = () => {
       return Math.round(x / tileSize) * tileSize;
     }
 
-    function preload(theme) {
+    function preload(theme){
       //load all images for drawing
       let path = "TilesImg/" + theme + "/";
       //loading chests
@@ -143,11 +141,11 @@ const LoadMap = () => {
       playerImg = p5.loadImage("TilesImg/player1.png");
     }
 
-    function storeImage(tile) {
+    function storeImage(tile){
       let type = tile.image.split("-");
-      switch (type[0]) {
+      switch(type[0]){
         case "big_object":
-          switch (type[1]) {
+          switch(type[1]){
             case "0":
               tile.setImage(big_object1);
               break;
@@ -160,7 +158,7 @@ const LoadMap = () => {
           }
           break;
         case "object":
-          switch (type[1]) {
+          switch(type[1]){
             case "0":
               tile.setImage(object1);
               break;
@@ -182,7 +180,7 @@ const LoadMap = () => {
           }
           break;
         case "chest":
-          switch (type[1]) {
+          switch(type[1]){
             case "0":
               tile.setImage(chest1);
               break;
@@ -217,12 +215,14 @@ const LoadMap = () => {
       mapped = mapObj.tiles;
       preload(state.theme);
       // create map and players
+      const cols = 80;
+      const rows = 45;
       mapped.forEach(r => r.forEach(t => storeImage(t)));
       players.push(new Player(0, 40, 40, playerImg));
     }
 
     p5.setup = () => {
-      p5.createCanvas(window.innerWidth, window.innerHeight);
+      p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
 
@@ -232,22 +232,18 @@ const LoadMap = () => {
       zoomInButton.size(100, 100);
       zoomOutButton.size(100, 100);
       zoomInButton.mousePressed(() => {
-        if (tileSize < maxTileSize) {
-          tileSize *= 1.1;
-          players.forEach(p => {
-            p.x *= 1.1;
-            p.y *= 1.1;
-          });
-        }
+        tileSize *= 1.1;
+        players.forEach(p => {
+          p.x *= 1.1;
+          p.y *= 1.1;
+        });
       });
       zoomOutButton.mousePressed(() => {
-        if (tileSize > minTileSize) {
-          tileSize *= 0.9;
-          players.forEach(p => {
-            p.x *= 0.9;
-            p.y *= 0.9;
-          });
-        }
+        tileSize *= 0.9;
+        players.forEach(p => {
+          p.x *= 0.9;
+          p.y *= 0.9;
+        });
       });
       setup();
     }
@@ -257,8 +253,9 @@ const LoadMap = () => {
     };
   }
   return (
-    <div class="editorWrapper">
+    <div>
       <ReactP5Wrapper sketch={sketch} />
+      {isPlayerStatsVisible && <PlayerStatistics />} {/* Add PlayerStatistics */}
     </div>
   );
 };

@@ -25,3 +25,9 @@
   input {
     width: 250%; /* Make the text boxes slightly larger */
   }
+  .character-sheet {
+    position: fixed;
+    right: 0;
+    top: 0;
+    /* other styles */
+  }

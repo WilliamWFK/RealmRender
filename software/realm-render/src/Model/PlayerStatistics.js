@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import '../styles/Statistics.css';
+import '../styles/PlayerStatistics.css';
 
-const Statistics = () => {
+const PlayerStatistics = () => {
   const [characterSheetOpen, setCharacterSheetOpen] = useState(false);
   const [characterData, setCharacterData] = useState({
     classLevel: 'MMOR Class, 1st',
@@ -66,4 +66,4 @@ const Statistics = () => {
   );
 };
 
-export default Statistics;
+export default PlayerStatistics;
