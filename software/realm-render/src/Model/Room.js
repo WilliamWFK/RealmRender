@@ -1,4 +1,6 @@
 import Tile from '../Model/Tile';
+import seedrandom from 'seedrandom';
+
 
 const medium = (dimension) => {
     return (dimension/ 9) - 2;
@@ -7,9 +9,10 @@ const medium = (dimension) => {
 class Room {
     globalX;
     globalY;
-    constructor(width, height, size, theme) {
-        this.id = 0;
 
+    constructor(width, height, size, theme, seed) {
+        this.id = 0;
+        this.seed = seed;
         this.name = "";
         this.description = "";
         this.theme = theme;
@@ -45,15 +48,16 @@ class Room {
 
     addExits(){
         const edgeWallTiles = this.findEdges()
+        const random = seedrandom(this.seed);
 
 
 
         //randomly selects a tile from edge wall tiles
-        this.exits.up.push(edgeWallTiles.up[Math.floor(Math.random() * edgeWallTiles.up.length)]);
+        this.exits.up.push(edgeWallTiles.up[Math.floor(random() * edgeWallTiles.up.length)]);
         console.log("in exit test", this.exits.up);
-        this.exits.right.push(edgeWallTiles.right[Math.floor(Math.random() * edgeWallTiles.right.length)]);
-        this.exits.down.push(edgeWallTiles.down[Math.floor(Math.random() * edgeWallTiles.down.length)]);
-        this.exits.left.push(edgeWallTiles.left[Math.floor(Math.random() * edgeWallTiles.left.length)]);
+        this.exits.right.push(edgeWallTiles.right[Math.floor(random() * edgeWallTiles.right.length)]);
+        this.exits.down.push(edgeWallTiles.down[Math.floor(random() * edgeWallTiles.down.length)]);
+        this.exits.left.push(edgeWallTiles.left[Math.floor(random() * edgeWallTiles.left.length)]);
 
         for (let exitDirection in this.exits) {
             const exitTiles = this.exits[exitDirection];

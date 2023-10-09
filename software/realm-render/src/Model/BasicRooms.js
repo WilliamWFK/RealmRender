@@ -2,16 +2,16 @@ import Room from './Room';
 import Tile from '../Model/Tile';
 import { rotate2DArray, decorateFloorTiles } from './ArrayUtils';
 
-
 class SquareRoom extends Room {
-    constructor(width, height, size, theme) {
-        super(width, height, size, theme); // Call the constructor of the base Room class
+    constructor(width, height, size, theme, seed) {
+        super(width, height, size, theme, seed); // Call the constructor of the base Room class
         console.log('hello create sqRoom');
         // Customize properties for your square room
         this.name = "Square Room";
         this.description = "A square room with walls on all sides.";
         this.tiles = this.createSquareTiles();
         this.addExits();
+        this.seed = seed;
     }
 
     createSquareTiles() {
@@ -34,7 +34,7 @@ class SquareRoom extends Room {
             squareTiles.push(row)
         }
         let tilesCopy = [...squareTiles];
-        tilesCopy = decorateFloorTiles(tilesCopy);
+        tilesCopy = decorateFloorTiles(tilesCopy, this.seed);
         console.log(tilesCopy);
 
         return tilesCopy;
