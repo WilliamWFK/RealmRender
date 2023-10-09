@@ -42,18 +42,26 @@ export function decorateFloorTiles(array, seed) {
                 if(array[col][row+1].isWall() || array[col][row-1].isWall() || array[col+1][row].isWall() || array[col-1][row].isWall()){
                     let rand = Math.floor(random()*100) +1;
                     if(rand <= 30){
-                        console.log("put objects here");
-                        decoratedArray[col][row].setType("object");
+                        if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
+                            console.log("put objects here");
+                            decoratedArray[col][row].setType("object");
+                        }
                     }
                     else if(rand <= 34) {
-                        console.log("put chest here");
-                        decoratedArray[col][row].setType("chest")};
+                        if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
+                            console.log("put chest here");
+                            decoratedArray[col][row].setType("chest")};
+                        }
                 }
                 if(!array[col][row+1].isWall() && !array[col][row-1].isWall() && !array[col+1][row].isWall() && !array[col-1][row].isWall()){
                     let rand = Math.floor(random()*100) +1;
                     if(rand <= 3){
-                        console.log("put objects here");
-                        decoratedArray[col][row].setType("BigObject");
+                        //isFloor and is not cleanFloor
+                        if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
+                            console.log("put clean floor here");
+                            decoratedArray[col][row].setType("cleanFloor");
+                        }
+
                     }
                 }
             }

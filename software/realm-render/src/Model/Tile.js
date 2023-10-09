@@ -28,6 +28,10 @@ class Tile {
       return (this.type ==="floor");
     }
 
+    isCleanFloor() {
+      return (this.type === "cleanFloor");
+    }
+
 
     //used for setting the edges of the tile
     setDirections(up, right, down, left) {
@@ -89,7 +93,11 @@ class Tile {
 
       if(this.type === "floor"){
         this.image = "floor-0";
-      } else if (this.type === "wall"){
+      } else if (this.type === "cleanFloor"){
+        this.image = "floor-0";
+      }
+
+      else if (this.type === "wall"){
         this.image = "wall-0";
       } else if (this.type === "door"){
         this.image = "door-0";

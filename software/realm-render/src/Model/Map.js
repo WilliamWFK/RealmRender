@@ -257,6 +257,27 @@ class Map {
                 this.tiles[allExits[i].x][allExits[i].y].setType("wall");
             }
         }
+        //If a floor tile is directly beside a used exit tile replace with a floor tile or chest tile or bigObject tile
+        for (let i = 0; i < usedExits.length; i++) {
+          const directions = [
+              { dx: 1, dy: 0 }, // Right
+              { dx: -1, dy: 0 }, // Left
+              { dx: 0, dy: 1 }, // Below
+              { dx: 0, dy: -1 }  // Above
+          ];
+
+          for (const { dx, dy } of directions) {
+              const x = usedExits[i].x + dx;
+              const y = usedExits[i].y + dy;
+              const tileType = this.tiles[x][y].type;
+
+              if (["floor", "chest", "BigObject", "object"].includes(tileType)) {
+                  this.tiles[x][y].setType("cleanFloor");
+              }
+          }
+      }
+        //Aswell as above or bellow
+
 
 
     }
