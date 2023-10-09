@@ -20,8 +20,7 @@ const LoadMap = () => {
   // tile definition
   let tileSize = 32;
   let maxTileSize = tileSize * 2;
-  let minTileSize = (window.innerHeight / state.height);
-  let minPan;
+  let minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
   // image storage
   let chest1;
   let chest2;
@@ -41,11 +40,10 @@ const LoadMap = () => {
   function sketch(p5) {
     function draw() {
       p5.background(220);
-      minPan = (100 / tileSize) + 5;
-      mapX = Math.min((window.innerWidth / 2) / tileSize, mapX);
-      mapY = Math.min((window.innerHeight / 2) / tileSize, mapY);
-      mapX = Math.max(((state.width) * -1) + ((window.innerWidth / 2) / tileSize), mapX);
-      mapY = Math.max(((state.height) * -1) + ((window.innerHeight / 2) / tileSize), mapY);
+      mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
+      mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
+      mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2/3)) / tileSize), mapX);
+      mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2/3)) / tileSize), mapY);
 
 
       // draw map
@@ -104,8 +102,8 @@ const LoadMap = () => {
       prevX = -1;
       prevY = -1;
       if (activePlayer !== -1) {
-        activePlayer.x = snapGrid(activePlayer.x + mapX + (tileSize / 2)) - (tileSize / 2);
-        activePlayer.y = snapGrid(activePlayer.y + mapY + (tileSize / 2)) - (tileSize / 2);
+        activePlayer.x = snapGrid(p5.mouseX - mapX*tileSize) + (tileSize / 2);
+        activePlayer.y = snapGrid(p5.mouseY - mapY*tileSize) + (tileSize / 2);
         players.forEach(p => {
           if (p.id === activePlayer.id) {
             p.x = activePlayer.x;
@@ -116,7 +114,7 @@ const LoadMap = () => {
     }
 
     function snapGrid(x) {
-      return Math.round(x / tileSize) * tileSize;
+      return Math.floor(x / tileSize) * tileSize;
     }
 
     function preload(theme) {
@@ -223,29 +221,43 @@ const LoadMap = () => {
 
     p5.setup = () => {
       p5.createCanvas(window.innerWidth, window.innerHeight);
+      let backButton = p5.createButton("<");
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
 
+      backButton.position(10, 10);
       zoomInButton.position(10, 10);
-      zoomOutButton.position(10, 120);
+      zoomOutButton.position(10, 10);
 
-      zoomInButton.size(100, 100);
-      zoomOutButton.size(100, 100);
+      backButton.style('width', '5vw');
+      backButton.style('height', '5vw');
+      backButton.style('font-size', '2vw');
+
+      zoomInButton.style('width', '5vw');
+      zoomInButton.style('height', '5vw');
+      zoomInButton.style('margin-top', '6vw');
+      zoomInButton.style('font-size', '2vw');
+
+      zoomOutButton.style('width', '5vw');
+      zoomOutButton.style('height', '5vw');
+      zoomOutButton.style('margin-top', '12vw');
+      zoomOutButton.style('font-size', '2vw');
+
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
-          tileSize *= 1.1;
+          Math.round(tileSize *= 1.1);
           players.forEach(p => {
-            p.x *= 1.1;
-            p.y *= 1.1;
+            Math.round(p.x *= 1.1);
+            Math.round(p.y *= 1.1);
           });
         }
       });
       zoomOutButton.mousePressed(() => {
         if (tileSize > minTileSize) {
-          tileSize *= 0.9;
+          Math.round(tileSize *= 0.9);
           players.forEach(p => {
-            p.x *= 0.9;
-            p.y *= 0.9;
+            Math.round(p.x *= 0.9);
+            Math.round(p.y *= 0.9);
           });
         }
       });
