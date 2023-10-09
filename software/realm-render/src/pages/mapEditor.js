@@ -104,8 +104,8 @@ const LoadMap = () => {
       prevX = -1;
       prevY = -1;
       if (activePlayer !== -1) {
-        activePlayer.x = snapGrid(activePlayer.x + mapX + (tileSize / 2)) - (tileSize / 2);
-        activePlayer.y = snapGrid(activePlayer.y + mapY + (tileSize / 2)) - (tileSize / 2);
+        activePlayer.x = snapGrid(p5.mouseX - mapX*tileSize) + (tileSize / 2);
+        activePlayer.y = snapGrid(p5.mouseY - mapY*tileSize) + (tileSize / 2);
         players.forEach(p => {
           if (p.id === activePlayer.id) {
             p.x = activePlayer.x;
@@ -116,7 +116,7 @@ const LoadMap = () => {
     }
 
     function snapGrid(x) {
-      return Math.round(x / tileSize) * tileSize;
+      return Math.floor(x / tileSize) * tileSize;
     }
 
     function preload(theme) {
@@ -233,19 +233,19 @@ const LoadMap = () => {
       zoomOutButton.size(100, 100);
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
-          tileSize *= 1.1;
+          Math.round(tileSize *= 1.1);
           players.forEach(p => {
-            p.x *= 1.1;
-            p.y *= 1.1;
+            Math.round(p.x *= 1.1);
+            Math.round(p.y *= 1.1);
           });
         }
       });
       zoomOutButton.mousePressed(() => {
         if (tileSize > minTileSize) {
-          tileSize *= 0.9;
+          Math.round(tileSize *= 0.9);
           players.forEach(p => {
-            p.x *= 0.9;
-            p.y *= 0.9;
+            Math.round(p.x *= 0.9);
+            Math.round(p.y *= 0.9);
           });
         }
       });
