@@ -64,11 +64,11 @@ const Home = () => {
 
                 <div class="formInput">
                   <label htmlFor="width">Width: {formData.width}</label>
-                  <input type="range" min="30" max="90" step="1" defaultValue={formData.width} onChange={(e) => setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
+                  <input type="range" min="30" max="120" step="1" defaultValue={formData.width} onChange={(e) => setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
                 </div>
                 <div class="formInput">
                   <label htmlFor="height">Height: {formData.height}</label>
-                  <input type="range" min="30" max="90" step="1" defaultValue={formData.height} onChange={(e) => setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
+                  <input type="range" min="30" max="120" step="1" defaultValue={formData.height} onChange={(e) => setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
                 </div>
                 {/* Create a slider to select 1-6 players*/}
                 <div class="formInput">

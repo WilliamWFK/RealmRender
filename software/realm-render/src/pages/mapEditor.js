@@ -1,24 +1,25 @@
 import React from "react";
 import Player from "../Model/Player";
 import Map from "../Model/Map";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import '../styles/mapEditor.css';
 
 const LoadMap = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   let mapObj;
   // tiles nand players
   let mapped = [];
   let players = [];
   // active storage
+  let tileSize = 32;
   let activePlayer = -1;
   let prevX = -1;
   let prevY = -1;
-  let mapX = 0;
-  let mapY = 0;
+  let mapX = ((state.width / 2) * -1) + (window.innerWidth / tileSize) / 2;
+  let mapY = (state.height - (window.innerHeight / tileSize)) * -1;
   // tile definition
-  let tileSize = 32;
   let maxTileSize = tileSize * 2;
   let minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
   // image storage
@@ -39,11 +40,11 @@ const LoadMap = () => {
 
   function sketch(p5) {
     function draw() {
-      p5.background(220);
+      p5.background('#0f1f1f');
       mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
       mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
-      mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2/3)) / tileSize), mapX);
-      mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2/3)) / tileSize), mapY);
+      mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2 / 3)) / tileSize), mapX);
+      mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2 / 3)) / tileSize), mapY);
 
 
       // draw map
@@ -102,8 +103,8 @@ const LoadMap = () => {
       prevX = -1;
       prevY = -1;
       if (activePlayer !== -1) {
-        activePlayer.x = snapGrid(p5.mouseX - mapX*tileSize) + (tileSize / 2);
-        activePlayer.y = snapGrid(p5.mouseY - mapY*tileSize) + (tileSize / 2);
+        activePlayer.x = snapGrid(p5.mouseX - mapX * tileSize) + (tileSize / 2);
+        activePlayer.y = snapGrid(p5.mouseY - mapY * tileSize) + (tileSize / 2);
         players.forEach(p => {
           if (p.id === activePlayer.id) {
             p.x = activePlayer.x;
@@ -216,7 +217,11 @@ const LoadMap = () => {
       preload(state.theme);
       // create map and players
       mapped.forEach(r => r.forEach(t => storeImage(t)));
-      players.push(new Player(0, 40, 40, playerImg));
+      let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
+      let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
+      for (let i = 0; i < state.players; i++) {
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg));
+      }
     }
 
     p5.setup = () => {
@@ -242,6 +247,10 @@ const LoadMap = () => {
       zoomOutButton.style('height', '5vw');
       zoomOutButton.style('margin-top', '12vw');
       zoomOutButton.style('font-size', '2vw');
+
+      backButton.mousePressed(() => {
+        navigate("/index");
+      });
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
