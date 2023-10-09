@@ -3,11 +3,11 @@ import seedrandom from 'seedrandom';
 
 
 const medium = (dimension) => {
-  return (dimension / 30) + 7;
+  return Math.floor((dimension / 30) + 7);
 };
 
 const large = (dimension) => {
-  return (dimension / 30) + 10;
+  return Math.floor((dimension / 30) + 10);
 }
 
 
