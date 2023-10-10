@@ -1,24 +1,30 @@
 import React from 'react';
 import Player from "../Model/Player";
 import Map from "../Model/Map";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import PlayerStatistics from '../Model/PlayerStatistics';
 
 
 const LoadMap = () => {
+  const navigate = useNavigate();
   const { state } = useLocation();
   //const [isPlayerStatsVisible, setPlayerStatsVisibility] = useState(false);
 
   let mapObj;
   let mapped = [];
   let players = [];
+  // active storage
+  let tileSize = 32;
   let activePlayer = -1;
   let prevX = -1;
   let prevY = -1;
-  let mapX = 0;
-  let mapY = 0;
-  let tileSize = 32;
+  let mapX = ((state.width / 2) * -1) + (window.innerWidth / tileSize) / 2;
+  let mapY = (state.height - (window.innerHeight / tileSize)) * -1;
+  // tile definition
+  let maxTileSize = tileSize * 2;
+  let minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
+  // image storage
   let chest1;
   let chest2;
   let big_object1;
@@ -36,7 +42,12 @@ const LoadMap = () => {
 
   function sketch(p5) {
     function draw() {
-      p5.background(220);
+      p5.background('#0f1f1f');
+      mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
+      mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
+      mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2 / 3)) / tileSize), mapX);
+      mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2 / 3)) / tileSize), mapY);
+
 
       // draw map
       mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
@@ -84,8 +95,8 @@ const LoadMap = () => {
       prevX = -1;
       prevY = -1;
       if (activePlayer !== -1) {
-        activePlayer.x = snapGrid(activePlayer.x + mapX + (tileSize / 2)) - (tileSize / 2);
-        activePlayer.y = snapGrid(activePlayer.y + mapY + (tileSize / 2)) - (tileSize / 2);
+        activePlayer.x = snapGrid(p5.mouseX - mapX * tileSize) + (tileSize / 2);
+        activePlayer.y = snapGrid(p5.mouseY - mapY * tileSize) + (tileSize / 2);
         players.forEach(p => {
           if(p.id === activePlayer.id) {
             p.x = activePlayer.x;
@@ -96,7 +107,7 @@ const LoadMap = () => {
     }
 
     function snapGrid(x) {
-      return Math.round(x / tileSize) * tileSize;
+      return Math.floor(x / tileSize) * tileSize;
     }
 
     function preload(theme){
@@ -200,32 +211,58 @@ const LoadMap = () => {
       const cols = 80;
       const rows = 45;
       mapped.forEach(r => r.forEach(t => storeImage(t)));
-      players.push(new Player(0, 40, 40, playerImg, new PlayerStatistics()));
+      let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
+      let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
+      for (let i = 0; i < state.players; i++) {
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg), new PlayerStatistics());
+      }
     }
 
     p5.setup = () => {
-      p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
+      p5.createCanvas(window.innerWidth, window.innerHeight);
+      let backButton = p5.createButton("<");
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
 
+      backButton.position(10, 10);
       zoomInButton.position(10, 10);
-      zoomOutButton.position(10, 120);
+      zoomOutButton.position(10, 10);
 
-      zoomInButton.size(100, 100);
-      zoomOutButton.size(100, 100);
+      backButton.style('width', '5vw');
+      backButton.style('height', '5vw');
+      backButton.style('font-size', '2vw');
+
+      zoomInButton.style('width', '5vw');
+      zoomInButton.style('height', '5vw');
+      zoomInButton.style('margin-top', '6vw');
+      zoomInButton.style('font-size', '2vw');
+
+      zoomOutButton.style('width', '5vw');
+      zoomOutButton.style('height', '5vw');
+      zoomOutButton.style('margin-top', '12vw');
+      zoomOutButton.style('font-size', '2vw');
+
+      backButton.mousePressed(() => {
+        navigate("/index");
+      });
+
       zoomInButton.mousePressed(() => {
-        tileSize *= 1.1;
-        players.forEach(p => {
-          p.x *= 1.1;
-          p.y *= 1.1;
-        });
+        if (tileSize < maxTileSize) {
+          Math.round(tileSize *= 1.1);
+          players.forEach(p => {
+            Math.round(p.x *= 1.1);
+            Math.round(p.y *= 1.1);
+          });
+        }
       });
       zoomOutButton.mousePressed(() => {
-        tileSize *= 0.9;
-        players.forEach(p => {
-          p.x *= 0.9;
-          p.y *= 0.9;
-        });
+        if (tileSize > minTileSize) {
+          Math.round(tileSize *= 0.9);
+          players.forEach(p => {
+            Math.round(p.x *= 0.9);
+            Math.round(p.y *= 0.9);
+          });
+        }
       });
       setup();
     }
