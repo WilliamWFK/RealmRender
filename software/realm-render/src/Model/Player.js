@@ -3,11 +3,12 @@
  * Currently unused in current build.
  */
 class Player {
-    constructor(id, x, y, img) {
+    constructor(id, x, y, img, playerStats) {
       this.id = id;
       this.x = x;
       this.y = y;
       this.img = img
+      this.playerStats = playerStats;
     }
 
     draw(p5, tileSize, mapX, mapY) {
@@ -17,6 +18,9 @@ class Player {
     on(x, y, p5, tileSize) {
       // return if x and y is on player including the circle radius
       return p5.dist(this.x, this.y, x, y) <= tileSize;
+    }
+    printStats(){
+      this.playerStats.returnSheet();
     }
   }
 export default Player;
