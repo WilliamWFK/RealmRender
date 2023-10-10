@@ -303,15 +303,15 @@ const LoadMap = () => {
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
       let fogToggle = p5.createButton("👁");
-      let exportButton = p5.createButton("Export");
-      let test = p5.createButton("test");
+      let exportButton = p5.createButton("Export PDF");
+      let png = p5.createButton("Export PNG");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
       zoomOutButton.position(10, 10);
       fogToggle.position(10, 10);
       exportButton.position(10, 10);
-      test.position(10, 10);
+      png.position(10, 10);
 
       backButton.style('width', '5vw');
       backButton.style('height', '5vw');
@@ -337,13 +337,13 @@ const LoadMap = () => {
       });
       exportButton.style('width', '5vw');
       exportButton.style('height', '5vw');
-      exportButton.style('margin-top', '18vw');
-      exportButton.style('font-size', '2vw');
+      exportButton.style('margin-top', '30vw');
+      exportButton.style('font-size', '1vw');
 
-      test.style('width', '5vw');
-      test.style('height', '5vw');
-      test.style('margin-top', '24vw');
-      test.style('font-size', '2vw');
+      png.style('width', '5vw');
+      png.style('height', '5vw');
+      png.style('margin-top', '24vw');
+      png.style('font-size', '1vw');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -412,13 +412,17 @@ const LoadMap = () => {
           const imgX = -65;
           const imgY = 0;
           pdf.addImage(imgData, 'PNG', imgX, imgY, width, height);
-          pdf.save("download.pdf");
+          if(state.name === ""){
+           pdf.save("Realm.pdf");
+          }else{
+            pdf.save(state.name + ".pdf");
+          }
         });
       });
 
 
 
-      test.mousePressed(async () => {
+      png.mousePressed(async () => {
         async function zoomOut() {
           while (tileSize > minTileSize) {
             Math.round(tileSize *= 0.9);
@@ -432,7 +436,11 @@ const LoadMap = () => {
       
         // Zoom out first
         await zoomOut();
-        p5.saveCanvas("map", "png");
+        if(state.name === ""){
+          p5.saveCanvas("Render", "png");
+        }else{
+          p5.saveCanvas(state.name, "png");
+        }
       });
 
       setup();
