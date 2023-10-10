@@ -211,11 +211,14 @@ const LoadMap = () => {
       mapped = mapObj.tiles;
       preload(state.theme);
       // create map and players
-      const cols = 80;
-      const rows = 45;
       mapped.forEach(r => r.forEach(t => storeImage(t)));
-      players.push(new Player(0, 40, 40, playerImg, new PlayerStatistics()));
+      let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
+      let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
+      for (let i = 0; i < state.players; i++) {
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, new PlayerStatistics()));
+      }
     }
+
 
     p5.setup = () => {
       p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
