@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
-import PlayerStatistics from '../Model/PlayerStatistics'; // Import PlayerStatistics
+import PlayerStatistics from '../Model/PlayerStatistics';
 
 
 const LoadMap = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const [isPlayerStatsVisible, setPlayerStatsVisibility] = useState(false);
 
   let mapObj;
   let mapped = [];
@@ -26,6 +25,7 @@ const LoadMap = () => {
 
   let maxTileSize = tileSize * 2;
   let minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
+
 
   let chest1;
   let chest2;
@@ -62,21 +62,6 @@ const LoadMap = () => {
 
     }
 
-    // detect mouse clicks
-    p5.mouseClicked = () => {
-      let x = Math.floor(p5.mouseX / tileSize);
-      let y = Math.floor(p5.mouseY / tileSize);
-
-      //zoom in
-      let tile = mapped.find(t => t.x + mapX === x && t.y + mapY === y);
-      if (tile) {
-        tile.type = "selected";
-
-      }
-
-
-    }
-
     p5.mousePressed = () => {
 
       if (prevX === -1 && prevY === -1) {
@@ -86,27 +71,14 @@ const LoadMap = () => {
 
       players.forEach(p => {
         if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
-
           activePlayer = p;
-          if(p5.mouseButton === p5.RIGHT && isPlayerStatsVisible === false) {
-
-            setPlayerStatsVisibility(true);
-            console.log("Yay")
-
-
-          }
-          else if(p5.mouseButton === p5.RIGHT && isPlayerStatsVisible === true) {
-            setPlayerStatsVisibility(false);
-            console.log("Nay")
-
-
-          }
+          p.printStats();
         }
-      })
 
-      if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
-        activePlayer = -1;
-      }
+       if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
+          activePlayer = -1;
+        }
+      });
     }
 
     p5.mouseDragged = () => {
@@ -123,7 +95,6 @@ const LoadMap = () => {
     }
 
     p5.mouseReleased = () => {
-
       prevX = -1;
       prevY = -1;
       if (activePlayer !== -1) {
@@ -243,13 +214,7 @@ const LoadMap = () => {
       const cols = 80;
       const rows = 45;
       mapped.forEach(r => r.forEach(t => storeImage(t)));
-      let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
-      let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
-      for (let i = 0; i < state.players; i++) {
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, new PlayerStatistics()));
-      }
-
-
+      players.push(new Player(0, 40, 40, playerImg, new PlayerStatistics()));
     }
 
     p5.setup = () => {
@@ -258,22 +223,28 @@ const LoadMap = () => {
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
 
-
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
-      zoomOutButton.position(10, 120);
+      zoomOutButton.position(10, 10);
+
+      backButton.style('width', '5vw');
+      backButton.style('height', '5vw');
+      backButton.style('font-size', '2vw');
+
+      zoomInButton.style('width', '5vw');
+      zoomInButton.style('height', '5vw');
+      zoomInButton.style('margin-top', '6vw');
+      zoomInButton.style('font-size', '2vw');
+
+      zoomOutButton.style('width', '5vw');
+      zoomOutButton.style('height', '5vw');
+      zoomOutButton.style('margin-top', '12vw');
+      zoomOutButton.style('font-size', '2vw');
 
       backButton.mousePressed(() => {
         navigate("/index");
       });
 
-
-      zoomInButton.size(100, 100);
-      zoomOutButton.size(100, 100);
-
-      backButton.style('width', '5vw');
-      backButton.style('height', '5vw');
-      backButton.style('font-size', '2vw');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -301,9 +272,8 @@ const LoadMap = () => {
     };
   }
   return (
-    <div>
+    <div id="P5Wrapper">
       <ReactP5Wrapper sketch={sketch} />
-      {isPlayerStatsVisible && <PlayerStatistics />} {/* Add PlayerStatistics */}
     </div>
   );
 };
