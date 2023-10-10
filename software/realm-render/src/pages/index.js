@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import background from '../indexBackground.svg';
+import Statistics from '../Model/PlayerStatistics';  // adjust the path based on your folder structure
+
 
 const Home = () => {
   const [menumode, setMenumode] = useState(0);
@@ -28,10 +30,13 @@ const Home = () => {
     if (menumode === 0) {
       return (
         <div class="menuBackdrop mainMenu">
+
           <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
           <div onClick={() => { setMenumode(2) }} class="menuButtonItem"><p>Load</p></div>
           <Link to="/join" class="menuButtonItem"><p>Join</p></Link>
+
         </div>
+
       );
     } else if (menumode === 1) {
       return (
@@ -110,8 +115,26 @@ const Home = () => {
             </div>
           </div>
         </div>
+
+      );
+
+    }
+    else if (menumode === 3) {
+      return (
+        <div>
+          <div class="menuBackdrop statisticsMenu">
+            <h1>Statistics</h1>
+            <Statistics />
+            <div class="navButtons">
+              <div class="backButton" onClick={() => { setMenumode(0) }}>
+                <p class="caret">&lt;</p><p class="text">Back</p>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     }
+
 
   }
   return (
@@ -119,6 +142,8 @@ const Home = () => {
       <header class="App-header">
         Realm Render
       </header>
+      <div onClick={() => { setMenumode(3) }} class="menuButtonItem"><p>Statistics</p></div> {/* Button to open Statistics */}
+
       {menuContents()}
       <div>
         <img class="custom-background" src={background} alt="background"></img>

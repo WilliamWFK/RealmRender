@@ -1,0 +1,44 @@
+.character-sheet {
+    max-height: 400px; /* Set the maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    width: 100%; /* Set the width */
+    border-radius: 25px; /* Rounded corners */
+    display: flex;
+    flex-wrap: wrap;
+    top: 0;
+    right: -1350px;
+    background-color: aliceblue;
+  }
+
+  table {
+    width: 200%; /* Make table take full width of the parent */
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  tr {
+    width: 100%; /* Make each row take up half the width */
+  }
+
+  td {
+    padding: 8px; /* Add padding to table cells */
+    width: 50%; /* Each cell takes up half the width of its row */
+  }
+
+  input {
+    width: 250%; /* Make the text boxes slightly larger */
+  }
+  .character-sheet {
+    position: fixed;
+    /* set top and right to their max values
+    to position the element at the top right corner */
+
+    /* margin to create some space at the bottom */
+    margin-top: 10px;
+
+    /* padding to make the content appear inside the element */
+    padding: 20px;
+    /* give the element a background color */
+
+    /* other styles */
+  }

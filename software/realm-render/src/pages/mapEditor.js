@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
-import '../styles/mapEditor.css';
+import PlayerStatistics from '../Model/PlayerStatistics'; // Import PlayerStatistics
+
 
 const LoadMap = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [isPlayerStatsVisible, setPlayerStatsVisibility] = useState(false);
+
   let mapObj;
-  // tiles nand players
   let mapped = [];
   let players = [];
   // active storage
@@ -66,10 +68,14 @@ const LoadMap = () => {
       let tile = mapped.find(t => t.x + mapX === x && t.y + mapY === y);
       if (tile) {
         tile.type = "selected";
+
       }
+
+
     }
 
     p5.mousePressed = () => {
+
       if (prevX === -1 && prevY === -1) {
         prevX = p5.mouseX;
         prevY = p5.mouseY;
@@ -77,7 +83,21 @@ const LoadMap = () => {
 
       players.forEach(p => {
         if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
+
           activePlayer = p;
+          if(p5.mouseButton === p5.RIGHT && isPlayerStatsVisible === false) {
+
+            setPlayerStatsVisibility(true);
+            console.log("Yay")
+
+
+          }
+          else if(p5.mouseButton === p5.RIGHT && isPlayerStatsVisible === true) {
+            setPlayerStatsVisibility(false);
+            console.log("Nay")
+
+
+          }
         }
       })
 
@@ -87,26 +107,27 @@ const LoadMap = () => {
     }
 
     p5.mouseDragged = () => {
+
       if (activePlayer !== -1) {
         activePlayer.x = p5.mouseX + (-(mapX) * tileSize);
         activePlayer.y = p5.mouseY + (-(mapY) * tileSize);
       } else {
         mapX += (p5.mouseX - prevX) / tileSize;
         mapY += (p5.mouseY - prevY) / tileSize;
-
         prevX = p5.mouseX;
         prevY = p5.mouseY;
       }
     }
 
     p5.mouseReleased = () => {
+
       prevX = -1;
       prevY = -1;
       if (activePlayer !== -1) {
         activePlayer.x = snapGrid(p5.mouseX - mapX * tileSize) + (tileSize / 2);
         activePlayer.y = snapGrid(p5.mouseY - mapY * tileSize) + (tileSize / 2);
         players.forEach(p => {
-          if (p.id === activePlayer.id) {
+          if(p.id === activePlayer.id) {
             p.x = activePlayer.x;
             p.y = activePlayer.y;
           }
@@ -118,7 +139,7 @@ const LoadMap = () => {
       return Math.floor(x / tileSize) * tileSize;
     }
 
-    function preload(theme) {
+    function preload(theme){
       //load all images for drawing
       let path = "TilesImg/" + theme + "/";
       //loading chests
@@ -142,11 +163,11 @@ const LoadMap = () => {
       playerImg = p5.loadImage("TilesImg/player1.png");
     }
 
-    function storeImage(tile) {
+    function storeImage(tile){
       let type = tile.image.split("-");
-      switch (type[0]) {
+      switch(type[0]){
         case "big_object":
-          switch (type[1]) {
+          switch(type[1]){
             case "0":
               tile.setImage(big_object1);
               break;
@@ -159,7 +180,7 @@ const LoadMap = () => {
           }
           break;
         case "object":
-          switch (type[1]) {
+          switch(type[1]){
             case "0":
               tile.setImage(object1);
               break;
@@ -181,7 +202,7 @@ const LoadMap = () => {
           }
           break;
         case "chest":
-          switch (type[1]) {
+          switch(type[1]){
             case "0":
               tile.setImage(chest1);
               break;
@@ -216,6 +237,8 @@ const LoadMap = () => {
       mapped = mapObj.tiles;
       preload(state.theme);
       // create map and players
+      const cols = 80;
+      const rows = 45;
       mapped.forEach(r => r.forEach(t => storeImage(t)));
       let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
       let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
@@ -278,8 +301,9 @@ const LoadMap = () => {
     };
   }
   return (
-    <div class="editorWrapper">
+    <div>
       <ReactP5Wrapper sketch={sketch} />
+      {isPlayerStatsVisible && <PlayerStatistics />} {/* Add PlayerStatistics */}
     </div>
   );
 };
