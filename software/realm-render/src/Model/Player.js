@@ -14,9 +14,14 @@ class Player {
     p5.image(this.img, (this.x + mapX * tileSize) - tileSize / 2, (this.y + mapY * tileSize) - tileSize / 2, tileSize, tileSize);
   }
 
-  on(x, y, p5, tileSize) {
-    // return if x and y is on player including the circle radius
-    return p5.dist(this.x, this.y, x, y) <= tileSize / 2;
+    on(x, y, p5, tileSize) {
+      // return if x and y is on player including the circle radius
+      return p5.dist(this.x, this.y, x, y) <= tileSize / 2;
+    }
+    printStats(){
+      this.playerStats.returnSheet();
+    }
   }
-}
+
+
 export default Player;

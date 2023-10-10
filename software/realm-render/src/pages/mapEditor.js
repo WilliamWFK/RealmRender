@@ -14,17 +14,19 @@ const LoadMap = () => {
   let mapObj;
   let mapped = [];
   let players = [];
-  // active storage
   let tileSize = 32;
   let activePlayer = -1;
   let prevX = -1;
   let prevY = -1;
+
+
+
   let mapX = ((state.width / 2) * -1) + (window.innerWidth / tileSize) / 2;
   let mapY = (state.height - (window.innerHeight / tileSize)) * -1;
-  // tile definition
+
   let maxTileSize = tileSize * 2;
   let minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
-  // image storage
+
   let chest1;
   let chest2;
   let big_object1;
@@ -43,17 +45,18 @@ const LoadMap = () => {
   function sketch(p5) {
     function draw() {
       p5.background('#0f1f1f');
-      mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
-      mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
-      mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2 / 3)) / tileSize), mapX);
-      mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2 / 3)) / tileSize), mapY);
-
 
       // draw map
       mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
 
       // draw players
       players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
+      mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
+      mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
+
+      mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2 / 3)) / tileSize), mapX);
+      mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2 / 3)) / tileSize), mapY);
+
 
       p5.frameRate(60);
 
@@ -243,37 +246,34 @@ const LoadMap = () => {
       let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
       let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
       for (let i = 0; i < state.players; i++) {
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg));
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, new PlayerStatistics()));
       }
+
+
     }
 
     p5.setup = () => {
-      p5.createCanvas(window.innerWidth, window.innerHeight);
+      p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
       let backButton = p5.createButton("<");
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
 
+
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
-      zoomOutButton.position(10, 10);
-
-      backButton.style('width', '5vw');
-      backButton.style('height', '5vw');
-      backButton.style('font-size', '2vw');
-
-      zoomInButton.style('width', '5vw');
-      zoomInButton.style('height', '5vw');
-      zoomInButton.style('margin-top', '6vw');
-      zoomInButton.style('font-size', '2vw');
-
-      zoomOutButton.style('width', '5vw');
-      zoomOutButton.style('height', '5vw');
-      zoomOutButton.style('margin-top', '12vw');
-      zoomOutButton.style('font-size', '2vw');
+      zoomOutButton.position(10, 120);
 
       backButton.mousePressed(() => {
         navigate("/index");
       });
+
+
+      zoomInButton.size(100, 100);
+      zoomOutButton.size(100, 100);
+
+      backButton.style('width', '5vw');
+      backButton.style('height', '5vw');
+      backButton.style('font-size', '2vw');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
