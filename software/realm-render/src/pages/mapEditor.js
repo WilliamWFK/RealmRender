@@ -227,11 +227,13 @@ const LoadMap = () => {
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
       let exportButton = p5.createButton("Export");
+      let test = p5.createButton("test");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
       zoomOutButton.position(10, 10);
       exportButton.position(10, 10);
+      test.position(10, 10);
 
       backButton.style('width', '5vw');
       backButton.style('height', '5vw');
@@ -251,6 +253,11 @@ const LoadMap = () => {
       exportButton.style('height', '5vw');
       exportButton.style('margin-top', '18vw');
       exportButton.style('font-size', '2vw');
+
+      test.style('width', '5vw');
+      test.style('height', '5vw');
+      test.style('margin-top', '24vw');
+      test.style('font-size', '2vw');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -272,6 +279,7 @@ const LoadMap = () => {
       });
 
       exportButton.mousePressed(async () => {
+        
         // Define a function to zoom out
         async function zoomOut() {
           while (tileSize > minTileSize) {
@@ -317,7 +325,28 @@ const LoadMap = () => {
           pdf.save("download.pdf");
         });
       });
+
+
+
+      test.mousePressed(async () => {
+        async function zoomOut() {
+          while (tileSize > minTileSize) {
+            Math.round(tileSize *= 0.9);
+            players.forEach(p => {
+              Math.round(p.x *= 0.9);
+              Math.round(p.y *= 0.9);
+            });
+            await new Promise(resolve => setTimeout(resolve, 0.1)); // Delay each zoom step
+          }
+        }
+      
+        // Zoom out first
+        await zoomOut();
+        p5.saveCanvas("map", "png");
+      });
+
       setup();
+
     }
 
     p5.draw = () => {
