@@ -51,6 +51,7 @@ class Map {
     placeRooms() {
         const random = seedrandom(this.seed);
         const spawnRoom = new SquareRoom(this.width, this.height, "medium", this.theme);
+
         //spawnRoom.addExits();
         const spawnRoomStartX = Math.floor((this.width - spawnRoom.roomWidth) / 2);
         const spawnRoomStartY = this.height - spawnRoom.roomHeight;
@@ -80,8 +81,8 @@ class Map {
 
             for (let x = startX + 1; x < startX + room.roomWidth - 1; x++) {
                 for (let y = startY + 1; y < startY + room.roomHeight - 1; y++) {
-                    console.log(typeof this.tiles[0][0])
-                    console.log(typeof this.tiles[x][y])
+                    //console.log(typeof this.tiles[0][0])
+                    //console.log(typeof this.tiles[x][y])
                     if (this.tiles[x][y].type !== "") {
                         return true;
                     }
@@ -271,20 +272,20 @@ class Map {
                 const y = usedExits[i].y + dy;
                 const tileType = this.tiles[x][y].type;
 
-                if (["floor", "chest", "BigObject", "object"].includes(tileType)) {
-                    this.tiles[x][y].setType("cleanFloor");
-                }
-            }
-        }
-        //Aswell as above or bellow
-        for (let x = spawnRoomStartX; x < spawnRoomStartX + spawnRoom.roomWidth; x++) {
-            for (let y = spawnRoomStartY; y < spawnRoomStartY + spawnRoom.roomHeight; y++) {
-                const tileType = this.tiles[x][y].type;
-                if (["floor", "chest", "BigObject", "object"].includes(tileType)) {
-                    this.tiles[x][y].setType("cleanFloor");
-                }
-            }
-        }
+              if (["floor", "chest", "BigObject", "object"].includes(tileType)) {
+                  this.tiles[x][y].setType("cleanFloor");
+              }
+          }
+      }
+      //Make all tiles within spawn room that are of these types cleanFloor
+      for (let x = spawnRoomStartX; x < spawnRoomStartX + spawnRoom.roomWidth; x++) {
+          for (let y = spawnRoomStartY; y < spawnRoomStartY + spawnRoom.roomHeight; y++) {
+              const tileType = this.tiles[x][y].type;
+              if (["floor", "chest", "BigObject", "object"].includes(tileType)) {
+                  this.tiles[x][y].setType("cleanFloor");
+              }
+          }
+      }
 
 
     }
