@@ -48,6 +48,7 @@ class PlayerStatistics {
         td2.id = key;
 
         td2.setAttribute("contenteditable", "true");
+        td2.setAttribute("spellcheck", "false");
 
         tr.appendChild(td1);
         tr.appendChild(td2);
