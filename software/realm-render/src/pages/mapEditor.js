@@ -72,6 +72,7 @@ const LoadMap = () => {
       players.forEach(p => {
         if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
           activePlayer = p;
+
           p.printStats();
         }
 
@@ -215,7 +216,9 @@ const LoadMap = () => {
       let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
       let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
       for (let i = 0; i < state.players; i++) {
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, new PlayerStatistics(i)));
+        let player1 = new PlayerStatistics(i)
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, player1));
+
       }
     }
 

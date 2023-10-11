@@ -22,6 +22,7 @@ class Player {
     printStats(){
       this.playerStats.returnSheet();
     }
+
   }
 
 
