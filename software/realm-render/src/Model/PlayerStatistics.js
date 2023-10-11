@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import '../styles/PlayerStatistics.css';
 
+
 class PlayerStatistics {
+  static players = [null, null, null, null, null, null];
+
   constructor(playerId) {
     this.stats = {};
+    this.playerId = playerId;
     this.populateStats();
+    PlayerStatistics.players[playerId] = this;
   }
 
   populateStats() {
@@ -29,14 +34,32 @@ class PlayerStatistics {
     this.stats["featuresTraits"] = 'Elf Weapon Training, Darkvision, Fey Ancestry, Trance';
   }
 
+
   returnSheet() {
     let p5 = document.getElementById("P5Wrapper");
-    if(p5.childNodes.length > 1)p5.removeChild(p5.childNodes[1]);
+
+    for (let i = 0; i < 6; i++) {
+      let existingPlayerSheet = document.getElementById("character-sheet" + i);
+      if (existingPlayerSheet) {
+        for (let key in this.stats) {
+          let statElement = document.getElementById(key);
+          if (statElement && PlayerStatistics.players[i]) {
+            PlayerStatistics.players[i].stats[key] = statElement.innerHTML;
+          }
+        }
+        p5.removeChild(existingPlayerSheet);
+        break;
+      }
+    }
+
+    if(p5.childNodes.length > 1) p5.removeChild(p5.childNodes[1]);
+
     let sheet = document.createElement("div");
-    sheet.id = "character-sheet";
-    let PlayerID = "Player " + this.stats["name"];
+    sheet.id = "character-sheet" + this.playerId;
+    let PlayerID = "Player " + this.playerId + ": " + this.stats["name"];
     sheet.className = "character-sheet";
     sheet.innerHTML = "<h1>"+PlayerID+"</h1>";
+
     let table = document.createElement("table");
     let tbody = document.createElement("tbody");
     for (let key in this.stats) {
