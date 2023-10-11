@@ -151,7 +151,7 @@ const LoadMap = () => {
       //loading base tiles
       floor = p5.loadImage(path + "tile.png");
       wall = p5.loadImage(path + "tileURDL.png");
-      door = p5.loadImage(path + "door2.png");
+      door = p5.loadImage(path + "door.png");
       background = p5.loadImage(path + "background.png");
       //load player
 
