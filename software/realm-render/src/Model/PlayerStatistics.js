@@ -56,7 +56,7 @@ class PlayerStatistics {
 
     let sheet = document.createElement("div");
     sheet.id = "character-sheet" + this.playerId;
-    let PlayerID = "Player " + this.playerId + ": " + this.stats["name"];
+    let PlayerID = "Player " + (this.playerId+1) + ": " + this.stats["name"];
     sheet.className = "character-sheet";
     sheet.innerHTML = "<h1>"+PlayerID+"</h1>";
 
