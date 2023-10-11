@@ -1,57 +1,91 @@
 .character-sheet {
-    max-height: 400px; /* Set the maximum height */
-    overflow-y: auto; /* Enable vertical scrolling */
-    width: 25vw; /* Set the width */
-    border-radius: 25px; /* Rounded corners */
-    display: flex;
-    flex-wrap: wrap;
-    top: 0;
-    right: 0;
-    background-color: aliceblue;
-    font-size: 1vw;
-  }
+  max-height: 400px;
+  overflow-y: auto;
+  width: 25vw;
+  border-radius: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  top: 0;
+  right: 0;
+  background-color: #FAEBD7;
+  font-size: 1vw;
+  font-family: 'Times New Roman', Times, serif;
+  border: 2px solid #8B4513;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
+}
 
-  table {
-    width: 200%; /* Make table take full width of the parent */
-    display: flex;
-    flex-wrap: wrap;
-  }
+table {
+  width: 200%;
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  tr {
-    width: 100%; /* Make each row take up half the width */
-  }
 
-  td {
-    padding: 8px; /* Add padding to table cells */
-    width: 50%; /* Each cell takes up half the width of its row */
-  }
+tr {
+  width: 100%;
+}
 
-  input {
-    width: 250%; /* Make the text boxes slightly larger */
-  }
-  .character-sheet {
-    position: fixed;
-    /* set top and right to their max values
-    to position the element at the top right corner */
+td {
+  padding: 8px;
+  width: 50%;
+  color: #3B3B3B;
+}
+td[id] {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px dotted #8B4513;
+  border-radius: 25px;
+}
 
-    /* margin to create some space at the bottom */
-    margin-top: 10px;
+td[id]:hover {
+  background-color: #EDEDED;
+  border: 1px dotted #993910;
+  border-radius: 25px;
+}
 
-    /* padding to make the content appear inside the element */
-    padding: 20px;
-    /* give the element a background color */
+input {
+  width: 250%;
+  border-radius: 5px;
+  border: 1px solid #8B4513;
+}
 
-    /* other styles */
-  }
+.character-sheet {
+  position: fixed;
+  margin-top: 10px;
+  padding: 20px;
+}
 
-  #close-sheet {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 12px 16px;
-    background-color: #f44336;
-    color: white;
-    font-size: 18px;
-    border: none;
-    cursor: pointer;
-  }
+#close-sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 12px 16px;
+  background-color: #B22222;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+
+}
+.character-sheet::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.character-sheet::-webkit-scrollbar-track {
+  background: #FAEBD7;
+  border-radius: 3px;
+}
+
+.character-sheet::-webkit-scrollbar-thumb {
+  background: #8B4513;
+  border-radius: 3px;
+}
+
+.character-sheet::-webkit-scrollbar-thumb:hover {
+  background: #A0522D;
+}
