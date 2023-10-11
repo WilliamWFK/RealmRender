@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import '../styles/PlayerStatistics.css';
 
-import Player1 from './player3.png';
-import Player2 from './player4.png';
-import Player3 from './player5.png';
+import Knight from './player3.png';
+import Rogue from './player4.png';
+import Wizard from './player5.png';
+import Token from './player1.png';
 
 
 
@@ -18,7 +19,7 @@ class PlayerStatistics {
   }
 
   populateStats() {
-    this.stats["classLevel"] = 'MMOR Class, 1st';
+    this.stats["classLevel"] = 'Knight, 1st';
     this.stats["race"] = 'Elf';
     this.stats["background"] = 'Acolyte';
     this.stats["name"] = 'Полевом';
@@ -38,7 +39,7 @@ class PlayerStatistics {
     this.stats["equipment"] = 'Leather armor, dagger, shield, backpack, waterskin, 10 gp';
     this.stats["featuresTraits"] = 'Elf Weapon Training, Darkvision, Fey Ancestry, Trance';
     if(this.playerId==1){
-      this.stats["classLevel"] = 'Barbarian, 1st';
+      this.stats["classLevel"] = 'Rogue, 1st';
       this.stats["race"] = 'Half-Orc';
       this.stats["background"] = 'Outlander';
       this.stats["name"] = 'Thordan';
@@ -59,7 +60,7 @@ class PlayerStatistics {
       this.stats["featuresTraits"] = 'Darkvision, Relentless Endurance, Savage Attacks';
     }
     if(this.playerId==2){
-      this.stats["classLevel"] = 'Rogue, 1st';
+      this.stats["classLevel"] = 'Wizard, 1st';
       this.stats["race"] = 'Halfling';
       this.stats["background"] = 'Criminal';
       this.stats["name"] = 'Elara';
@@ -80,7 +81,7 @@ class PlayerStatistics {
       this.stats["featuresTraits"] = 'Lucky, Brave, Halfling Nimbleness, Sneak Attack';
     }
     if(this.playerId==3){
-      this.stats["classLevel"] = 'Cleric, 1st';
+      this.stats["classLevel"] = 'Knight, 1st';
       this.stats["race"] = 'Dwarf';
       this.stats["background"] = 'Acolyte';
       this.stats["name"] = 'Seraphina';
@@ -101,7 +102,7 @@ class PlayerStatistics {
       this.stats["featuresTraits"] = 'Dwarven Resilience, Stonecunning, Divine Domain';
     }
     if(this.playerId==4){
-      this.stats["classLevel"] = 'Wizard, 1st';
+      this.stats["classLevel"] = 'Rogue, 1st';
       this.stats["race"] = 'Gnome';
       this.stats["background"] = 'Sage';
       this.stats["name"] = 'Nim';
@@ -122,7 +123,7 @@ class PlayerStatistics {
       this.stats["featuresTraits"] = 'Gnome Cunning, Darkvision, Spellcasting';
     }
     if(this.playerId==5){
-      this.stats["classLevel"] = 'Bard, 1st';
+      this.stats["classLevel"] = 'Wizard, 1st';
       this.stats["race"] = 'Human';
       this.stats["background"] = 'Entertainer';
       this.stats["name"] = 'Lyra';
@@ -166,15 +167,18 @@ class PlayerStatistics {
 
     let sheet = document.createElement("div");
     sheet.id = "character-sheet" + this.playerId;
-    if(this.playerId==0 || this.playerId==3){
-      sheet.style.backgroundImage = `url(${Player1})`
+    sheet.style.backgroundImage = `url(${Token})`;
+
+    if(this.stats["classLevel"].includes("Knight")){
+      sheet.style.backgroundImage = `url(${Knight})`
     }
-    if(this.playerId==1|| this.playerId==4){
-      sheet.style.backgroundImage = `url(${Player2})`
+    if(this.stats["classLevel"].includes("Rogue")){
+      sheet.style.backgroundImage = `url(${Rogue})`
     }
-    if(this.playerId==2|| this.playerId==5){
-      sheet.style.backgroundImage = `url(${Player3})`
+    if(this.stats["classLevel"].includes("Wizard")){
+      sheet.style.backgroundImage = `url(${Wizard})`
     }
+
     sheet.style.backgroundSize = '60px';
     sheet.style.backgroundRepeat = 'no-repeat';
     sheet.style.backgroundPositionX = '80%';

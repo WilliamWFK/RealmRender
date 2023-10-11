@@ -47,6 +47,10 @@ const LoadMap = () => {
   let player3Img;
   let player4Img;
   let player5Img;
+  let rogueImg;
+  let knightImg;
+  let wizardImg;
+  let tokenImg;
   let playerImgs;
   let monsterImg;
   let monster1Img;
@@ -60,14 +64,41 @@ const LoadMap = () => {
   let monster9Img;
   let monsterImgs;
 
+  //let players 1 through 6 player stats
+  let player1PlayerStats;
+  let player2PlayerStats;
+  let player3PlayerStats;
+  let player4PlayerStats;
+  let player5PlayerStats;
+  let player6PlayerStats;
+  let playerPlayerStats;
+
   function sketch(p5) {
     function draw() {
       p5.background('#0f1f1f');
 
       // draw map
       mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+      monsters.forEach(m => m.draw(p5, tileSize, mapX, mapY));
+
 
       // draw players
+      let i = 0;
+      players.forEach(p => {
+        if(playerPlayerStats[i].stats['classLevel'].includes("Rogue")){
+          p.img = rogueImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Knight")){
+          p.img = knightImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Wizard")){
+          p.img = wizardImg;
+        }
+        else{
+          p.img = tokenImg;
+        }
+        i++;
+      });
       players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
       mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
       mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
@@ -75,7 +106,6 @@ const LoadMap = () => {
       mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2 / 3)) / tileSize), mapX);
       mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2 / 3)) / tileSize), mapY);
 
-      monsters.forEach(m => m.draw(p5, tileSize, mapX, mapY));
 
       p5.frameRate(60);
 
@@ -91,7 +121,6 @@ const LoadMap = () => {
       players.forEach(p => {
         if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
           activePlayer = p;
-
           p.printStats();
         }
 
@@ -161,6 +190,10 @@ const LoadMap = () => {
       player3Img = p5.loadImage("TilesImg/player3.png");
       player4Img = p5.loadImage("TilesImg/player4.png");
       player5Img = p5.loadImage("TilesImg/player5.png");
+      rogueImg = p5.loadImage("TilesImg/player4.png");
+      knightImg = p5.loadImage("TilesImg/player3.png");
+      wizardImg = p5.loadImage("TilesImg/player5.png");
+      tokenImg = p5.loadImage("TilesImg/player1.png");
       playerImgs = [player3Img, player4Img, player5Img, player3Img, player4Img, player5Img];
 
       //load monster
@@ -256,9 +289,22 @@ const LoadMap = () => {
       mapped.forEach(r => r.forEach(t => storeImage(t)));
       let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
       let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
+      playerPlayerStats = [player1PlayerStats, player2PlayerStats, player3PlayerStats, player4PlayerStats, player5PlayerStats, player6PlayerStats]
       for (let i = 0; i < state.players; i++) {
-        let player1 = new PlayerStatistics(i)
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImgs[i], player1));
+        playerPlayerStats[i] = new PlayerStatistics(i)
+        if(playerPlayerStats[i].stats['classLevel'].includes("Rogue")){
+          player1Img = rogueImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Knight")){
+          player1Img = knightImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Wizard")){
+          player1Img = wizardImg;
+        }
+        else{
+          player1Img = tokenImg;
+        }
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, player1Img, playerPlayerStats[i]));
 
       }
 
