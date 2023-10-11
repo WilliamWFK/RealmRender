@@ -8,6 +8,7 @@ import Token from './player1.png';
 
 
 
+
 class PlayerStatistics {
   static players = [null, null, null, null, null, null];
 
@@ -166,30 +167,40 @@ class PlayerStatistics {
     if(p5.childNodes.length > 1) p5.removeChild(p5.childNodes[1]);
 
     let sheet = document.createElement("div");
-    sheet.id = "character-sheet" + this.playerId;
-    sheet.style.backgroundImage = `url(${Token})`;
-
-    if(this.stats["classLevel"].includes("Knight")){
-      sheet.style.backgroundImage = `url(${Knight})`
-    }
-    if(this.stats["classLevel"].includes("Rogue")){
-      sheet.style.backgroundImage = `url(${Rogue})`
-    }
-    if(this.stats["classLevel"].includes("Wizard")){
-      sheet.style.backgroundImage = `url(${Wizard})`
-    }
-
-    sheet.style.backgroundSize = '60px';
-    sheet.style.backgroundRepeat = 'no-repeat';
-    sheet.style.backgroundPositionX = '80%';
-    sheet.style.backgroundPositionY = '6%';
-
-    let PlayerID = "Player " + (this.playerId+1) + ": " + this.stats["name"];
     sheet.className = "character-sheet";
-    sheet.innerHTML = "<h1>"+PlayerID+"</h1>";
+    sheet.id = "character-sheet" + this.playerId;
+
+
+
+    //Add the style
+
 
     let table = document.createElement("table");
     let tbody = document.createElement("tbody");
+    let h1 = document.createElement("h1");
+
+
+    h1.style.backgroundImage = `url(${Token})`;
+
+    if(this.stats["classLevel"].includes("Knight")){
+      h1.style.backgroundImage = `url(${Knight})`
+    }
+    if(this.stats["classLevel"].includes("Rogue")){
+      h1.style.backgroundImage = `url(${Rogue})`
+    }
+    if(this.stats["classLevel"].includes("Wizard")){
+      h1.style.backgroundImage = `url(${Wizard})`
+    }
+
+
+
+    h1.style.backgroundSize = '50px';
+    h1.style.backgroundRepeat = 'no-repeat';
+    h1.style.backgroundPositionX = '95%';
+    h1.style.backgroundPositionY = '0%';
+    h1.textContent = "Player " + (this.playerId+1) + ": " + this.stats["name"];
+    tbody.appendChild(h1);
+
     for (let key in this.stats) {
         let tr = document.createElement("tr");
         let td1 = document.createElement("td");
