@@ -34,45 +34,51 @@ class PlayerStatistics {
     if(p5.childNodes.length > 1)p5.removeChild(p5.childNodes[1]);
     let sheet = document.createElement("div");
     sheet.id = "character-sheet";
+    let PlayerID = "Player " + this.stats["name"];
     sheet.className = "character-sheet";
-    sheet.innerHTML = "<h1>Character Sheet</h1>";
+    sheet.innerHTML = "<h1>"+PlayerID+"</h1>";
     let table = document.createElement("table");
     let tbody = document.createElement("tbody");
     for (let key in this.stats) {
-      let tr = document.createElement("tr");
-      let td1 = document.createElement("td");
-      let td2 = document.createElement("td");
-      td1.innerHTML = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
-      td2.innerHTML = this.stats[key];
-      td2.id = key;
-      td2.addEventListener("click", () => {
-        let input = tr.appendChild(document.createElement("input"));
-        input.value = this.stats[td2.id];
-        input.id = td2.id;
-        input.addEventListener("change", function(){
-          td2.innerHTML = input.value;
-        }, {once: true});
-        td2.innerHTML = "";
-        td2.appendChild(input);
-      }, {once : true});
+        let tr = document.createElement("tr");
+        let td1 = document.createElement("td");
+        let td2 = document.createElement("td");
+        td1.innerHTML = key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+        td2.innerHTML = this.stats[key];
+        td2.id = key;
+
+        td2.setAttribute("contenteditable", "true");
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tbody.appendChild(tr);
+        td2.addEventListener("keydown", function(event) {
+          if (event.key === ("Enter")) {
+              event.preventDefault();
+              td2.blur();
+          }
+      });
+
       tr.appendChild(td1);
       tr.appendChild(td2);
       tbody.appendChild(tr);
     }
     table.appendChild(tbody);
     sheet.appendChild(table);
+
     let button = document.createElement("button");
     button.id = "close-sheet";
     button.innerHTML = "X";
     button.addEventListener("click", () => {
-      for (let key in this.stats) {
-        this.stats[key] = document.getElementById(key).innerHTML;
-      }
-      document.getElementById("P5Wrapper").removeChild(sheet);
+        for (let key in this.stats) {
+            this.stats[key] = document.getElementById(key).innerHTML;
+        }
+        document.getElementById("P5Wrapper").removeChild(sheet);
     }, {once : true});
+
     sheet.appendChild(button);
     p5.appendChild(sheet);
-  }
+}
 }
 
 export default PlayerStatistics;
