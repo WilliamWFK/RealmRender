@@ -4,6 +4,7 @@ import Map from "../Model/Map";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import PlayerStatistics from '../Model/PlayerStatistics';
+import '../styles/mapEditor.css';
 
 
 const LoadMap = () => {
@@ -75,7 +76,7 @@ const LoadMap = () => {
           p.printStats();
         }
 
-       if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
+        if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
           activePlayer = -1;
         }
       });
@@ -101,7 +102,7 @@ const LoadMap = () => {
         activePlayer.x = snapGrid(p5.mouseX - mapX * tileSize) + (tileSize / 2);
         activePlayer.y = snapGrid(p5.mouseY - mapY * tileSize) + (tileSize / 2);
         players.forEach(p => {
-          if(p.id === activePlayer.id) {
+          if (p.id === activePlayer.id) {
             p.x = activePlayer.x;
             p.y = activePlayer.y;
           }
@@ -113,7 +114,7 @@ const LoadMap = () => {
       return Math.floor(x / tileSize) * tileSize;
     }
 
-    function preload(theme){
+    function preload(theme) {
       //load all images for drawing
       let path = "TilesImg/" + theme + "/";
       //loading chests
@@ -137,11 +138,11 @@ const LoadMap = () => {
       playerImg = p5.loadImage("TilesImg/player1.png");
     }
 
-    function storeImage(tile){
+    function storeImage(tile) {
       let type = tile.image.split("-");
-      switch(type[0]){
+      switch (type[0]) {
         case "big_object":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(big_object1);
               break;
@@ -154,7 +155,7 @@ const LoadMap = () => {
           }
           break;
         case "object":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(object1);
               break;
@@ -176,7 +177,7 @@ const LoadMap = () => {
           }
           break;
         case "chest":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(chest1);
               break;
@@ -221,7 +222,7 @@ const LoadMap = () => {
 
 
     p5.setup = () => {
-      p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
+      p5.createCanvas(window.innerWidth, window.innerHeight);
       let backButton = p5.createButton("<");
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
@@ -275,7 +276,7 @@ const LoadMap = () => {
     };
   }
   return (
-    <div id="P5Wrapper">
+    <div id="P5Wrapper" className="editorWrapper">
       <ReactP5Wrapper sketch={sketch} />
     </div>
   );
