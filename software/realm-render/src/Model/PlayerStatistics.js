@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import '../styles/PlayerStatistics.css';
 
+import Player1 from './player3.png';
+import Player2 from './player4.png';
+import Player3 from './player5.png';
+
+
 
 class PlayerStatistics {
   static players = [null, null, null, null, null, null];
@@ -161,6 +166,20 @@ class PlayerStatistics {
 
     let sheet = document.createElement("div");
     sheet.id = "character-sheet" + this.playerId;
+    if(this.playerId==0 || this.playerId==3){
+      sheet.style.backgroundImage = `url(${Player1})`
+    }
+    if(this.playerId==1|| this.playerId==4){
+      sheet.style.backgroundImage = `url(${Player2})`
+    }
+    if(this.playerId==2|| this.playerId==5){
+      sheet.style.backgroundImage = `url(${Player3})`
+    }
+    sheet.style.backgroundSize = '60px';
+    sheet.style.backgroundRepeat = 'no-repeat';
+    sheet.style.backgroundPositionX = '80%';
+    sheet.style.backgroundPositionY = '6%';
+
     let PlayerID = "Player " + (this.playerId+1) + ": " + this.stats["name"];
     sheet.className = "character-sheet";
     sheet.innerHTML = "<h1>"+PlayerID+"</h1>";
@@ -211,6 +230,8 @@ class PlayerStatistics {
     }, {once : true});
 
     sheet.appendChild(button);
+
+
     p5.appendChild(sheet);
 }
 }

@@ -13,6 +13,7 @@ const LoadMap = () => {
   let mapObj;
   let mapped = [];
   let players = [];
+  let monsters = [];
   let tileSize = 32;
   let activePlayer = -1;
   let prevX = -1;
@@ -41,6 +42,23 @@ const LoadMap = () => {
   let door;
   let background;
   let playerImg;
+  let player1Img;
+  let player2Img;
+  let player3Img;
+  let player4Img;
+  let player5Img;
+  let playerImgs;
+  let monsterImg;
+  let monster1Img;
+  let monster2Img;
+  let monster3Img;
+  let monster4Img;
+  let monster5Img;
+  let monster6Img;
+  let monster7Img;
+  let monster8Img;
+  let monster9Img;
+  let monsterImgs;
 
   function sketch(p5) {
     function draw() {
@@ -57,6 +75,7 @@ const LoadMap = () => {
       mapX = Math.max(((state.width) * -1) + ((window.innerWidth * (2 / 3)) / tileSize), mapX);
       mapY = Math.max(((state.height) * -1) + ((window.innerHeight * (2 / 3)) / tileSize), mapY);
 
+      monsters.forEach(m => m.draw(p5, tileSize, mapX, mapY));
 
       p5.frameRate(60);
 
@@ -132,10 +151,32 @@ const LoadMap = () => {
       //loading base tiles
       floor = p5.loadImage(path + "tile.png");
       wall = p5.loadImage(path + "tileURDL.png");
-      door = p5.loadImage(path + "door.png");
+      door = p5.loadImage(path + "door2.png");
       background = p5.loadImage(path + "background.png");
       //load player
-      playerImg = p5.loadImage("TilesImg/player1.png");
+
+      playerImg = p5.loadImage("TilesImg/player3.png");
+      player1Img = p5.loadImage("TilesImg/player1.png");
+      player2Img = p5.loadImage("TilesImg/player2.png");
+      player3Img = p5.loadImage("TilesImg/player3.png");
+      player4Img = p5.loadImage("TilesImg/player4.png");
+      player5Img = p5.loadImage("TilesImg/player5.png");
+      playerImgs = [player3Img, player4Img, player5Img, player3Img, player4Img, player5Img];
+
+      //load monster
+      monster1Img = p5.loadImage("TilesImg/monster1.png");
+      monster2Img = p5.loadImage("TilesImg/monster2.png");
+      monster3Img = p5.loadImage("TilesImg/monster3.png");
+      monster5Img = p5.loadImage("TilesImg/monster5.png");
+      monster6Img = p5.loadImage("TilesImg/monster6.png");
+      monster7Img = p5.loadImage("TilesImg/monster7.png");
+      monster8Img = p5.loadImage("TilesImg/monster8.png");
+      monster9Img = p5.loadImage("TilesImg/monster9.png");
+
+      monsterImgs = [monster1Img, monster2Img, monster3Img, monster5Img, monster6Img, monster7Img, monster8Img, monster9Img];
+
+
+
     }
 
     function storeImage(tile){
@@ -217,9 +258,10 @@ const LoadMap = () => {
       let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
       for (let i = 0; i < state.players; i++) {
         let player1 = new PlayerStatistics(i)
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, player1));
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImgs[i], player1));
 
       }
+
     }
 
 
