@@ -12,6 +12,9 @@
   font-family: 'Times New Roman', Times, serif;
   border: 2px solid #8B4513;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
 }
 
 table {
