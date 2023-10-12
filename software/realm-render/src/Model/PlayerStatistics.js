@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import '../styles/PlayerStatistics.css';
+import { useLocation, useNavigate } from "react-router-dom";
 
-import Knight from './player3.png';
-import Rogue from './player4.png';
-import Wizard from './player5.png';
-import Token from './player1.png';
+//import p5 js
+
+
 
 
 
@@ -148,7 +148,7 @@ class PlayerStatistics {
 
 
   returnSheet() {
-    let p5 = document.getElementById("P5Wrapper");
+    let P5Wrapper = document.getElementById("P5Wrapper");
 
     for (let i = 0; i < 6; i++) {
       let existingPlayerSheet = document.getElementById("character-sheet" + i);
@@ -159,12 +159,12 @@ class PlayerStatistics {
             PlayerStatistics.players[i].stats[key] = statElement.innerHTML;
           }
         }
-        p5.removeChild(existingPlayerSheet);
+        P5Wrapper.removeChild(existingPlayerSheet);
         break;
       }
     }
 
-    if(p5.childNodes.length > 1) p5.removeChild(p5.childNodes[1]);
+    if(P5Wrapper.childNodes.length > 1) P5Wrapper.removeChild(P5Wrapper.childNodes[1]);
 
     let sheet = document.createElement("div");
     sheet.className = "character-sheet";
@@ -180,16 +180,16 @@ class PlayerStatistics {
     let h1 = document.createElement("h1");
 
 
-    h1.style.backgroundImage = `url(${Token})`;
+    h1.style.backgroundImage = `url(${"TilesImg/player1.png"})`;
 
     if(this.stats["classLevel"].includes("Knight")){
-      h1.style.backgroundImage = `url(${Knight})`
+      h1.style.backgroundImage = `url(${"TilesImg/player3.png"})`
     }
     if(this.stats["classLevel"].includes("Rogue")){
-      h1.style.backgroundImage = `url(${Rogue})`
+      h1.style.backgroundImage = `url(${"TilesImg/player4.png"})`
     }
     if(this.stats["classLevel"].includes("Wizard")){
-      h1.style.backgroundImage = `url(${Wizard})`
+      h1.style.backgroundImage = `url(${"TilesImg/player5.png"})`
     }
 
 
@@ -247,7 +247,7 @@ class PlayerStatistics {
     sheet.appendChild(button);
 
 
-    p5.appendChild(sheet);
+    P5Wrapper.appendChild(sheet);
 }
 }
 
