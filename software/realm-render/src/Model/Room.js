@@ -61,9 +61,6 @@ class Room {
   getGlobalExitCoordinates(exitDirection, exitIndex) {
     const exitTile = this.exits[exitDirection][exitIndex];
     if (!exitTile) return null; // Exit doesn't exist
-    console.log("global X, y", this.globalX, this.globalY)
-    console.log("global X, y", this.globalX + exitTile.x, this.globalY + exitTile.y)
-    console.log("global X, y", exitTile.x, exitTile.y)
 
     return { x: this.globalX + exitTile.x, y: this.globalY + exitTile.y };
   }
@@ -76,7 +73,6 @@ class Room {
 
     //randomly selects a tile from edge wall tiles
     this.exits.up.push(edgeWallTiles.up[Math.floor(random() * edgeWallTiles.up.length)]);
-    console.log("in exit test", this.exits.up);
     this.exits.right.push(edgeWallTiles.right[Math.floor(random() * edgeWallTiles.right.length)]);
     this.exits.down.push(edgeWallTiles.down[Math.floor(random() * edgeWallTiles.down.length)]);
     this.exits.left.push(edgeWallTiles.left[Math.floor(random() * edgeWallTiles.left.length)]);

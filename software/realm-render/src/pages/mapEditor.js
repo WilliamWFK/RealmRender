@@ -15,6 +15,7 @@ const LoadMap = () => {
   let mapped = [];
   let fog = [];
   let players = [];
+  let monsters = [];
   let tileSize = 32;
   let activePlayer = -1;
   let prevX = -1;
@@ -32,15 +33,66 @@ const LoadMap = () => {
   let big_object1, big_object2, object1, object2, object3, object4, object5;
   let floor, wall, door, background;
   let playerImg;
-  let zeroOpacityFogImg, halfOpacityFogImg, fullOpacityFogImg;
+  let player1Img;
+  let player2Img;
+  let player3Img;
+  let player4Img;
+  let player5Img;
+  let rogueImg;
+  let knightImg;
+  let wizardImg;
+  let tokenImg;
+  let playerImgs;
+  let monsterImg;
+  let monster1Img;
+  let monster2Img;
+  let monster3Img;
+  let monster4Img;
+  let monster5Img;
+  let monster6Img;
+  let monster7Img;
+  let monster8Img;
+  let monster9Img;
+  let monsterImgs;
+
+  //let players 1 through 6 player stats
+  let player1PlayerStats;
+  let player2PlayerStats;
+  let player3PlayerStats;
+  let player4PlayerStats;
+  let player5PlayerStats;
+  let player6PlayerStats;
+  let playerPlayerStats;
+
+  let zeroOpacityFogImg;
+  let halfOpacityFogImg;
+  let fullOpacityFogImg;
 
   function sketch(p5) {
     function draw() {
       p5.background('#0f1f1f');
       // draw map
       mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+      monsters.forEach(m => m.draw(p5, tileSize, mapX, mapY));
+
 
       // draw players
+      let i = 0;
+      players.forEach(p => {
+        if(playerPlayerStats[i].stats['classLevel'].includes("Rogue")){
+          p.img = rogueImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Knight")){
+          p.img = knightImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Wizard")){
+          p.img = wizardImg;
+        }
+        else{
+          p.img = tokenImg;
+        }
+        i++;
+      });
       players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
       fog.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
       mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
@@ -147,6 +199,33 @@ const LoadMap = () => {
       door = p5.loadImage(path + "door.png");
       background = p5.loadImage(path + "background.png");
       //load player
+
+      playerImg = p5.loadImage("TilesImg/player3.png");
+      player1Img = p5.loadImage("TilesImg/player1.png");
+      player2Img = p5.loadImage("TilesImg/player2.png");
+      player3Img = p5.loadImage("TilesImg/player3.png");
+      player4Img = p5.loadImage("TilesImg/player4.png");
+      player5Img = p5.loadImage("TilesImg/player5.png");
+      rogueImg = p5.loadImage("TilesImg/player4.png");
+      knightImg = p5.loadImage("TilesImg/player3.png");
+      wizardImg = p5.loadImage("TilesImg/player5.png");
+      tokenImg = p5.loadImage("TilesImg/player1.png");
+      playerImgs = [player3Img, player4Img, player5Img, player3Img, player4Img, player5Img];
+
+      //load monster
+      monster1Img = p5.loadImage("TilesImg/monster1.png");
+      monster2Img = p5.loadImage("TilesImg/monster2.png");
+      monster3Img = p5.loadImage("TilesImg/monster3.png");
+      monster5Img = p5.loadImage("TilesImg/monster5.png");
+      monster6Img = p5.loadImage("TilesImg/monster6.png");
+      monster7Img = p5.loadImage("TilesImg/monster7.png");
+      monster8Img = p5.loadImage("TilesImg/monster8.png");
+      monster9Img = p5.loadImage("TilesImg/monster9.png");
+
+      monsterImgs = [monster1Img, monster2Img, monster3Img, monster5Img, monster6Img, monster7Img, monster8Img, monster9Img];
+
+
+
       playerImg = p5.loadImage("TilesImg/player1.png");
       fullOpacityFogImg = p5.loadImage("TilesImg/fog.png");
 
@@ -243,10 +322,26 @@ const LoadMap = () => {
       mapped.forEach(r => r.forEach(t => storeImage(t)));
       let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
       let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
+      playerPlayerStats = [player1PlayerStats, player2PlayerStats, player3PlayerStats, player4PlayerStats, player5PlayerStats, player6PlayerStats]
       for (let i = 0; i < state.players; i++) {
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, new PlayerStatistics(i)));
+        playerPlayerStats[i] = new PlayerStatistics(i)
+        if(playerPlayerStats[i].stats['classLevel'].includes("Rogue")){
+          player1Img = rogueImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Knight")){
+          player1Img = knightImg;
+        }
+        else if(playerPlayerStats[i].stats['classLevel'].includes("Wizard")){
+          player1Img = wizardImg;
+        }
+        else{
+          player1Img = tokenImg;
+        }
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, player1Img, playerPlayerStats[i]));
+
         fogUpdate(players[i]);
       }
+
     }
 
 
