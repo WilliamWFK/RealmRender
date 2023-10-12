@@ -33,28 +33,29 @@ export function decorateFloorTiles(array, seed) {
     const decoratedArray = [...array];
     const random = seedrandom(seed);
 
-    for (let col = 1; col < numCols-1; col++) {
-        for (let row = 1; row < numRows-1; row++) {
-            if(array[col][row].isFloor()){
+    for (let col = 1; col < numCols - 1; col++) {
+        for (let row = 1; row < numRows - 1; row++) {
+            if (array[col][row].isFloor()) {
                 //check for adjacent walls
                 //if adjacent walls, add decoration
-                if(array[col][row+1].isWall() || array[col][row-1].isWall() || array[col+1][row].isWall() || array[col-1][row].isWall()){
-                    let rand = Math.floor(random()*100) +1;
-                    if(rand <= 30){
-                        if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
+                if (array[col][row + 1].isWall() || array[col][row - 1].isWall() || array[col + 1][row].isWall() || array[col - 1][row].isWall()) {
+                    let rand = Math.floor(random() * 100) + 1;
+                    if (rand <= 30) {
+                        if (decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()) {
                             decoratedArray[col][row].setType("object");
                         }
                     }
-                    else if(rand <= 34) {
-                        if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
-                            decoratedArray[col][row].setType("chest")};
-                        }
+                    else if (rand <= 34) {
+                        if (decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()) {
+                            decoratedArray[col][row].setType("chest")
+                        };
+                    }
                 }
-                if(!array[col][row+1].isWall() && !array[col][row-1].isWall() && !array[col+1][row].isWall() && !array[col-1][row].isWall()){
-                    let rand = Math.floor(random()*100) +1;
-                    if(rand <= 3){
+                if (!array[col][row + 1].isWall() && !array[col][row - 1].isWall() && !array[col + 1][row].isWall() && !array[col - 1][row].isWall()) {
+                    let rand = Math.floor(random() * 100) + 1;
+                    if (rand <= 3) {
                         //isFloor and is not cleanFloor
-                        if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
+                        if (decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()) {
                             decoratedArray[col][row].setType("cleanFloor");
                         }
 

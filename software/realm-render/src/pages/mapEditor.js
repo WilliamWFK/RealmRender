@@ -14,6 +14,7 @@ const LoadMap = () => {
   let mapObj;
   let mapped = [];
   let fog = [];
+  let fogOn = false;
   let players = [];
   let monsters = [];
   let tileSize = 32;
@@ -94,7 +95,11 @@ const LoadMap = () => {
         i++;
       });
       players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
-      fog.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+
+      if (fogOn) {
+        fog.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+      }
+
       mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
       mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
 
@@ -161,8 +166,8 @@ const LoadMap = () => {
       for (let i = -radius; i <= radius; i++) {
         for (let j = -radius; j <= radius; j++) {
           if (x + i >= 0 && x + i < state.width && y + j >= 0 && y + j < state.height) {
-            if(i === -radius || i === radius || j === -radius || j === radius){
-              if(fog[x + i][y + j].opacity !== 0){
+            if (i === -radius || i === radius || j === -radius || j === radius) {
+              if (fog[x + i][y + j].opacity !== 0) {
                 fog[x + i][y + j].setImage(halfOpacityFogImg);
               }
             } else {
@@ -350,10 +355,12 @@ const LoadMap = () => {
       let backButton = p5.createButton("<");
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
+      let fogToggle = p5.createButton("👁");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
       zoomOutButton.position(10, 10);
+      fogToggle.position(10, 10);
 
       backButton.style('width', '5vw');
       backButton.style('height', '5vw');
@@ -369,10 +376,14 @@ const LoadMap = () => {
       zoomOutButton.style('margin-top', '12vw');
       zoomOutButton.style('font-size', '2vw');
 
+      fogToggle.style('width', '5vw');
+      fogToggle.style('height', '5vw');
+      fogToggle.style('margin-top', '18vw');
+      fogToggle.style('font-size', '2vw');
+
       backButton.mousePressed(() => {
         navigate("/index");
       });
-
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -383,6 +394,7 @@ const LoadMap = () => {
           });
         }
       });
+
       zoomOutButton.mousePressed(() => {
         if (tileSize > minTileSize) {
           Math.round(tileSize *= 0.9);
@@ -392,6 +404,10 @@ const LoadMap = () => {
           });
         }
       });
+
+      fogToggle.mousePressed(() => {
+        fogOn = !fogOn;
+      })
       setup();
     }
 
