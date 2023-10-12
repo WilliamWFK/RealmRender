@@ -5,8 +5,9 @@
  * and each tile will have a type with various items possiblys
  * Map is currently unused in the current build.
  */
-import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom } from "../Model/BasicRooms";
+import { SquareRoom } from "../Model/BasicRooms";
 import Tile from '../Model/Tile';
+import Fog from '../Model/Fog';
 import seedrandom from 'seedrandom';
 
 
@@ -15,6 +16,7 @@ class Map {
     constructor(width, height, seed, theme) {
         this.tiles = [];
         this.tilesOccupied = [];
+        this.fogLayer = [];
         this.rooms = [];
         this.width = width;
         this.height = height;
@@ -23,8 +25,22 @@ class Map {
         this.theme = theme;
         this.makeEmptyMap(this.width, this.height);
         this.createGrid(this.width, this.height);
+        this.makeFog(this.width, this.height);
 
 
+    }
+
+    makeFog(width, height) {
+        const fogLayer = [];
+        for(let x = 0; x < width; x++) {
+            const row = [];
+            for(let y = 0; y < height; y++) {
+                const fogTile = new Fog(x, y);
+                row.push(fogTile);
+            }
+            fogLayer.push(row);
+        }
+        this.fogLayer = fogLayer;
     }
 
     /**
