@@ -1,9 +1,9 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, onValue, ref, update, set } from "firebase/database";
+import { get, getDatabase, onValue, ref, update, set } from "firebase/database";
 import firebaseConfig from "../firebaseConfig.js";
 
 class RTDbObject {
-    constructor(gameId, role) {
+    constructor(gameId) {
         this.gameId = gameId;
         // intialize app
         this.app = initializeApp(firebaseConfig);
@@ -11,8 +11,8 @@ class RTDbObject {
         // this.update();
     }
 
-    createMapListener(gameId, callback) {
-        const mapReference = ref(this.db, 'maps/' + gameId);
+    createMapListener(callback) {
+        const mapReference = ref(this.db, 'maps/' + this.gameId);
         onValue(mapReference, (snapshot) => {
             const tiles = snapshot.val();
             callback(tiles);
@@ -40,6 +40,23 @@ class RTDbObject {
             console.log(player);
         });
     }
+
+    getGameData() {
+        const gameReference = ref(this.db, 'games/' + this.gameId);
+        get(gameReference).then((snapshot) => {
+            if (snapshot.exists()) {
+                const game = snapshot.val();
+                console.log("Game data retrieved");
+                console.log(game);
+                return game;
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+
 
 
     createGameListener(gameId, callback) {
