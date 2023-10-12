@@ -64,7 +64,9 @@ const LoadMap = () => {
   let player6PlayerStats;
   let playerPlayerStats;
 
-  let zeroOpacityFogImg, halfOpacityFogImg, fullOpacityFogImg;
+  let zeroOpacityFogImg
+  let halfOpacityFogImg
+  let fullOpacityFogImg;
 
   function sketch(p5) {
     function draw() {
@@ -337,7 +339,6 @@ const LoadMap = () => {
         }
         players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, player1Img, playerPlayerStats[i]));
 
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, new PlayerStatistics(i)));
         fogUpdate(players[i]);
       }
 
