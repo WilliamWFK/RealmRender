@@ -64,8 +64,8 @@ const LoadMap = () => {
   let player6PlayerStats;
   let playerPlayerStats;
 
-  let zeroOpacityFogImg
-  let halfOpacityFogImg
+  let zeroOpacityFogImg;
+  let halfOpacityFogImg;
   let fullOpacityFogImg;
 
   function sketch(p5) {

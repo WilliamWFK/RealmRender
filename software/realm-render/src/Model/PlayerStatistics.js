@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import '../styles/PlayerStatistics.css';
-import { useLocation, useNavigate } from "react-router-dom";
 
 //import p5 js
 
