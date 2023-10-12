@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import background from '../indexBackground.svg';
 
+
 const Home = () => {
   const [menumode, setMenumode] = useState(0);
   //const [sliderValue, setValue] = useState(5); // example setting
@@ -28,10 +29,13 @@ const Home = () => {
     if (menumode === 0) {
       return (
         <div class="menuBackdrop mainMenu">
+
           <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
           <div onClick={() => { setMenumode(2) }} class="menuButtonItem"><p>Load</p></div>
           <Link to="/join" class="menuButtonItem"><p>Join</p></Link>
+
         </div>
+
       );
     } else if (menumode === 1) {
       return (
@@ -64,11 +68,11 @@ const Home = () => {
 
                 <div class="formInput">
                   <label htmlFor="width">Width: {formData.width}</label>
-                  <input type="range" min="30" max="90" step="1" defaultValue={formData.width} onChange={(e) => setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
+                  <input type="range" min="30" max="120" step="1" defaultValue={formData.width} onChange={(e) => setFormData({ ...formData, width: parseInt(e.target.value) })} id="width" name="width"></input>
                 </div>
                 <div class="formInput">
                   <label htmlFor="height">Height: {formData.height}</label>
-                  <input type="range" min="30" max="90" step="1" defaultValue={formData.height} onChange={(e) => setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
+                  <input type="range" min="30" max="120" step="1" defaultValue={formData.height} onChange={(e) => setFormData({ ...formData, height: parseInt(e.target.value) })} id="height" name="height"></input>
                 </div>
                 {/* Create a slider to select 1-6 players*/}
                 <div class="formInput">
@@ -110,8 +114,11 @@ const Home = () => {
             </div>
           </div>
         </div>
+
       );
+
     }
+
 
   }
   return (
@@ -119,6 +126,7 @@ const Home = () => {
       <header class="App-header">
         Realm Render
       </header>
+
       {menuContents()}
       <div>
         <img class="custom-background" src={background} alt="background"></img>

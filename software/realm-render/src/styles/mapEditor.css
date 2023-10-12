@@ -2,5 +2,8 @@ body,
 .editorWrapper {
     margin: 0;
     height: 100%;
-    overflow: hidden
+    overflow: hidden;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
 }

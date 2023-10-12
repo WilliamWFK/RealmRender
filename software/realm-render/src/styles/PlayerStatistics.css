@@ -1,0 +1,94 @@
+.character-sheet {
+  max-height: 400px;
+  overflow-y: auto;
+  width: 25vw;
+  border-radius: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  top: 0;
+  right: 0;
+  background-color: #FAEBD7;
+  font-size: 15px;
+  font-family: 'Times New Roman', Times, serif;
+  border: 2px solid #8B4513;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+  -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Standard syntax */
+}
+
+table {
+  width: 200%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+tr {
+  width: 100%;
+}
+h1{
+  height: 50px;
+}
+
+td {
+  padding: 8px;
+  width: 50%;
+  color: #3B3B3B;
+}
+td[id] {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 1px dotted #8B4513;
+  border-radius: 25px;
+}
+
+td[id]:hover {
+  background-color: #EDEDED;
+  border: 1px dotted #993910;
+  border-radius: 25px;
+}
+
+input {
+  width: 250%;
+  border-radius: 5px;
+  border: 1px solid #8B4513;
+}
+
+.character-sheet {
+  position: fixed;
+  margin-top: 10px;
+  padding: 20px;
+}
+
+#close-sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 12px 16px;
+  background-color: #B22222;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+
+}
+.character-sheet::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.character-sheet::-webkit-scrollbar-track {
+  background: #FAEBD7;
+  border-radius: 3px;
+}
+
+.character-sheet::-webkit-scrollbar-thumb {
+  background: #8B4513;
+  border-radius: 3px;
+}
+
+.character-sheet::-webkit-scrollbar-thumb:hover {
+  background: #A0522D;
+}
