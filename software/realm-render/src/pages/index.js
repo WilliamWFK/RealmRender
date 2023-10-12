@@ -32,7 +32,7 @@ const Home = () => {
 
           <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
           <div onClick={() => { setMenumode(2) }} class="menuButtonItem"><p>Load</p></div>
-          <Link to="/join" class="menuButtonItem"><p>Join</p></Link>
+          <Link to="/playerView" class="menuButtonItem"><p>Join</p></Link>
 
         </div>
 
@@ -93,7 +93,7 @@ const Home = () => {
           <div class="menuBackdrop mainMenu">
             <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
             <div onClick={() => { setMenumode(2) }} class="menuButtonItem"><p>Load</p></div>
-            <Link to="/join" class="menuButtonItem"><p>Join</p></Link>
+            <Link to="/playerView" class="menuButtonItem"><p>Join</p></Link>
           </div>
         </div>
       );
@@ -103,7 +103,7 @@ const Home = () => {
           <div class="menuBackdrop mainMenu">
             <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
             <div onClick={() => { setMenumode(2) }} class="menuButtonItem"><p>Load</p></div>
-            <Link to="/join" class="menuButtonItem"><p>Join</p></Link>
+            <Link to="/playerView" class="menuButtonItem"><p>Join</p></Link>
           </div>
           <div class="menuBackdrop loadForm">
             <h1>Load</h1>
