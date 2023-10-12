@@ -355,7 +355,7 @@ const LoadMap = () => {
       let backButton = p5.createButton("<");
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
-      let fogToggle = p5.createButton("@");
+      let fogToggle = p5.createButton("👁");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
