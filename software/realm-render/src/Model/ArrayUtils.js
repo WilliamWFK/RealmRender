@@ -9,18 +9,10 @@ export function rotate2DArray(array) {
         rotatedArray[col] = new Array(numRows);
         for (let row = 0; row < numRows; row++) {
             rotatedArray[col][row] = array[numRows - 1 - row][col];
+            rotatedArray[col][row].x = col
+            rotatedArray[col][row].y = row
         }
     }
-    const lefty = this.exits.left
-    const righty = this.exits.right
-    const uppy = this.exits.up
-    const downy = this.exits.down
-
-    this.exits.left = uppy
-    this.exits.right = downy
-    this.exits.up = righty
-    this.exits.down = lefty
-
 
     return rotatedArray;
 }
