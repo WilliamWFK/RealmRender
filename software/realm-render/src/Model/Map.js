@@ -126,7 +126,7 @@ class Map {
 
 
             // Generate adjacent rooms
-            
+
             let topRoom = this.rooms[Math.floor(random() * this.rooms.length)];
             let topRoomStartX = upExit.x - topRoom.exits.down[0].x;
             let topRoomStartY = upExit.y - topRoom.exits.down[0].y;
@@ -340,9 +340,6 @@ class Map {
             new TshapeRoom(width, height, "medium", this.theme, this.seed + 2),
             new TshapeRoom(width, height, "medium", this.theme, this.seed + 3),
             new TshapeRoom(width, height, "medium", this.theme, this.seed + 4),
-            new TshapeRoom(width, height, "medium", this.theme, this.seed + 5),
-            new TshapeRoom(width, height, "medium", this.theme, this.seed + 6),
-            new TshapeRoom(width, height, "medium", this.theme, this.seed + 7),
 
             new TshapeRoom(width, height, "large", this.theme, this.seed),
             new TshapeRoom(width, height, "large", this.theme, this.seed + 1),
@@ -368,17 +365,18 @@ class Map {
             new PlusShapeRoom(width, height, "medium", this.theme, this.seed + 3),
             new PlusShapeRoom(width, height, "medium", this.theme, this.seed + 4),
 
+            new PlusShapeRoom(width, height, "large", this.theme, this.seed),
+            new PlusShapeRoom(width, height, "large", this.theme, this.seed + 1),
+            new PlusShapeRoom(width, height, "large", this.theme, this.seed + 2),
+
             new HoleShapeRoom(width, height, "medium", this.theme, this.seed),
             new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 1),
             new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 2),
             new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 3),
-            new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 4),
 
-            // new TshapeRoom(width, height, "medium"),
-            // new LShapeRoom(width, height, "medium"),
-            // new RectShapeRoom(width, height, "medium"),
-            // new PlusShapeRoom(width, height, "medium"),
-            // new HoleShapeRoom(width, height, "medium"),
+            new HoleShapeRoom(width, height, "large", this.theme, this.seed),
+            new HoleShapeRoom(width, height, "large", this.theme, this.seed + 1),
+            new HoleShapeRoom(width, height, "large", this.theme, this.seed + 2),
         ];
         this.rooms = rooms;
         this.placeRooms();

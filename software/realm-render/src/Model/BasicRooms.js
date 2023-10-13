@@ -22,7 +22,6 @@ class SquareRoom extends Room {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
                 const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
-                // Customize tile directions as needed
                 if (x === startX || x === startX + this.roomWidth - 1 || y === startY || y === startY + this.roomHeight - 1) {
                     tile.setType("wall")
                 } else {
@@ -47,7 +46,7 @@ class TshapeRoom extends Room {
         this.description = "A T shaped room with walls on all sides.";
         this.tiles = this.createTshapeTiles();
         this.roomWidth = this.tiles.length;
-        this.roomHeight = this.tiles[0].length;   
+        this.roomHeight = this.tiles[0].length;
         this.addExits();
     }
 
@@ -77,7 +76,7 @@ class TshapeRoom extends Room {
                 } else {
                     tile.setType("")
                 }
-                
+
                 if (x === Math.round(startX + this.roomWidth/4) && y <= startY + (this.roomHeight/2 - Math.round(this.roomHeight/4))){
                     tile.setType("wall")
                 } else if (x === Math.round(startX + this.roomWidth/4) && y >= startY + this.roomHeight - (1 + (this.roomWidth/2 - Math.round(this.roomHeight/4)))){
@@ -196,7 +195,7 @@ class RectShapeRoom extends Room {
         this.description = "A Rectangle shaped room with walls on all sides.";
         this.tiles = this.createRectshapeTiles();
         this.roomWidth = this.tiles.length;
-        this.roomHeight = this.tiles[0].length;   
+        this.roomHeight = this.tiles[0].length;
         this.addExits();
     }
 
@@ -278,6 +277,8 @@ class PlusShapeRoom extends Room {
                 if(x >= Math.round(this.roomWidth/4) && x < Math.round(this.roomWidth/4) + Math.round(this.roomWidth/2) && y >= Math.round(this.roomHeight/4) && y < Math.round(this.roomHeight/4) + Math.round(this.roomHeight/2)){
                     tile.setType("floor")
                 }
+
+
 
                 if(x === 0 || x === this.roomWidth-1 || y === 0 || y === this.roomHeight-1){
                     tile.setType("wall")
