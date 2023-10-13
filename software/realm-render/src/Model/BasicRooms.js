@@ -5,7 +5,6 @@ import { rotate2DArray, decorateFloorTiles } from './ArrayUtils';
 class SquareRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        // console.log('hello create sqRoom');
         // Customize properties for your square room
         this.name = "Square Room";
         this.description = "A square room with walls on all sides.";
@@ -35,7 +34,6 @@ class SquareRoom extends Room {
         }
         let tilesCopy = [...squareTiles];
         tilesCopy = decorateFloorTiles(tilesCopy, this.seed);
-        // console.log(tilesCopy);
 
         return tilesCopy;
     }
@@ -44,7 +42,6 @@ class SquareRoom extends Room {
 class TshapeRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        // console.log('hello create Troom');
         // Customize properties for your square room
         this.name = "Tshape Room";
         this.description = "A T shaped room with walls on all sides.";
@@ -86,9 +83,6 @@ class TshapeRoom extends Room {
                 } else if (x === Math.round(startX + this.roomWidth/4) && y >= startY + this.roomHeight - (1 + (this.roomWidth/2 - Math.round(this.roomHeight/4)))){
                      tile.setType("wall")
                 }
-                // if (x === this.roomWidth - 1){
-                //     tile.setType("wall")
-                // }
 
                 if ((x === this.roomWidth - 1 && y <= startY + (this.roomHeight-1) - (this.roomWidth/2 - Math.round(this.roomHeight/4)) && y >= startY + (this.roomHeight/2 - Math.round(this.roomHeight/4)))){
                     tile.setType("wall")
@@ -108,10 +102,14 @@ class TshapeRoom extends Room {
     }
 }
 
+
+//not used doesnt work with current system possibly edit to fit but not crutial
+//problems: findExits need walls on all outer extremities L doesnt always have that
+//map gen can't handle having no exit on a side under the assumption there is an exit for all sides
+//even if not used
 class LShapeRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        // console.log('hello create Lroom');
         // Customize properties for your square room
         this.name = "Lshape Room";
         this.description = "A L shaped room with walls on all sides.";
@@ -128,9 +126,7 @@ class LShapeRoom extends Room {
         let stickHeight = Math.floor(Math.random() * (this.roomHeight/2-1) + 1);
         let baseWidth = Math.floor(Math.random() * (this.roomWidth - this.roomWidth / 2 - 1)) + this.roomWidth / 2;
         let baseHeight = Math.floor(Math.random() * (this.roomHeight/2-2) + 2);
-        //console.log("stick width: " + stickWidth, "stick height: " + stickHeight, "base width: " + baseWidth, "base height: " + baseHeight);
-        //console.log(this.roomWidth, this.roomHeight);
-        //console.log(this.roomWidth/2, this.roomHeight/2);
+
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
@@ -195,7 +191,6 @@ class RectShapeRoom extends Room {
         let tempWidth = Math.floor(Math.random() * (width-1) + 2);
         let tempHeight = Math.floor(Math.random() * (height-1) + 2);
         super(tempWidth, tempHeight, size, theme, seed); // Call the constructor of the base Room class
-        // console.log('hello create Rectroom');
         // Customize properties for your square room
         this.name = "Rectshape Room";
         this.description = "A Rectangle shaped room with walls on all sides.";
@@ -209,11 +204,6 @@ class RectShapeRoom extends Room {
     createRectshapeTiles() {
         // Create a grid of Tile objects for the square room
         const tTiles = [];
-        //let width = Math.floor(Math.random() * (this.roomWidth-1) + 2);
-        //let height = Math.floor(Math.random() * (this.roomHeight-1) + 2);
-        //console.log("height: "+ height + "width: "+ width);
-        //console.log(this.roomWidth, this.roomHeight);
-        //console.log(this.roomWidth/2, this.roomHeight/2);
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
@@ -242,7 +232,6 @@ class RectShapeRoom extends Room {
 class PlusShapeRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        // console.log('hello create Plusroom');
         // Customize properties for your square room
         this.name = "Plusshape Room";
         this.description = "A Plus shaped room with walls on all sides.";
@@ -257,10 +246,8 @@ class PlusShapeRoom extends Room {
         this.exits.down.push(this.tiles[Math.round(this.roomWidth/2)-1][this.roomHeight -1])
         for (let exitDirection in this.exits) {
             const exitTiles = this.exits[exitDirection];
-            // console.log("length", exitTiles.length, "inside ", exitTiles[0])
             for (let i = 0; i < exitTiles.length; i++) {
               const tile = exitTiles[i];
-              // console.log(tile)
               if(tile !== undefined){
                 this.tiles[tile.x][tile.y].setType("door");
               }
@@ -309,8 +296,8 @@ class PlusShapeRoom extends Room {
 }
 
 class HoleShapeRoom extends Room {
-    constructor(width, height, size, theme) {
-        super(width, height, size, theme); // Call the constructor of the base Room class
+    constructor(width, height, size, theme, seed) {
+        super(width, height, size, theme, seed); // Call the constructor of the base Room class
         // console.log('hello create HoleRoom');
         // Customize properties for your square room
         this.name = "HoleShape Room";

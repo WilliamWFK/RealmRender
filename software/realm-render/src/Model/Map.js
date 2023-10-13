@@ -5,7 +5,7 @@
  * and each tile will have a type with various items possiblys
  * Map is currently unused in the current build.
  */
-import { SquareRoom, TshapeRoom, LShapeRoom, RectShapeRoom, PlusShapeRoom, HoleShapeRoom} from "../Model/BasicRooms";
+import { SquareRoom, TshapeRoom, RectShapeRoom, PlusShapeRoom, HoleShapeRoom} from "../Model/BasicRooms";
 import Tile from '../Model/Tile';
 import seedrandom from 'seedrandom';
 
