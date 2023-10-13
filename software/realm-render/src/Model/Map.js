@@ -320,46 +320,42 @@ class Map {
             new SquareRoom(width, height, "medium", this.theme, this.seed + 10),
 
 
-            // new SquareRoom(width, height, "large", this.theme, this.seed),
-            // new SquareRoom(width, height, "large", this.theme, this.seed + 1),
-            // new SquareRoom(width, height, "large", this.theme, this.seed + 2),
-            // new SquareRoom(width, height, "large", this.theme, this.seed + 3),
-            // new SquareRoom(width, height, "large", this.theme, this.seed + 4),
-            // new SquareRoom(width, height, "large", this.theme, this.seed + 5),
+            new SquareRoom(width, height, "large", this.theme, this.seed),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 1),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 2),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 3),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 4),
+            new SquareRoom(width, height, "large", this.theme, this.seed + 5),
 
 
-            // new SquareRoom(width, height, "small", this.theme, this.seed),
-            // new SquareRoom(width, height, "small", this.theme, this.seed + 1),
-            // new SquareRoom(width, height, "small", this.theme, this.seed + 2),
-            // new SquareRoom(width, height, "small", this.theme, this.seed + 3),
-            // new SquareRoom(width, height, "small", this.theme, this.seed + 4),
-            // new SquareRoom(width, height, "small", this.theme, this.seed + 5),
+            new SquareRoom(width, height, "small", this.theme, this.seed),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 1),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 2),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 3),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 4),
+            new SquareRoom(width, height, "small", this.theme, this.seed + 5),
 
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed),
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed + 1),
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed + 2),
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed + 3),
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed + 4),
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed + 5),
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed + 6),
-            // new TshapeRoom(width, height, "medium", this.theme, this.seed + 7),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed + 1),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed + 2),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed + 3),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed + 4),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed + 5),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed + 6),
+            new TshapeRoom(width, height, "medium", this.theme, this.seed + 7),
 
-            // new TshapeRoom(width, height, "large", this.theme, this.seed),
-            // new TshapeRoom(width, height, "large", this.theme, this.seed + 1),
-            // new TshapeRoom(width, height, "large", this.theme, this.seed + 2),
-            // new TshapeRoom(width, height, "large", this.theme, this.seed + 3),
-            // new TshapeRoom(width, height, "large", this.theme, this.seed + 4),
+            new TshapeRoom(width, height, "large", this.theme, this.seed),
+            new TshapeRoom(width, height, "large", this.theme, this.seed + 1),
+            new TshapeRoom(width, height, "large", this.theme, this.seed + 2),
+            new TshapeRoom(width, height, "large", this.theme, this.seed + 3),
+            new TshapeRoom(width, height, "large", this.theme, this.seed + 4),
 
             //cant use TshapeRoom small size just dont work
 
-            // new LShapeRoom(width, height, "medium", this.theme, this.seed),
-            // new LShapeRoom(width, height, "medium", this.theme, this.seed + 1),
-            // new LShapeRoom(width, height, "medium", this.theme, this.seed + 2),
-            // new LShapeRoom(width, height, "medium", this.theme, this.seed + 3),
-            // new LShapeRoom(width, height, "medium", this.theme, this.seed + 4),
+            // L shape doesnt work with current system
 
-            // new RectShapeRoom(width, height, "medium", this.theme, this.seed),
 
+            new RectShapeRoom(width, height, "medium", this.theme, this.seed),
             new PlusShapeRoom(width, height, "medium", this.theme, this.seed),
             new HoleShapeRoom(width, height, "medium", this.theme, this.seed),
 

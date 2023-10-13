@@ -73,8 +73,12 @@ class TshapeRoom extends Room {
                     tile.setType("wall")
                 } else if (x >= startX && x <= startX + Math.round(this.roomWidth/4) &&  y === startY){
                     tile.setType("wall")
-                } else {
+                } else if (x >= startX + Math.round(this.roomWidth/4) && x <= startX + this.roomWidth - 1 && y >= startY + Math.round((this.roomHeight/2 - Math.round(this.roomWidth/4))) && y <= startY + this.roomHeight - Math.round((1 + (this.roomWidth/2 ) - Math.round(this.roomWidth/4)))){
                     tile.setType("floor")
+                } else if (x >= startX && x <= startX + Math.round(this.roomWidth/4) && y <= startY + this.roomHeight - 1 &&  y >= startY){
+                    tile.setType("floor")
+                } else {
+                    tile.setType("")
                 }
                 
                 if (x === Math.round(startX + this.roomWidth/4) && y <= startY + (this.roomHeight/2 - Math.round(this.roomHeight/4))){
@@ -86,7 +90,7 @@ class TshapeRoom extends Room {
                 //     tile.setType("wall")
                 // }
 
-                if ((x === this.roomWidth - 1 && y <= startY + this.roomHeight - (this.roomWidth/2 - Math.round(this.roomHeight/4)) && y >= startY + (this.roomHeight/2 - Math.round(this.roomHeight/4)))){
+                if ((x === this.roomWidth - 1 && y <= startY + (this.roomHeight-1) - (this.roomWidth/2 - Math.round(this.roomHeight/4)) && y >= startY + (this.roomHeight/2 - Math.round(this.roomHeight/4)))){
                     tile.setType("wall")
                 }
                 tile.selectImage();
@@ -188,12 +192,16 @@ class LShapeRoom extends Room {
 
 class RectShapeRoom extends Room {
     constructor(width, height, size, theme, seed) {
-        super(width, height, size, theme, seed); // Call the constructor of the base Room class
+        let tempWidth = Math.floor(Math.random() * (width-1) + 2);
+        let tempHeight = Math.floor(Math.random() * (height-1) + 2);
+        super(tempWidth, tempHeight, size, theme, seed); // Call the constructor of the base Room class
         console.log('hello create Rectroom');
         // Customize properties for your square room
         this.name = "Rectshape Room";
         this.description = "A Rectangle shaped room with walls on all sides.";
         this.tiles = this.createRectshapeTiles();
+        this.roomWidth = this.tiles.length;
+        this.roomHeight = this.tiles[0].length;   
         this.addExits();
     }
 
@@ -201,33 +209,31 @@ class RectShapeRoom extends Room {
     createRectshapeTiles() {
         // Create a grid of Tile objects for the square room
         const tTiles = [];
-        let width = Math.floor(Math.random() * (this.roomWidth-1) + 2);
-        let height = Math.floor(Math.random() * (this.roomHeight-1) + 2);
+        //let width = Math.floor(Math.random() * (this.roomWidth-1) + 2);
+        //let height = Math.floor(Math.random() * (this.roomHeight-1) + 2);
         //console.log("height: "+ height + "width: "+ width);
         //console.log(this.roomWidth, this.roomHeight);
         //console.log(this.roomWidth/2, this.roomHeight/2);
         for (let x = 0; x < this.roomWidth; x++) {
             const row = [];
             for (let y = 0; y < this.roomHeight; y++) {
-                const tile = new Tile(x, y, "floor", super.getTheme(), this.seed);
-                if(x === 0 || x === this.roomWidth-1 || y === 0 || y === this.roomHeight-1){
+                const tile = new Tile(x, y, 0, super.getTheme(), "nothing");
+                // Customize tile directions as needed
+                if (x === 0 || x === 0 + this.roomWidth - 1 || y === 0 || y === 0 + this.roomHeight - 1) {
                     tile.setType("wall")
-                }
-                if(x > 0 && x < width && y > 0 && y < height){
-                    tile.setType("floor")
-                }else{
+                } else {
                     tile.setType("floor")
                 }
-                tile.selectImage();
                 row.push(tile);
             }
             tTiles.push(row)
         }
         let tilesCopy = [...tTiles];
-        //rotate the 2d array of tiles x times
+        // //rotate the 2d array of tiles x times
         for(let i = 0; i < Math.floor(Math.random() * 4); i++){
             tilesCopy = rotate2DArray(tilesCopy); // Rotate the copied array
         }
+        tilesCopy = decorateFloorTiles(tilesCopy, this.seed);
 
         return tilesCopy;
     }
@@ -245,10 +251,10 @@ class PlusShapeRoom extends Room {
     }
 
     customExits(){
-        this.exits.up.push(this.tiles[Math.round(this.roomWidth/2)][0])
-        this.exits.right.push(this.tiles[this.roomWidth - 1][Math.round(this.roomHeight/2)])
-        this.exits.left.push(this.tiles[0][Math.round(this.roomHeight/2)])
-        this.exits.down.push(this.tiles[Math.round(this.roomWidth/2)][this.roomHeight -1])
+        this.exits.up.push(this.tiles[Math.round(this.roomWidth/2) - 1][0])
+        this.exits.right.push(this.tiles[this.roomWidth - 1][Math.round(this.roomHeight/2)-1])
+        this.exits.left.push(this.tiles[0][Math.round(this.roomHeight/2)-1])
+        this.exits.down.push(this.tiles[Math.round(this.roomWidth/2)-1][this.roomHeight -1])
         for (let exitDirection in this.exits) {
             const exitTiles = this.exits[exitDirection];
             // console.log("length", exitTiles.length, "inside ", exitTiles[0])
