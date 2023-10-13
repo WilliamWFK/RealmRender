@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import PlayerStatistics from '../Model/PlayerStatistics';
+import '../styles/mapEditor.css';
 
 
 const LoadMap = () => {
@@ -12,13 +13,14 @@ const LoadMap = () => {
 
   let mapObj;
   let mapped = [];
+  let fog = [];
+  let fogOn = false;
   let players = [];
   let tileSize = 32;
   let activePlayer = -1;
   let prevX = -1;
   let prevY = -1;
-
-
+  let fowRadius = 7;
 
   let mapX = ((state.width / 2) * -1) + (window.innerWidth / tileSize) / 2;
   let mapY = (state.height - (window.innerHeight / tileSize)) * -1;
@@ -27,30 +29,44 @@ const LoadMap = () => {
   let minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
 
 
-  let chest1;
-  let chest2;
-  let big_object1;
-  let big_object2;
-  let object1;
-  let object2;
-  let object3;
-  let object4;
-  let object5;
-  let floor;
-  let wall;
-  let door;
-  let background;
-  let playerImg;
+  let chest1, chest2;
+  let big_object1, big_object2, object1, object2, object3, object4, object5;
+  let floor, wall, door, background;
+
+  let rogueImg, knightImg, wizardImg, tokenImg;
+
+  //let players 1 through 6 player stats
+  let zeroOpacityFogImg, halfOpacityFogImg, fullOpacityFogImg;
 
   function sketch(p5) {
     function draw() {
       p5.background('#0f1f1f');
-
       // draw map
       mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+     //monsters.forEach(m => m.draw(p5, tileSize, mapX, mapY));
+
 
       // draw players
+      players.forEach(p => {
+        if(p.playerStats.stats['classLevel'].includes("Rogue")){
+          p.img = rogueImg;
+        }
+        else if(p.playerStats.stats['classLevel'].includes("Knight")){
+          p.img = knightImg;
+        }
+        else if(p.playerStats.stats['classLevel'].includes("Wizard")){
+          p.img = wizardImg;
+        }
+        else{
+          p.img = tokenImg;
+        }
+      });
       players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
+
+      if (fogOn) {
+        fog.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+      }
+
       mapX = Math.min((window.innerWidth / 3) / tileSize, mapX);
       mapY = Math.min((window.innerHeight / 3) / tileSize, mapY);
 
@@ -59,7 +75,6 @@ const LoadMap = () => {
 
 
       p5.frameRate(60);
-
     }
 
     p5.mousePressed = () => {
@@ -75,7 +90,7 @@ const LoadMap = () => {
           p.printStats();
         }
 
-       if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
+        if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
           activePlayer = -1;
         }
       });
@@ -100,8 +115,9 @@ const LoadMap = () => {
       if (activePlayer !== -1) {
         activePlayer.x = snapGrid(p5.mouseX - mapX * tileSize) + (tileSize / 2);
         activePlayer.y = snapGrid(p5.mouseY - mapY * tileSize) + (tileSize / 2);
+        fogUpdate(activePlayer);
         players.forEach(p => {
-          if(p.id === activePlayer.id) {
+          if (p.id === activePlayer.id) {
             p.x = activePlayer.x;
             p.y = activePlayer.y;
           }
@@ -109,11 +125,32 @@ const LoadMap = () => {
       }
     }
 
+    function fogUpdate(player) {
+      let x = Math.round((player.x + tileSize / 2) / tileSize);
+      let y = Math.round((player.y + tileSize / 2) / tileSize);
+      let radius = fowRadius;
+
+      for (let i = -radius; i <= radius; i++) {
+        for (let j = -radius; j <= radius; j++) {
+          if (x + i >= 0 && x + i < state.width && y + j >= 0 && y + j < state.height) {
+            if (i === -radius || i === radius || j === -radius || j === radius) {
+              if (fog[x + i][y + j].opacity !== 0) {
+                fog[x + i][y + j].setImage(halfOpacityFogImg);
+              }
+            } else {
+              fog[x + i][y + j].opacity = 0;
+              fog[x + i][y + j].setImage(zeroOpacityFogImg);
+            }
+          }
+        }
+      }
+    }
+
     function snapGrid(x) {
       return Math.floor(x / tileSize) * tileSize;
     }
 
-    function preload(theme){
+    function preload(theme) {
       //load all images for drawing
       let path = "TilesImg/" + theme + "/";
       //loading chests
@@ -134,14 +171,34 @@ const LoadMap = () => {
       door = p5.loadImage(path + "door.png");
       background = p5.loadImage(path + "background.png");
       //load player
-      playerImg = p5.loadImage("TilesImg/player1.png");
+
+      rogueImg = p5.loadImage("TilesImg/player4.png");
+      knightImg = p5.loadImage("TilesImg/player3.png");
+      wizardImg = p5.loadImage("TilesImg/player5.png");
+      tokenImg = p5.loadImage("TilesImg/player1.png");
+
+      fullOpacityFogImg = p5.loadImage("TilesImg/fog.png");
+
+      let full = p5.createGraphics(tileSize, tileSize);
+      full.background(255, 255);
+
+      fullOpacityFogImg.mask(full);
+      halfOpacityFogImg = p5.createGraphics(tileSize, tileSize);
+      halfOpacityFogImg.background(255, 127);
+
+      fullOpacityFogImg.mask(halfOpacityFogImg);
+      zeroOpacityFogImg = p5.createGraphics(tileSize, tileSize);
+      zeroOpacityFogImg.background(255, 0);
+
+      fullOpacityFogImg.mask(zeroOpacityFogImg);
+      fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
     }
 
-    function storeImage(tile){
+    function storeImage(tile) {
       let type = tile.image.split("-");
-      switch(type[0]){
+      switch (type[0]) {
         case "big_object":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(big_object1);
               break;
@@ -154,7 +211,7 @@ const LoadMap = () => {
           }
           break;
         case "object":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(object1);
               break;
@@ -176,7 +233,7 @@ const LoadMap = () => {
           }
           break;
         case "chest":
-          switch(type[1]){
+          switch (type[1]) {
             case "0":
               tile.setImage(chest1);
               break;
@@ -209,26 +266,46 @@ const LoadMap = () => {
       const seed = 'exampleSeed';
       mapObj = new Map(state.width, state.height, seed);
       mapped = mapObj.tiles;
+      fog = mapObj.fogLayer;
       preload(state.theme);
       // create map and players
       mapped.forEach(r => r.forEach(t => storeImage(t)));
       let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
       let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
       for (let i = 0; i < state.players; i++) {
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, playerImg, new PlayerStatistics(i)));
+        let placerHolderImg;
+        let placeHolderStats = new PlayerStatistics(i)
+        if(placeHolderStats.stats['classLevel'].includes("Rogue")){
+          placerHolderImg = rogueImg;
+        }
+        else if(placeHolderStats.stats['classLevel'].includes("Knight")){
+          placerHolderImg = knightImg;
+        }
+        else if(placeHolderStats.stats['classLevel'].includes("Wizard")){
+          placerHolderImg = wizardImg;
+        }
+        else{
+          placerHolderImg = tokenImg;
+        }
+        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, placerHolderImg, placeHolderStats));
+
+        fogUpdate(players[i]);
       }
+
     }
 
 
     p5.setup = () => {
-      p5.createCanvas(window.innerWidth - 4, window.innerHeight - 4);
-      let backButton = p5.createButton("<");
+      p5.createCanvas(window.innerWidth, window.innerHeight);
+      let backButton = p5.createButton("🠈");
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
+      let fogToggle = p5.createButton("👁");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
       zoomOutButton.position(10, 10);
+      fogToggle.position(10, 10);
 
       backButton.style('width', '5vw');
       backButton.style('height', '5vw');
@@ -244,10 +321,14 @@ const LoadMap = () => {
       zoomOutButton.style('margin-top', '12vw');
       zoomOutButton.style('font-size', '2vw');
 
+      fogToggle.style('width', '5vw');
+      fogToggle.style('height', '5vw');
+      fogToggle.style('margin-top', '18vw');
+      fogToggle.style('font-size', '2vw');
+
       backButton.mousePressed(() => {
         navigate("/index");
       });
-
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -258,6 +339,7 @@ const LoadMap = () => {
           });
         }
       });
+
       zoomOutButton.mousePressed(() => {
         if (tileSize > minTileSize) {
           Math.round(tileSize *= 0.9);
@@ -267,6 +349,10 @@ const LoadMap = () => {
           });
         }
       });
+
+      fogToggle.mousePressed(() => {
+        fogOn = !fogOn;
+      })
       setup();
     }
 
@@ -275,7 +361,7 @@ const LoadMap = () => {
     };
   }
   return (
-    <div id="P5Wrapper">
+    <div id="P5Wrapper" className="editorWrapper">
       <ReactP5Wrapper sketch={sketch} />
     </div>
   );

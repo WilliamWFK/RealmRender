@@ -3,7 +3,7 @@ import './styles/App.css';
 import { BrowserRouter as Router, Routes, Route }
   from 'react-router-dom';
 import Home from './pages';
-import Join from './pages/join';
+import PlayerView from './pages/playerView';
 import MapEditor from './pages/mapEditor';
 
 /**
@@ -17,7 +17,7 @@ function App() {
         <Route exact path='/' element={<Home />} />
         <Route path='/mapEditor' element={<MapEditor />} />
         <Route path='/index' element={<Home />} />
-        <Route path='/join' element={<Join />} />
+        <Route path='/playerView' element={<PlayerView />} />
       </Routes>
     </Router>
   );
