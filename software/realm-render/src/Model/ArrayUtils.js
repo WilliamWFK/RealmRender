@@ -9,25 +9,17 @@ export function rotate2DArray(array) {
         rotatedArray[col] = new Array(numRows);
         for (let row = 0; row < numRows; row++) {
             rotatedArray[col][row] = array[numRows - 1 - row][col];
+            rotatedArray[col][row].x = col
+            rotatedArray[col][row].y = row
         }
     }
-    const lefty = this.exits.left
-    const righty = this.exits.right
-    const uppy = this.exits.up
-    const downy = this.exits.down
-
-    this.exits.left = uppy
-    this.exits.right = downy
-    this.exits.up = righty
-    this.exits.down = lefty
-
 
     return rotatedArray;
 }
 
 //Function to decorate floor tiles with objects
 export function decorateFloorTiles(array, seed) {
-    console.log("decorating floor tiles");
+    //console.log("decorating floor tiles");
     const numCols = array.length;
     const numRows = array[0].length;
     //const numCols = array[0].length;
@@ -43,13 +35,13 @@ export function decorateFloorTiles(array, seed) {
                     let rand = Math.floor(random()*100) +1;
                     if(rand <= 30){
                         if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
-                            console.log("put objects here");
+                            //console.log("put objects here");
                             decoratedArray[col][row].setType("object");
                         }
                     }
                     else if(rand <= 34) {
                         if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
-                            console.log("put chest here");
+                            //console.log("put chest here");
                             decoratedArray[col][row].setType("chest")};
                         }
                 }
@@ -58,7 +50,7 @@ export function decorateFloorTiles(array, seed) {
                     if(rand <= 3){
                         //isFloor and is not cleanFloor
                         if(decoratedArray[col][row].isFloor() && !decoratedArray[col][row].isCleanFloor()){
-                            console.log("put clean floor here");
+                            //console.log("put clean floor here");
                             decoratedArray[col][row].setType("cleanFloor");
                         }
 

@@ -61,9 +61,9 @@ class Room {
   getGlobalExitCoordinates(exitDirection, exitIndex) {
     const exitTile = this.exits[exitDirection][exitIndex];
     if (!exitTile) return null; // Exit doesn't exist
-    console.log("global X, y", this.globalX, this.globalY)
-    console.log("global X, y", this.globalX + exitTile.x, this.globalY + exitTile.y)
-    console.log("global X, y", exitTile.x, exitTile.y)
+    //console.log("global X, y", this.globalX, this.globalY)
+    //console.log("global X, y", this.globalX + exitTile.x, this.globalY + exitTile.y)
+    //console.log("global X, y", exitTile.x, exitTile.y)
 
     return { x: this.globalX + exitTile.x, y: this.globalY + exitTile.y };
   }
@@ -76,16 +76,29 @@ class Room {
 
     //randomly selects a tile from edge wall tiles
     this.exits.up.push(edgeWallTiles.up[Math.floor(random() * edgeWallTiles.up.length)]);
-    console.log("in exit test", this.exits.up);
+    //console.log("in exit test", this.exits.up);
     this.exits.right.push(edgeWallTiles.right[Math.floor(random() * edgeWallTiles.right.length)]);
     this.exits.down.push(edgeWallTiles.down[Math.floor(random() * edgeWallTiles.down.length)]);
     this.exits.left.push(edgeWallTiles.left[Math.floor(random() * edgeWallTiles.left.length)]);
 
     for (let exitDirection in this.exits) {
       const exitTiles = this.exits[exitDirection];
+      // console.log("length", exitTiles.length, "inside ", exitTiles[0])
       for (let i = 0; i < exitTiles.length; i++) {
         const tile = exitTiles[i];
-        this.tiles[tile.x][tile.y].setType("door");
+        if(tile === undefined){
+          console.log(exitDirection)
+          console.log(this.tiles)
+          console.log(this.tiles[0][0])
+          console.log(edgeWallTiles.up)
+          console.log(edgeWallTiles.left)
+          console.log(edgeWallTiles.right)
+          console.log(edgeWallTiles.down)
+        }
+        // console.log(tile)
+        if(tile !== undefined){
+          this.tiles[tile.x][tile.y].setType("door");
+        }
       }
     }
   }
@@ -98,30 +111,32 @@ class Room {
       left: []
     };
 
+    //console.log(this.tiles)
+    //console.log(this.roomHeight, this.roomWidth)
     // Iterate through the top row
     for (let x = 1; x < this.roomWidth - 1; x++) {
-      if (this.tiles[x][0].isWall) {
+      if (this.tiles[x][0].isWall()) {
         edgeWallTiles.up.push(this.tiles[x][0]);
       }
     }
 
     // Iterate through the bottom row
     for (let x = 1; x < this.roomWidth - 1; x++) {
-      if (this.tiles[x][this.roomHeight - 1].isWall) {
+      if (this.tiles[x][this.roomHeight - 1].isWall()) {
         edgeWallTiles.down.push(this.tiles[x][this.roomHeight - 1]);
       }
     }
 
     // Iterate through the left column
     for (let y = 1; y < this.roomHeight - 1; y++) {
-      if (this.tiles[0][y].isWall) {
+      if (this.tiles[0][y].isWall()) {
         edgeWallTiles.left.push(this.tiles[0][y]);
       }
     }
 
     // Iterate through the right column
     for (let y = 1; y < this.roomHeight - 1; y++) {
-      if (this.tiles[this.roomWidth - 1][y].isWall) {
+      if (this.tiles[this.roomWidth - 1][y].isWall()) {
         edgeWallTiles.right.push(this.tiles[this.roomWidth - 1][y]);
       }
     }
