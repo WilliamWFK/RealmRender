@@ -5,7 +5,7 @@ import { rotate2DArray, decorateFloorTiles } from './ArrayUtils';
 class SquareRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        console.log('hello create sqRoom');
+        // console.log('hello create sqRoom');
         // Customize properties for your square room
         this.name = "Square Room";
         this.description = "A square room with walls on all sides.";
@@ -15,7 +15,7 @@ class SquareRoom extends Room {
     }
 
     createSquareTiles() {
-        console.log('hello create sqRoom create');
+        // console.log('hello create sqRoom create');
         // Create a grid of Tile objects for the square room
         const squareTiles = [];
         const startX = 0, startY = 0
@@ -44,7 +44,7 @@ class SquareRoom extends Room {
 class TshapeRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        console.log('hello create Troom');
+        // console.log('hello create Troom');
         // Customize properties for your square room
         this.name = "Tshape Room";
         this.description = "A T shaped room with walls on all sides.";
@@ -111,7 +111,7 @@ class TshapeRoom extends Room {
 class LShapeRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        console.log('hello create Lroom');
+        // console.log('hello create Lroom');
         // Customize properties for your square room
         this.name = "Lshape Room";
         this.description = "A L shaped room with walls on all sides.";
@@ -195,7 +195,7 @@ class RectShapeRoom extends Room {
         let tempWidth = Math.floor(Math.random() * (width-1) + 2);
         let tempHeight = Math.floor(Math.random() * (height-1) + 2);
         super(tempWidth, tempHeight, size, theme, seed); // Call the constructor of the base Room class
-        console.log('hello create Rectroom');
+        // console.log('hello create Rectroom');
         // Customize properties for your square room
         this.name = "Rectshape Room";
         this.description = "A Rectangle shaped room with walls on all sides.";
@@ -242,7 +242,7 @@ class RectShapeRoom extends Room {
 class PlusShapeRoom extends Room {
     constructor(width, height, size, theme, seed) {
         super(width, height, size, theme, seed); // Call the constructor of the base Room class
-        console.log('hello create Plusroom');
+        // console.log('hello create Plusroom');
         // Customize properties for your square room
         this.name = "Plusshape Room";
         this.description = "A Plus shaped room with walls on all sides.";
@@ -311,7 +311,7 @@ class PlusShapeRoom extends Room {
 class HoleShapeRoom extends Room {
     constructor(width, height, size, theme) {
         super(width, height, size, theme); // Call the constructor of the base Room class
-        console.log('hello create HoleRoom');
+        // console.log('hello create HoleRoom');
         // Customize properties for your square room
         this.name = "HoleShape Room";
         this.description = "A Hole shaped room with walls on all sides.";

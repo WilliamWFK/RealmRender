@@ -86,15 +86,6 @@ class Room {
       // console.log("length", exitTiles.length, "inside ", exitTiles[0])
       for (let i = 0; i < exitTiles.length; i++) {
         const tile = exitTiles[i];
-        if(tile === undefined){
-          console.log(exitDirection)
-          console.log(this.tiles)
-          console.log(this.tiles[0][0])
-          console.log(edgeWallTiles.up)
-          console.log(edgeWallTiles.left)
-          console.log(edgeWallTiles.right)
-          console.log(edgeWallTiles.down)
-        }
         // console.log(tile)
         if(tile !== undefined){
           this.tiles[tile.x][tile.y].setType("door");

@@ -356,8 +356,23 @@ class Map {
 
 
             new RectShapeRoom(width, height, "medium", this.theme, this.seed),
+            new RectShapeRoom(width, height, "medium", this.theme, this.seed + 1),
+            new RectShapeRoom(width, height, "medium", this.theme, this.seed + 2),
+            new RectShapeRoom(width, height, "medium", this.theme, this.seed + 3),
+            new RectShapeRoom(width, height, "medium", this.theme, this.seed + 4),
+            new RectShapeRoom(width, height, "medium", this.theme, this.seed + 5),
+
             new PlusShapeRoom(width, height, "medium", this.theme, this.seed),
+            new PlusShapeRoom(width, height, "medium", this.theme, this.seed + 1),
+            new PlusShapeRoom(width, height, "medium", this.theme, this.seed + 2),
+            new PlusShapeRoom(width, height, "medium", this.theme, this.seed + 3),
+            new PlusShapeRoom(width, height, "medium", this.theme, this.seed + 4),
+
             new HoleShapeRoom(width, height, "medium", this.theme, this.seed),
+            new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 1),
+            new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 2),
+            new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 3),
+            new HoleShapeRoom(width, height, "medium", this.theme, this.seed + 4),
 
             // new TshapeRoom(width, height, "medium"),
             // new LShapeRoom(width, height, "medium"),
