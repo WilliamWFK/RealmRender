@@ -73,10 +73,10 @@ class Room {
 
 
     //randomly selects a tile from edge wall tiles
-    this.exits.up.push(edgeWallTiles.up[Math.floor(random() * edgeWallTiles.up.length)]);
-    this.exits.right.push(edgeWallTiles.right[Math.floor(random() * edgeWallTiles.right.length)]);
-    this.exits.down.push(edgeWallTiles.down[Math.floor(random() * edgeWallTiles.down.length)]);
-    this.exits.left.push(edgeWallTiles.left[Math.floor(random() * edgeWallTiles.left.length)]);
+    this.exits.up.push(edgeWallTiles.up[Math.floor(random() * (edgeWallTiles.up.length - 2)) + 1]);
+    this.exits.right.push(edgeWallTiles.right[Math.floor(random() * (edgeWallTiles.right.length - 2)) + 1]);
+    this.exits.down.push(edgeWallTiles.down[Math.floor(random() * (edgeWallTiles.down.length - 2)) + 1]);
+    this.exits.left.push(edgeWallTiles.left[Math.floor(random() * (edgeWallTiles.left.length - 2)) + 1]);
 
     for (let exitDirection in this.exits) {
       const exitTiles = this.exits[exitDirection];
@@ -84,7 +84,7 @@ class Room {
       for (let i = 0; i < exitTiles.length; i++) {
         const tile = exitTiles[i];
         // console.log(tile)
-        if(tile !== undefined){
+        if (tile !== undefined) {
           this.tiles[tile.x][tile.y].setType("door");
         }
       }
