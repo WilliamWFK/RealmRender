@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useRef } from "react";
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import PlayerStatistics from '../Model/PlayerStatistics';
+import html2canvas from "html2canvas";
+import jsPdf from "jspdf";
 import '../styles/mapEditor.css';
 
 
@@ -301,11 +303,13 @@ const LoadMap = () => {
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
       let fogToggle = p5.createButton("👁");
+      let exportButton = p5.createButton("Export");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
       zoomOutButton.position(10, 10);
       fogToggle.position(10, 10);
+      exportButton.position(10, 10);
 
       backButton.style('width', '5vw');
       backButton.style('height', '5vw');
@@ -329,6 +333,10 @@ const LoadMap = () => {
       backButton.mousePressed(() => {
         navigate("/index");
       });
+      exportButton.style('width', '5vw');
+      exportButton.style('height', '5vw');
+      exportButton.style('margin-top', '18vw');
+      exportButton.style('font-size', '2vw');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -353,6 +361,46 @@ const LoadMap = () => {
       fogToggle.mousePressed(() => {
         fogOn = !fogOn;
       })
+      exportButton.mousePressed(async () => {
+        // Define a function to zoom out
+        async function zoomOut() {
+          while (tileSize > minTileSize) {
+            Math.round(tileSize *= 0.9);
+            players.forEach(p => {
+              Math.round(p.x *= 0.9);
+              Math.round(p.y *= 0.9);
+            });
+            await new Promise(resolve => setTimeout(resolve, 0.1)); // Delay each zoom step
+          }
+        }
+      
+        // Zoom out first
+        await zoomOut();
+
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        console.log(screenWidth, screenHeight);
+        // After fully zoomed out, capture the content and export as PDF
+        html2canvas(pdfRef.current, {
+          scrollX: 0,
+          scrollY: 0,
+          width: screenWidth*0.70, 
+          height: screenHeight,
+        }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPdf({
+            orientation: 'landscape',
+            unit: 'pt',
+            format: [canvas.height, canvas.width],
+          });
+          var width = pdf.internal.pageSize.getWidth();
+          var height = pdf.internal.pageSize.getHeight();
+          const imgX = -130;
+          const imgY = 30;
+          pdf.addImage(imgData, 'PNG', imgX, imgY, width, height);
+          pdf.save("download.pdf");
+        });
+      });
       setup();
     }
 
@@ -360,8 +408,11 @@ const LoadMap = () => {
       draw();
     };
   }
+
+  const pdfRef = useRef();
+
   return (
-    <div id="P5Wrapper" className="editorWrapper">
+    <div class="editorWrapper" ref={pdfRef}>
       <ReactP5Wrapper sketch={sketch} />
     </div>
   );
