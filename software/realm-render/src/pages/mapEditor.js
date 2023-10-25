@@ -382,7 +382,7 @@ const LoadMap = () => {
             await new Promise(resolve => setTimeout(resolve, 0.1)); // Delay each zoom step
           }
         }
-      
+
         // Zoom out first
         await zoomOut();
 
@@ -390,12 +390,12 @@ const LoadMap = () => {
         const screenHeight = window.innerHeight;
         console.log(screenWidth, screenHeight);
 
-        
+
 
         html2canvas(pdfRef.current, {
           scrollX: 0,
           scrollY: 0,
-          width: screenWidth, 
+          width: screenWidth,
           height: screenHeight,
         }).then(canvas => {
           const imgData = canvas.toDataURL('image/png');
@@ -436,7 +436,7 @@ const LoadMap = () => {
             await new Promise(resolve => setTimeout(resolve, 0.1)); // Delay each zoom step
           }
         }
-      
+
         // Zoom out first
         await zoomOut();
         if(state.name === ""){
