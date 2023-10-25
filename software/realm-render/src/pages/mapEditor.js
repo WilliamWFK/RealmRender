@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,6 +12,12 @@ import '../styles/mapEditor.css';
 const LoadMap = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [buttonsVisible, setButtonsVisible] = useState(true);
+
+  const toggleButtonsVisibility = (visible) => {
+    setButtonsVisible(visible);
+  };
+
 
   let mapObj;
   let mapped = [];
@@ -40,7 +46,43 @@ const LoadMap = () => {
   //let players 1 through 6 player stats
   let zeroOpacityFogImg, halfOpacityFogImg, fullOpacityFogImg;
 
+
+  function zoomIn() {
+    if (tileSize < maxTileSize) {
+      Math.round(tileSize *= 1.1);
+      players.forEach(p => {
+        Math.round(p.x *= 1.1);
+        Math.round(p.y *= 1.1);
+      });
+    }
+  }
+
+  function zoomOut() {
+    if (tileSize > minTileSize) {
+      Math.round(tileSize *= 0.9);
+      players.forEach(p => {
+        Math.round(p.x *= 0.9);
+        Math.round(p.y *= 0.9);
+      });
+    }
+  }
+
+  function toggleFog() {
+    fogOn = !fogOn;
+  }
+
+  function exportToPDF() {
+    // ... (existing code for exporting PDF)
+    toggleButtonsVisibility(true); // Show buttons after exporting
+  }
+
+  function exportToPNG() {
+    // ... (existing code for exporting PNG)
+    toggleButtonsVisibility(true); // Show buttons after exporting
+  }
+
   function sketch(p5) {
+
     function draw() {
       p5.background('#0f1f1f');
       // draw map
@@ -372,6 +414,7 @@ const LoadMap = () => {
         mapX = 0;
         mapY = 0;
         fogOn = false;
+        toggleButtonsVisibility(false);
         // Define a function to zoom out
         async function zoomOut() {
           while (tileSize > minTileSize) {
@@ -462,6 +505,16 @@ const LoadMap = () => {
   return (
     <div id="P5Wrapper" className="editorWrapper" ref={pdfRef}>
       <ReactP5Wrapper sketch={sketch} />
+      {buttonsVisible && (
+        <div id="p5Buttons">
+          <button onClick={() => toggleButtonsVisibility(false)}>🠈</button>
+          <button onClick={zoomIn}>+</button>
+          <button onClick={zoomOut}>-</button>
+          <button onClick={toggleFog}>👁</button>
+          <button onClick={exportToPDF}>Export PDF</button>
+          <button onClick={exportToPNG}>Export PNG</button>
+        </div>
+      )}
     </div>
   );
 };
