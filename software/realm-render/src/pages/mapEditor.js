@@ -371,6 +371,7 @@ const LoadMap = () => {
       exportButton.mousePressed(async () => {
         mapX = 0;
         mapY = 0;
+        fogOn = false;
         // Define a function to zoom out
         async function zoomOut() {
           while (tileSize > minTileSize) {
@@ -426,6 +427,7 @@ const LoadMap = () => {
       png.mousePressed(async () => {
         mapX = 0;
         mapY = 0;
+        fogOn = false;
         async function zoomOut() {
           while (tileSize > minTileSize) {
             Math.round(tileSize *= 0.9);
@@ -458,7 +460,7 @@ const LoadMap = () => {
   const pdfRef = useRef();
 
   return (
-    <div class="editorWrapper" ref={pdfRef}>
+    <div id="P5Wrapper" className="editorWrapper" ref={pdfRef}>
       <ReactP5Wrapper sketch={sketch} />
     </div>
   );
