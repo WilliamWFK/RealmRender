@@ -369,7 +369,8 @@ const LoadMap = () => {
         fogOn = !fogOn;
       })
       exportButton.mousePressed(async () => {
-        
+        mapX = 0;
+        mapY = 0;
         // Define a function to zoom out
         async function zoomOut() {
           while (tileSize > minTileSize) {
@@ -423,6 +424,8 @@ const LoadMap = () => {
 
 
       png.mousePressed(async () => {
+        mapX = 0;
+        mapY = 0;
         async function zoomOut() {
           while (tileSize > minTileSize) {
             Math.round(tileSize *= 0.9);
