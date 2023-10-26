@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useRef } from "react";
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import PlayerStatistics from '../Model/PlayerStatistics';
+import html2canvas from "html2canvas";
+import jsPdf from "jspdf";
 import '../styles/mapEditor.css';
 
 
@@ -301,11 +303,15 @@ const LoadMap = () => {
       let zoomInButton = p5.createButton("+");
       let zoomOutButton = p5.createButton("-");
       let fogToggle = p5.createButton("👁");
+      let exportButton = p5.createButton("Export PDF");
+      let png = p5.createButton("Export PNG");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
       zoomOutButton.position(10, 10);
       fogToggle.position(10, 10);
+      exportButton.position(10, 10);
+      png.position(10, 10);
 
       backButton.style('width', '5vw');
       backButton.style('height', '5vw');
@@ -329,6 +335,15 @@ const LoadMap = () => {
       backButton.mousePressed(() => {
         navigate("/index");
       });
+      exportButton.style('width', '5vw');
+      exportButton.style('height', '5vw');
+      exportButton.style('margin-top', '30vw');
+      exportButton.style('font-size', '1vw');
+
+      png.style('width', '5vw');
+      png.style('height', '5vw');
+      png.style('margin-top', '24vw');
+      png.style('font-size', '1vw');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -353,15 +368,99 @@ const LoadMap = () => {
       fogToggle.mousePressed(() => {
         fogOn = !fogOn;
       })
+      exportButton.mousePressed(async () => {
+        mapX = 0;
+        mapY = 0;
+        fogOn = false;
+        // Define a function to zoom out
+        async function zoomOut() {
+          while (tileSize > minTileSize) {
+            Math.round(tileSize *= 0.9);
+            players.forEach(p => {
+              Math.round(p.x *= 0.9);
+              Math.round(p.y *= 0.9);
+            });
+            await new Promise(resolve => setTimeout(resolve, 0.1)); // Delay each zoom step
+          }
+        }
+
+        // Zoom out first
+        await zoomOut();
+
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        console.log(screenWidth, screenHeight);
+
+
+
+        html2canvas(pdfRef.current, {
+          scrollX: 0,
+          scrollY: 0,
+          width: screenWidth,
+          height: screenHeight,
+        }).then(canvas => {
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = new jsPdf({
+            orientation: 'landscape',
+            unit: 'pt',
+            format: [595.276, 841.890],
+          });
+          //var width = state.width * tileSize;
+          //var height = state.height * tileSize;
+          console.log(state.width*tileSize);
+          console.log(pdf.internal.pageSize.getWidth());
+          var width = pdf.internal.pageSize.getWidth()+(state.width*tileSize)/2;
+          var height = pdf.internal.pageSize.getHeight();
+          const imgX = -65;
+          const imgY = 0;
+          pdf.addImage(imgData, 'PNG', imgX, imgY, width, height);
+          if(state.name === ""){
+           pdf.save("Realm.pdf");
+          }else{
+            pdf.save(state.name + ".pdf");
+          }
+        });
+      });
+
+
+
+      png.mousePressed(async () => {
+        mapX = 0;
+        mapY = 0;
+        fogOn = false;
+        async function zoomOut() {
+          while (tileSize > minTileSize) {
+            Math.round(tileSize *= 0.9);
+            players.forEach(p => {
+              Math.round(p.x *= 0.9);
+              Math.round(p.y *= 0.9);
+            });
+            await new Promise(resolve => setTimeout(resolve, 0.1)); // Delay each zoom step
+          }
+        }
+
+        // Zoom out first
+        await zoomOut();
+        if(state.name === ""){
+          p5.saveCanvas("Render", "png");
+        }else{
+          p5.saveCanvas(state.name, "png");
+        }
+      });
+
       setup();
+
     }
 
     p5.draw = () => {
       draw();
     };
   }
+
+  const pdfRef = useRef();
+
   return (
-    <div id="P5Wrapper" className="editorWrapper">
+    <div id="P5Wrapper" className="editorWrapper" ref={pdfRef}>
       <ReactP5Wrapper sketch={sketch} />
     </div>
   );
