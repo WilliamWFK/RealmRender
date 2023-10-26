@@ -14,9 +14,6 @@ class Tile {
             down: "empty",
             left: "empty"
         };
-        this.theme = theme;     // Theme of tile
-        /**this.selectImage();*/
-        this.seed = seed;
     }
 
     isWall() {

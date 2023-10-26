@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import Player from "../Model/Player";
 import Map from "../Model/Map";
+import Tile from "../Model/Tile";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 import PlayerStatistics from '../Model/PlayerStatistics';
@@ -305,6 +306,7 @@ const LoadMap = () => {
       let fogToggle = p5.createButton("👁");
       let exportButton = p5.createButton("Export PDF");
       let png = p5.createButton("Export PNG");
+      let save = p5.createButton("Save");
 
       backButton.position(10, 10);
       zoomInButton.position(10, 10);
@@ -312,6 +314,7 @@ const LoadMap = () => {
       fogToggle.position(10, 10);
       exportButton.position(10, 10);
       png.position(10, 10);
+      save.position(10, 10);
 
       backButton.style('width', '5vw');
       backButton.style('height', '5vw');
@@ -344,6 +347,12 @@ const LoadMap = () => {
       png.style('height', '5vw');
       png.style('margin-top', '24vw');
       png.style('font-size', '1vw');
+
+
+      save.style('width', '5vw');
+      save.style('height', '5vw');
+      save.style('margin-top', '36vw');
+      save.style('font-size', '1vw');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {
@@ -446,6 +455,68 @@ const LoadMap = () => {
         }else{
           p5.saveCanvas(state.name, "png");
         }
+      });
+
+      save.mousePressed(async () => {
+
+        console.log("save")
+        //         tiles: mapped,
+        //fog: fog,
+
+        //remove img from players
+        //copy the players array
+        console.log(players);
+        let playersCopy = [...players];
+        console.log(playersCopy);
+        playersCopy.forEach(p => {
+          p.img = null;
+        });
+
+        //deep copy the tiles array
+        let tilesCopy = [];
+        mapped.forEach(r => {
+          let row = [];
+          r.forEach(t => {
+            let tile = new Tile(t.x, t.y, t.type, t.seed);
+            tile.image = null;
+            row.push(tile);
+          });
+          tilesCopy.push(row);
+        });
+
+        //deep copy the fog array
+        let fogCopy = [];
+        fog.forEach(r => {
+          let row = [];
+          r.forEach(t => {
+            let tile = new Tile(t.x, t.y, t.type, t.seed);
+            tile.image = null;
+            row.push(tile);
+          });
+          fogCopy.push(row);
+        });
+
+        console.log(playersCopy);
+        let saveData = {
+          name: state.name,
+          width: state.width,
+          height: state.height,
+          theme: state.theme,
+          tiles: tilesCopy,
+          fog: fogCopy,
+          players: players,
+        }
+        console.log(saveData);
+
+        //store map into local storage
+        const storedData = localStorage.getItem('maps');
+        let maps = [];
+        if(storedData){
+          maps = JSON.parse(storedData);
+        }
+        maps.push(saveData);
+        localStorage.setItem('maps', JSON.stringify(maps));
+        console.log("saved");
       });
 
       setup();

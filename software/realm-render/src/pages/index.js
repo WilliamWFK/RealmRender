@@ -10,6 +10,60 @@ const Home = () => {
 
   const [formData, setFormData] = useState({ name: "", width: 90, height: 90, players: 2, theme: "Atlantis" });
 
+  const [jsonData] = useState(localStorage.getItem("maps") ? JSON.parse(localStorage.getItem("maps")) : []);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const toggleItemSelection = (index) => {
+    // Toggle the selection for the clicked item
+    if (selectedItem === index) {
+      setSelectedItem(null); // Deselect if already selected
+    } else {
+      setSelectedItem(index); // Select the new item
+    }
+  };
+
+  const renderTable = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Save Name</th>
+            <th>Save Theme</th>
+            <th>Selected</th>
+          </tr>
+        </thead>
+        <tbody>
+          {jsonData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.name}</td>
+              <td>{item.theme}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedItem === index}
+                  onChange={() => toggleItemSelection(index)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+
+  const handleLoad = (event) => {
+    event.preventDefault();
+    if (selectedItem !== null && selectedItem >= 0 && selectedItem < jsonData.length) {
+      alert(`Index: ${selectedItem} Name: ${jsonData[selectedItem].name} Theme: ${jsonData[selectedItem].theme}`);
+
+      navigate("/mapEditor", {state: {index: selectedItem, action: "load"}});
+    } else {
+      alert("Please select a save to load");
+      return;
+    }
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -107,10 +161,10 @@ const Home = () => {
           </div>
           <div class="menuBackdrop loadForm">
             <h1>Load</h1>
-            <textarea id="pasteBox" name="pasteBox" rows="4"></textarea>
+            {renderTable()}
             <div class="navButtons">
               <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
-              <div class="createButton" ><p class="text">Load</p><p class="plus">+</p></div>
+              <div class="createButton" onClick={handleLoad}><p class="text">Load</p><p class="plus">+</p></div>
             </div>
           </div>
         </div>
