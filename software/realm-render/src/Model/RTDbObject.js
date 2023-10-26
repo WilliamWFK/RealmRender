@@ -21,8 +21,8 @@ class RTDbObject {
         });
     }
 
-    createEntityListener(gameId, callback) {
-        const entityReference = ref(this.db, 'entities/' + gameId + "/otherEntities");
+    createEntityListener(callback) {
+        const entityReference = ref(this.db, 'entities/' + this.gameId + "/otherEntities");
         onValue(entityReference, (snapshot) => {
             const entities = snapshot.val();
             callback(entities);
@@ -31,8 +31,8 @@ class RTDbObject {
         });
     }
 
-    createPlayerListener(gameId, callback) {
-        const entityReference = ref(this.db, 'entities/' + gameId + "/players");
+    createPlayerListener(callback) {
+        const entityReference = ref(this.db, 'entities/' + this.gameId + "/players");
         onValue(entityReference, (snapshot) => {
             const player = snapshot.val();
             callback(player);
@@ -59,8 +59,8 @@ class RTDbObject {
 
 
 
-    createGameListener(gameId, callback) {
-        const gameReference = ref(this.db, 'games/' + gameId);
+    createGameListener(callback) {
+        const gameReference = ref(this.db, 'games/' + this.gameId);
         onValue(gameReference, (snapshot) => {
             const game = snapshot.val();
             callback(game);
@@ -69,64 +69,64 @@ class RTDbObject {
         });
     }
 
-    updateMapData(gameId, map) {
-        const mapReference = ref(this.db, 'maps/' + gameId);
+    updateMapData(map) {
+        const mapReference = ref(this.db, 'maps/' + this.gameId);
         update(mapReference, {
             tiles: map.tiles
         });
         console.log("Map updated");
     }
 
-    updateEntityData(gameId, entity) {
-        const entityReference = ref(this.db, 'entities/' + gameId + "/otherEntities");
+    updateEntityData(entity) {
+        const entityReference = ref(this.db, 'entities/' + this.gameId + "/otherEntities");
         update(entityReference, {
             entities: entity.entities
         });
         console.log("Entities updated");
     }
 
-    updatePlayerData(gameId, player) {
-        const entityReference = ref(this.db, 'entities/' + gameId + "/players");
+    updatePlayerData(player) {
+        const entityReference = ref(this.db, 'entities/' + this.gameId + "/players");
         update(entityReference, {
             player: player
         });
         console.log("Player updated");
     }
 
-    updateGameData(gameId, game) {
-        const gameReference = ref(this.db, 'games/' + gameId);
+    updateGameData(game) {
+        const gameReference = ref(this.db, 'games/' + this.gameId);
         update(gameReference, {
             game: game.game
         });
         console.log("Game updated");
     }
 
-    createNewGame(gameId, game) {
-        const gameReference = ref(this.db, 'games/' + gameId);
+    createNewGame(game) {
+        const gameReference = ref(this.db, 'games/' + this.gameId);
         set(gameReference, {
             game: game
         });
         console.log("Game created");
     }
 
-    createNewMap(gameId, map) {
-        const mapReference = ref(this.db, 'maps/' + gameId);
+    createNewMap(map) {
+        const mapReference = ref(this.db, 'maps/' + this.gameId);
         set(mapReference, {
             tiles: map.tiles
         });
         console.log("Map created");
     }
 
-    createNewEntity(gameId, entity) {
-        const entityReference = ref(this.db, 'entities/' + gameId + "/otherEntities");
+    createNewEntity(entity) {
+        const entityReference = ref(this.db, 'entities/' + this.gameId + "/otherEntities");
         set(entityReference, {
             entities: entity.entities
         });
         console.log("Entities created");
     }
 
-    createNewPlayer(gameId, player) {
-        const entityReference = ref(this.db, 'entities/' + gameId + "/players");
+    createNewPlayer(player) {
+        const entityReference = ref(this.db, 'entities/' + this.gameId + "/players");
         set(entityReference, {
             player: player
         });

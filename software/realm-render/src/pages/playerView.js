@@ -6,7 +6,7 @@ import RTDbObject from '../Model/RTDbObject';
 
 const rtdb = new RTDbObject("ABCD");
 
-rtdb.getGameData(console.log)
+rtdb.createMapListener(console.log)
 
 
 
