@@ -606,6 +606,12 @@
           if(storedData){
             maps = JSON.parse(storedData);
           }
+
+          //if map name and theme already exists, replace it
+          if(state.index !== undefined){
+            //remove the old map
+            maps.splice(state.index, 1);
+          }
           //check if maps size will exceed 3 maps
           if(maps.length >= 3){
             maps.shift();
