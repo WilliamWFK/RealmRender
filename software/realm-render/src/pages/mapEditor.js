@@ -298,7 +298,7 @@
             });
             mapped.push(row);
           });
-          //mapped.forEach(r => r.forEach(t => storeImage(t)));
+
           mapObj.tiles = mapped;
           //set the map fog
           console.log(selectedMap.fog);
@@ -319,7 +319,7 @@
             fog.push(row);
           });
           mapObj.fogLayer = fog;
-          //fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
+
           //set the map players
           players = [];
           selectedMap.players.forEach(p => {
@@ -327,11 +327,11 @@
             playerStatistics.stats = p.playerStats.stats;
             let player = new Player(p.id, p.x, p.y, p.img, playerStatistics);
             players.push(player);
-            //fogUpdate(player);
+
           });
           //set the map name
           state.name = selectedMap.name;
-          console.log(mapObj);
+
         }else{
           mapObj = new Map(state.width, state.height, seed);
           mapped = mapObj.tiles;
@@ -533,9 +533,7 @@
         });
 
         save.mousePressed(async () => {
-          console.log(mapObj);
-
-          localStorage.clear();
+          //localStorage.clear();
           //set zoom in/out to 0
           if(zoom > 0){
             for(let i = 0; i < zoom; i++){
@@ -591,8 +589,6 @@
             });
             fogCopy.push(row);
           });
-          console.log(fog);
-          console.log(fogCopy);
 
           let saveData = {
             name: state.name,
@@ -609,6 +605,10 @@
           let maps = [];
           if(storedData){
             maps = JSON.parse(storedData);
+          }
+          //check if maps size will exceed 3 maps
+          if(maps.length >= 3){
+            maps.shift();
           }
           maps.push(saveData);
           localStorage.setItem('maps', JSON.stringify(maps));

@@ -23,6 +23,7 @@ const Home = () => {
   };
 
   const renderTable = () => {
+    const reversedData = jsonData.slice().reverse();
     return (
       <table>
         <thead>
@@ -33,15 +34,15 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {jsonData.map((item, index) => (
+          {reversedData.map((item, index) => (
             <tr key={index}>
               <td>{item.name}</td>
               <td>{item.theme}</td>
               <td>
                 <input
                   type="checkbox"
-                  checked={selectedItem === index}
-                  onChange={() => toggleItemSelection(index)}
+                  checked={selectedItem === jsonData.length - 1 - index}
+                  onChange={() => toggleItemSelection(jsonData.length - 1 - index)}
                 />
               </td>
             </tr>
@@ -55,8 +56,6 @@ const Home = () => {
   const handleLoad = (event) => {
     event.preventDefault();
     if (selectedItem !== null && selectedItem >= 0 && selectedItem < jsonData.length) {
-      alert(`Index: ${selectedItem} Name: ${jsonData[selectedItem].name} Theme: ${jsonData[selectedItem].theme}`);
-
       navigate("/mapEditor", {state: {index: selectedItem, action: "load"}});
     } else {
       alert("Please select a save to load");
@@ -73,8 +72,6 @@ const Home = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
-    );
 
     navigate("/mapEditor", { state: { name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme } });
   }
@@ -98,12 +95,6 @@ const Home = () => {
             <h1>Create Your Map</h1>
             <div class="settingForm">
               {/* example settings */}
-              {/*<div>setting:</div>
-              <input type="text" id="setting1" name="setting1"></input>
-              <div>setting two:</div>
-              <label for="setting2">{sliderValue}</label>
-              <input type="range" min="0" max="10" value={sliderValue} onInput={(e) => setValue(e.target.value)} id="setting2" name="setting2"></input>
-              */}
               {/* example settings end */}
               <form onSubmit={handleSubmit}>
                 <div class="formInput">
