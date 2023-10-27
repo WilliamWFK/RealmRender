@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import Player from "../Model/Player";
 import Map from "../Model/Map";
 import Tile from "../Model/Tile";
@@ -8,11 +8,29 @@ import PlayerStatistics from '../Model/PlayerStatistics';
 import html2canvas from "html2canvas";
 import jsPdf from "jspdf";
 import '../styles/mapEditor.css';
+import Fog from "../Model/Fog";
 
 
 const LoadMap = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
+
+  useEffect(() => {
+    if (state.action === 'load') {
+      alert('Map loaded successfully!');
+      //parse the json data map into an array
+      let maps = JSON.parse(localStorage.getItem("maps"));
+      //get the selected map
+      let selectedMap = maps[state.index];
+      console.log("selectedMap");
+      console.log(selectedMap);
+
+
+    }
+    else if(state.action === 'create') {
+      alert('Map created successfully!');
+    }
+  }, [state.action]);
 
   let mapObj;
   let mapped = [];
@@ -267,33 +285,89 @@ const LoadMap = () => {
     }
     function setup() {
       const seed = 'exampleSeed';
-      mapObj = new Map(state.width, state.height, seed);
-      mapped = mapObj.tiles;
-      fog = mapObj.fogLayer;
-      preload(state.theme);
-      // create map and players
-      mapped.forEach(r => r.forEach(t => storeImage(t)));
-      let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
-      let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
-      for (let i = 0; i < state.players; i++) {
-        let placerHolderImg;
-        let placeHolderStats = new PlayerStatistics(i)
-        if(placeHolderStats.stats['classLevel'].includes("Rogue")){
-          placerHolderImg = rogueImg;
-        }
-        else if(placeHolderStats.stats['classLevel'].includes("Knight")){
-          placerHolderImg = knightImg;
-        }
-        else if(placeHolderStats.stats['classLevel'].includes("Wizard")){
-          placerHolderImg = wizardImg;
-        }
-        else{
-          placerHolderImg = tokenImg;
-        }
-        players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, placerHolderImg, placeHolderStats));
+      //check if map is being loaded or created
+      if (state.action === 'load') {
+        //parse the json data map into an array
+        let maps = JSON.parse(localStorage.getItem("maps"));
+        //get the selected map
+        let selectedMap = maps[state.index];
+        console.log(selectedMap);
+        //set the map width and height
+        state.width = selectedMap.width;
+        state.height = selectedMap.height;
+        //set the map theme
+        state.theme = selectedMap.theme;
+        preload(state.theme);
+        mapObj = new Map(state.width, state.height, seed);
 
-        fogUpdate(players[i]);
+        //set the map tiles
+        mapped = [];
+        //set the mapped to be an array of tile objects
+        selectedMap.tiles.forEach(r => {
+          let row = [];
+          r.forEach(t => {
+            let tile = new Tile(t.x, t.y, t.type, t.seed);
+            tile.p5Image = null;
+            tile.image = t.image;
+            row.push(tile);
+          });
+          mapped.push(row);
+        });
+        mapped.forEach(r => r.forEach(t => storeImage(t)));
+        mapObj.tiles = mapped;
+        console.log(mapObj.tiles);
+        //set the map fog
+        fog = [];
+        selectedMap.fog.forEach(r => {
+          let row = [];
+          r.forEach(t => {
+            let tile = new Fog(t.x, t.y);
+            row.push(tile);
+          });
+          fog.push(row);
+        });
+        fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
+        //set the map players
+        players = [];
+        selectedMap.players.forEach(p => {
+          let player = new Player(p.id, p.x, p.y, p.img, p.playerStats);
+          players.push(player);
+          fogUpdate(player);
+        });
+        //set the map name
+        state.name = selectedMap.name;
+      }else{
+        mapObj = new Map(state.width, state.height, seed);
+        mapped = mapObj.tiles;
+        fog = mapObj.fogLayer;
+        console.log(mapObj);
+        preload(state.theme);
+        // create map and players
+        mapped.forEach(r => r.forEach(t => storeImage(t)));
+        let entranceX = snapGrid((state.width / 2) * tileSize) - (tileSize / 2);
+        let entranceY = snapGrid((state.height - 1) * tileSize) - (tileSize / 2);
+        for (let i = 0; i < state.players; i++) {
+          let placerHolderImg;
+          let placeHolderStats = new PlayerStatistics(i)
+          if(placeHolderStats.stats['classLevel'].includes("Rogue")){
+            placerHolderImg = rogueImg;
+          }
+          else if(placeHolderStats.stats['classLevel'].includes("Knight")){
+            placerHolderImg = knightImg;
+          }
+          else if(placeHolderStats.stats['classLevel'].includes("Wizard")){
+            placerHolderImg = wizardImg;
+          }
+          else{
+            placerHolderImg = tokenImg;
+          }
+          players.push(new Player(i, entranceX + (i * tileSize) - (Math.ceil((state.players / 2) - 1) * tileSize), entranceY, placerHolderImg, placeHolderStats));
+
+          fogUpdate(players[i]);
+        }
       }
+
+
 
     }
 
@@ -458,7 +532,7 @@ const LoadMap = () => {
       });
 
       save.mousePressed(async () => {
-
+        localStorage.clear();
         console.log("save")
         //         tiles: mapped,
         //fog: fog,
@@ -466,10 +540,11 @@ const LoadMap = () => {
         //remove img from players
         //copy the players array
         console.log(players);
-        let playersCopy = [...players];
-        console.log(playersCopy);
-        playersCopy.forEach(p => {
-          p.img = null;
+        let playersCopy = [];
+        players.forEach(p => {
+          let player = new Player(p.id, p.x, p.y, p.img, p.playerStats);
+          player.img = null;
+          playersCopy.push(player);
         });
 
         //deep copy the tiles array
@@ -478,7 +553,8 @@ const LoadMap = () => {
           let row = [];
           r.forEach(t => {
             let tile = new Tile(t.x, t.y, t.type, t.seed);
-            tile.image = null;
+            tile.p5Image = null;
+            tile.image = t.image;
             row.push(tile);
           });
           tilesCopy.push(row);
@@ -489,8 +565,8 @@ const LoadMap = () => {
         fog.forEach(r => {
           let row = [];
           r.forEach(t => {
-            let tile = new Tile(t.x, t.y, t.type, t.seed);
-            tile.image = null;
+            let tile = new Fog(t.x, t.y);
+            tile.img = null;
             row.push(tile);
           });
           fogCopy.push(row);
@@ -504,7 +580,7 @@ const LoadMap = () => {
           theme: state.theme,
           tiles: tilesCopy,
           fog: fogCopy,
-          players: players,
+          players: playersCopy,
         }
         console.log(saveData);
 
