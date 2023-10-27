@@ -1,4 +1,4 @@
-  import React, { useRef, useEffect } from "react";
+  import React, { useRef } from "react";
   import Player from "../Model/Player";
   import Map from "../Model/Map";
   import Tile from "../Model/Tile";
