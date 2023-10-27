@@ -25,6 +25,7 @@
     let prevX = -1;
     let prevY = -1;
     let fowRadius = 7;
+    let zoom = 0;
 
     let mapX = ((state.width / 2) * -1) + (window.innerWidth / tileSize) / 2;
     let mapY = (state.height - (window.innerHeight / tileSize)) * -1;
@@ -415,6 +416,7 @@
 
         zoomInButton.mousePressed(() => {
           if (tileSize < maxTileSize) {
+            zoom++;
             Math.round(tileSize *= 1.1);
             players.forEach(p => {
               Math.round(p.x *= 1.1);
@@ -425,10 +427,11 @@
 
         zoomOutButton.mousePressed(() => {
           if (tileSize > minTileSize) {
-            Math.round(tileSize *= 0.9);
+            zoom--;
+            Math.round(tileSize /= 1.1);
             players.forEach(p => {
-              Math.round(p.x *= 0.9);
-              Math.round(p.y *= 0.9);
+              Math.round(p.x /= 1.1);
+              Math.round(p.y /= 1.1);
             });
           }
         });
@@ -443,6 +446,7 @@
           // Define a function to zoom out
           async function zoomOut() {
             while (tileSize > minTileSize) {
+              zoom--;
               Math.round(tileSize *= 0.9);
               players.forEach(p => {
                 Math.round(p.x *= 0.9);
@@ -498,6 +502,7 @@
           fogOn = false;
           async function zoomOut() {
             while (tileSize > minTileSize) {
+              zoom--;
               Math.round(tileSize *= 0.9);
               players.forEach(p => {
                 Math.round(p.x *= 0.9);
@@ -518,13 +523,29 @@
 
         save.mousePressed(async () => {
           localStorage.clear();
-          console.log("save")
-          //         tiles: mapped,
-          //fog: fog,
+          //set zoom in/out to 0
+          if(zoom > 0){
+            for(let i = 0; i < zoom; i++){
+              Math.round(tileSize /= 1.1);
+              players.forEach(p => {
+                Math.round(p.x /= 1.1);
+                Math.round(p.y /= 1.1);
+              });
+            }
+          }
+          else if(zoom < 0){
+            for(let i = 0; i > zoom; i--){
+              Math.round(tileSize *= 1.1);
+              players.forEach(p => {
+                Math.round(p.x *= 1.1);
+                Math.round(p.y *= 1.1);
+              });
+            }
+          }
+
 
           //remove img from players
           //copy the players array
-          console.log(players);
           let playersCopy = [];
           players.forEach(p => {
             let player = new Player(p.id, p.x, p.y, p.img, p.playerStats);
@@ -556,8 +577,6 @@
             });
             fogCopy.push(row);
           });
-
-          console.log(playersCopy);
           let saveData = {
             name: state.name,
             width: state.width,
@@ -567,7 +586,6 @@
             fog: fogCopy,
             players: playersCopy,
           }
-          console.log(saveData);
 
           //store map into local storage
           const storedData = localStorage.getItem('maps');
@@ -577,7 +595,6 @@
           }
           maps.push(saveData);
           localStorage.setItem('maps', JSON.stringify(maps));
-          console.log("saved");
         });
 
         setup();
