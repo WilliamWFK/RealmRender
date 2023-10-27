@@ -612,10 +612,20 @@
             //remove the old map
             maps.splice(state.index, 1);
           }
-          //check if maps size will exceed 3 maps
-          if(maps.length >= 3){
-            maps.shift();
+
+          //check if maps will exceed the local storage limit
+          if(JSON.stringify(maps).length + JSON.stringify(saveData).length > 5242880){
+            //if it will exceed limit ask user if they are ok with deleting maps
+            if(window.confirm("You are about to exceed the local storage limit. Do you want to delete the old maps to make room?")){
+              while(JSON.stringify(maps).length + JSON.stringify(saveData).length > 5242880){
+                maps.shift();
+              }
+            }
+            else{
+              return;
+            }
           }
+
           maps.push(saveData);
           localStorage.setItem('maps', JSON.stringify(maps));
         });
