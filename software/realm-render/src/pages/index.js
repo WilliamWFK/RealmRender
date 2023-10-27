@@ -21,11 +21,10 @@ const Home = () => {
       setSelectedItem(index); // Select the new item
     }
   };
-
   const renderTable = () => {
     const reversedData = jsonData.slice().reverse();
     return (
-      <table>
+      <table id="load_table">
         <thead>
           <tr>
             <th>Save Name</th>
