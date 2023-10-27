@@ -349,6 +349,11 @@
             fogUpdate(players[i]);
           }
         }
+        mapX = ((state.width / 2) * -1) + (window.innerWidth / tileSize) / 2;
+        mapY = (state.height - (window.innerHeight / tileSize)) * -1;
+
+        maxTileSize = tileSize * 2;
+        minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
       }
 
 
