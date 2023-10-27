@@ -141,6 +141,7 @@
               if (i === -radius || i === radius || j === -radius || j === radius) {
                 if (fog[x + i][y + j].opacity !== 0) {
                   fog[x + i][y + j].setImage(halfOpacityFogImg);
+                  fog[x + i][y + j].opacity = 127;
                 }
               } else {
                 fog[x + i][y + j].opacity = 0;
@@ -292,23 +293,32 @@
               let tile = new Tile(t.x, t.y, t.type, t.seed);
               tile.p5Image = null;
               tile.image = t.image;
+              storeImage(tile);
               row.push(tile);
             });
             mapped.push(row);
           });
-          mapped.forEach(r => r.forEach(t => storeImage(t)));
+          //mapped.forEach(r => r.forEach(t => storeImage(t)));
           mapObj.tiles = mapped;
           //set the map fog
+          console.log(selectedMap.fog);
           fog = [];
           selectedMap.fog.forEach(r => {
             let row = [];
             r.forEach(t => {
               let tile = new Fog(t.x, t.y);
               tile.setImage(fullOpacityFogImg);
+              tile.opacity = t.opacity;
+              if(tile.opacity === 0){
+                tile.setImage(zeroOpacityFogImg);
+              }else if(tile.opacity === 127){
+                tile.setImage(halfOpacityFogImg);
+              }
               row.push(tile);
             });
             fog.push(row);
           });
+          mapObj.fogLayer = fog;
           //fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
           //set the map players
           players = [];
@@ -317,10 +327,11 @@
             playerStatistics.stats = p.playerStats.stats;
             let player = new Player(p.id, p.x, p.y, p.img, playerStatistics);
             players.push(player);
-            fogUpdate(player);
+            //fogUpdate(player);
           });
           //set the map name
           state.name = selectedMap.name;
+          console.log(mapObj);
         }else{
           mapObj = new Map(state.width, state.height, seed);
           mapped = mapObj.tiles;
@@ -522,6 +533,8 @@
         });
 
         save.mousePressed(async () => {
+          console.log(mapObj);
+
           localStorage.clear();
           //set zoom in/out to 0
           if(zoom > 0){
@@ -573,10 +586,14 @@
             r.forEach(t => {
               let tile = new Fog(t.x, t.y);
               tile.img = null;
+              tile.opacity = t.opacity;
               row.push(tile);
             });
             fogCopy.push(row);
           });
+          console.log(fog);
+          console.log(fogCopy);
+
           let saveData = {
             name: state.name,
             width: state.width,
