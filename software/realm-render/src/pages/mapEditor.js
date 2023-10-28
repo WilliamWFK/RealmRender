@@ -313,37 +313,37 @@ const LoadMap = () => {
       exportButton.position(10, 10);
       png.position(10, 10);
 
-      backButton.style('width', '5vw');
-      backButton.style('height', '5vw');
-      backButton.style('font-size', '2vw');
+      backButton.style('width', '8vh');
+      backButton.style('height', '8vh');
+      backButton.style('font-size', '4vh');
 
-      zoomInButton.style('width', '5vw');
-      zoomInButton.style('height', '5vw');
-      zoomInButton.style('margin-top', '6vw');
-      zoomInButton.style('font-size', '2vw');
+      zoomInButton.style('width', '8vh');
+      zoomInButton.style('height', '8vh');
+      zoomInButton.style('margin-top', '10vh');
+      zoomInButton.style('font-size', '4vh');
 
-      zoomOutButton.style('width', '5vw');
-      zoomOutButton.style('height', '5vw');
-      zoomOutButton.style('margin-top', '12vw');
-      zoomOutButton.style('font-size', '2vw');
+      zoomOutButton.style('width', '8vh');
+      zoomOutButton.style('height', '8vh');
+      zoomOutButton.style('margin-top', '20vh');
+      zoomOutButton.style('font-size', '4vh');
 
-      fogToggle.style('width', '5vw');
-      fogToggle.style('height', '5vw');
-      fogToggle.style('margin-top', '18vw');
-      fogToggle.style('font-size', '2vw');
+      fogToggle.style('width', '8vh');
+      fogToggle.style('height', '8vh');
+      fogToggle.style('margin-top', '30vh');
+      fogToggle.style('font-size', '4vh');
 
       backButton.mousePressed(() => {
         navigate("/index");
       });
-      exportButton.style('width', '5vw');
-      exportButton.style('height', '5vw');
-      exportButton.style('margin-top', '30vw');
-      exportButton.style('font-size', '1vw');
+      exportButton.style('width', '8vh');
+      exportButton.style('height', '8vh');
+      exportButton.style('margin-top', '40vh');
+      exportButton.style('font-size', '2vh');
 
-      png.style('width', '5vw');
-      png.style('height', '5vw');
-      png.style('margin-top', '24vw');
-      png.style('font-size', '1vw');
+      png.style('width', '8vh');
+      png.style('height', '8vh');
+      png.style('margin-top', '50vh');
+      png.style('font-size', '2vh');
 
       zoomInButton.mousePressed(() => {
         if (tileSize < maxTileSize) {

@@ -14,7 +14,7 @@
   z-index: 2;
 }
 
-.menuBackdrop {
+.menuBackdrop, .auxMenuBackdrop {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -74,14 +74,13 @@
 }
 
 .settingForm label {
-  padding: 5px;
-  width: 25%;
+  width: 100%;
   float: left;
 }
 
 .settingForm input {
   box-sizing: border-box;
-  width: 60%;
+  width: 100%;
 }
 
 .navButtons {
@@ -98,13 +97,14 @@
 }
 
 .backButton {
-  width: 180px;
+  width: 40%;
+  max-width: 160px;
   height: 60px;
   border-radius: 8px;
   background: #dadada;
-  color: #757575;
+  color: #555555;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -112,41 +112,41 @@
 }
 
 .backButton > .caret {
-  aspect-ratio: 1;
-  text-align: center;
-  padding-left: 20px;
+  text-align: left;
+  padding-left: 10%;
+  font-size: 30px;
 }
 
 .backButton > .text {
   flex-grow: 1;
-  text-align: left;
-  padding-left: 20%;
+  text-align: right;
+  padding-right: 10%;
 }
 
 .createButton {
-  width: 180px;
+  width: 40%;
+  max-width: 160px;
   height: 60px;
   border-radius: 8px;
   background: #a8dc59;
   color: #000000;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   margin-left: 10px; /* Add margin to separate from Back button */
 }
 
 .createButton > .plus {
-  aspect-ratio: 1;
-  text-align: center;
-  padding-right: 20px;
-  font-size: 40px;
+  text-align: right;
+  padding-right: 10%;
+  font-size: 30px;
 }
 
 .createButton > .text {
   flex-grow: 1;
-  text-align: right;
-  padding-right: 15%;
+  text-align: left;
+  padding-left: 10%;
 }
 .custom-background {
   position: absolute;
@@ -155,4 +155,42 @@
   object-fit: contain;
   width: 100vw;
   object-position: bottom;
+}
+
+@media only screen and (max-width: 1000px) {
+  .App-header {
+    position: absolute;
+    text-align: center;
+    color: var(--textColor);
+    left: 8vw;
+    top: 20px;
+    font-size: 50px;
+    z-index: 2;
+  }
+
+  .menuBackdrop {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    gap: 3vw;
+    left: 6vw;
+    width: 80vw;
+    top: 100px;
+  }
+
+  .auxMenuBackdrop {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 3vw;
+    left: 6vw;
+    width: 80vw;
+    top: 240px;
+  }
+
+  .menuButtonItem {
+    border-radius: 10px;
+    line-height: 40px;
+    font-size: 24px;
+  }
 }
