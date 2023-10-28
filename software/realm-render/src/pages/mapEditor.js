@@ -301,7 +301,6 @@
 
           mapObj.tiles = mapped;
           //set the map fog
-          console.log(selectedMap.fog);
           fog = [];
           selectedMap.fog.forEach(r => {
             let row = [];
@@ -331,6 +330,8 @@
           });
           //set the map name
           state.name = selectedMap.name;
+          //set the fog on/off
+          fogOn = selectedMap.fogOn;
 
         }else{
           mapObj = new Map(state.width, state.height, seed);
@@ -596,6 +597,7 @@
             tiles: tilesCopy,
             fog: fogCopy,
             players: playersCopy,
+            fogOn: fogOn
           }
 
           //store map into local storage
