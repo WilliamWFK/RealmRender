@@ -535,23 +535,21 @@
         save.mousePressed(async () => {
           //localStorage.clear();
           //set zoom in/out to 0
-          if(zoom > 0){
-            for(let i = 0; i < zoom; i++){
-              Math.round(tileSize /= 1.1);
-              players.forEach(p => {
-                Math.round(p.x /= 1.1);
-                Math.round(p.y /= 1.1);
-              });
-            }
+          while(zoom > 0){
+            zoom -= 1;
+            Math.round(tileSize /= 1.1);
+            players.forEach(p => {
+              Math.round(p.x /= 1.1);
+              Math.round(p.y /= 1.1);
+            });
           }
-          else if(zoom < 0){
-            for(let i = 0; i > zoom; i--){
-              Math.round(tileSize *= 1.1);
-              players.forEach(p => {
-                Math.round(p.x *= 1.1);
-                Math.round(p.y *= 1.1);
-              });
-            }
+          while(zoom < 0){
+            Math.round(tileSize *= 1.1);
+            players.forEach(p => {
+              Math.round(p.x *= 1.1);
+              Math.round(p.y *= 1.1);
+            });
+            zoom += 1;
           }
 
 
@@ -612,6 +610,21 @@
             //remove the old map
             maps.splice(state.index, 1);
           }
+          else{
+            console.log("new map");
+            //check if map name already exists
+            for(let i = 0; i < maps.length; i++){
+              if(maps[i].name === state.name && maps[i].theme === state.theme){
+                //if map name already exists, ask user if they want to replace it
+                if(window.confirm("Map name already exists. Do you want to replace it?")){
+                  maps.splice(i, 1);
+                }
+                else{
+                  return;
+                }
+              }
+            }
+          }
 
           //check if maps will exceed the local storage limit
           if(JSON.stringify(maps).length + JSON.stringify(saveData).length > 5242880){
@@ -628,6 +641,7 @@
 
           maps.push(saveData);
           localStorage.setItem('maps', JSON.stringify(maps));
+          alert("Map Saved!")
         });
 
         setup();
