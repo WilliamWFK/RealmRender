@@ -167,6 +167,21 @@ const Home = () => {
           </div>
         </div>
       );
+    } else if (menumode === 3) {
+      return (
+        <div>
+          {mainMenuButtons()}
+          <div class="auxMenuBackdrop joinForm">
+            <h1>Join</h1>
+            <textarea id="pasteBox" name="pasteBox" rows="1"></textarea>
+            <div class="navButtons">
+              <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
+              {/* <div class="createButton" ><p class="text">Join</p></div> */}
+              <Link to="/playerView" class="createButton"><p class="textJoin">Join</p></Link>
+            </div>
+          </div>
+        </div>
+      );
     }
   }
 
