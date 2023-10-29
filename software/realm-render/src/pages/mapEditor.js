@@ -421,10 +421,10 @@
       png.style('font-size', '2vh');
 
 
-        save.style('width', '5vw');
-        save.style('height', '5vw');
-        save.style('margin-top', '36vw');
-        save.style('font-size', '1vw');
+        save.style('width', '8vh');
+        save.style('height', '8vh');
+        save.style('margin-top', '60vh');
+        save.style('font-size', '2vh');
 
         zoomInButton.mousePressed(() => {
           if (tileSize < maxTileSize) {
