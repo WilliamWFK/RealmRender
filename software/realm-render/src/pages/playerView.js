@@ -100,83 +100,83 @@ const Join = () => {
             selectedGame.tiles.forEach(r => {
                 let row = [];
                 r.forEach(t => {
-                let tile = new Tile(t.x, t.y, t.type, t.seed);
-                tile.p5Image = null;
-                tile.image = t.image;
-                storeImage(tile);
-                row.push(tile);
+                    let tile = new Tile(t.x, t.y, t.type, t.seed);
+                    tile.p5Image = null;
+                    tile.image = t.image;
+                    storeImage(tile);
+                    row.push(tile);
                 });
                 mapped.push(row);
             });
         }
 
         function storeImage(tile) {
-        let type = tile.image.split("-");
-        switch (type[0]) {
-            case "big_object":
-            switch (type[1]) {
-                case "0":
-                tile.setImage(big_object1);
-                break;
-                case "1":
-                tile.setImage(big_object2);
-                break;
+            let type = tile.image.split("-");
+            switch (type[0]) {
+                case "big_object":
+                    switch (type[1]) {
+                        case "0":
+                            tile.setImage(big_object1);
+                            break;
+                        case "1":
+                            tile.setImage(big_object2);
+                            break;
+                        default:
+                            tile.setImage(big_object1);
+                            break;
+                    }
+                    break;
+                case "object":
+                    switch (type[1]) {
+                        case "0":
+                            tile.setImage(object1);
+                            break;
+                        case "1":
+                            tile.setImage(object2);
+                            break;
+                        case "2":
+                            tile.setImage(object3);
+                            break;
+                        case "3":
+                            tile.setImage(object4);
+                            break;
+                        case "4":
+                            tile.setImage(object5);
+                            break;
+                        default:
+                            tile.setImage(object1);
+                            break;
+                    }
+                    break;
+                case "chest":
+                    switch (type[1]) {
+                        case "0":
+                            tile.setImage(chest1);
+                            break;
+                        case "1":
+                            tile.setImage(chest2);
+                            break;
+                        default:
+                            tile.setImage(chest1);
+                            break;
+                    }
+                    break;
+                case "floor":
+                    tile.setImage(floor);
+                    break;
+                case "wall":
+                    tile.setImage(wall);
+                    break;
+                case "door":
+                    tile.setImage(door);
+                    break;
+                case "background":
+                    tile.setImage(background);
+                    break;
                 default:
-                tile.setImage(big_object1);
-                break;
+                    tile.setImage(background);
+                    break;
             }
-            break;
-            case "object":
-            switch (type[1]) {
-                case "0":
-                tile.setImage(object1);
-                break;
-                case "1":
-                tile.setImage(object2);
-                break;
-                case "2":
-                tile.setImage(object3);
-                break;
-                case "3":
-                tile.setImage(object4);
-                break;
-                case "4":
-                tile.setImage(object5);
-                break;
-                default:
-                tile.setImage(object1);
-                break;
-            }
-            break;
-            case "chest":
-            switch (type[1]) {
-                case "0":
-                tile.setImage(chest1);
-                break;
-                case "1":
-                tile.setImage(chest2);
-                break;
-                default:
-                tile.setImage(chest1);
-                break;
-            }
-            break;
-            case "floor":
-            tile.setImage(floor);
-            break;
-            case "wall":
-            tile.setImage(wall);
-            break;
-            case "door":
-            tile.setImage(door);
-            break;
-            case "background":
-            tile.setImage(background);
-            break;
-            default:
-            tile.setImage(background);
-            break;
-        }
         }
 
         function parseJSON() {
@@ -214,12 +214,12 @@ const Join = () => {
 
             players.forEach(p => {
                 if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
-                activePlayer = p;
-                p.printStats();
+                    activePlayer = p;
+                    p.printStats();
                 }
 
                 if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
-                activePlayer = -1;
+                    activePlayer = -1;
                 }
             });
         }
@@ -235,6 +235,11 @@ const Join = () => {
                 prevX = p5.mouseX;
                 prevY = p5.mouseY;
             }
+        }
+
+        p5.mouseReleased = () => {
+            prevX = -1;
+            prevY = -1;
         }
 
         p5.setup = () => {
@@ -270,24 +275,24 @@ const Join = () => {
 
             zoomInButton.mousePressed(() => {
                 if (tileSize < maxTileSize) {
-                  zoom++;
-                  Math.round(tileSize *= 1.1);
-                  players.forEach(p => {
-                    Math.round(p.x *= 1.1);
-                    Math.round(p.y *= 1.1);
-                  });
+                    zoom++;
+                    Math.round(tileSize *= 1.1);
+                    players.forEach(p => {
+                        Math.round(p.x *= 1.1);
+                        Math.round(p.y *= 1.1);
+                    });
                 }
-              });
+            });
 
             zoomOutButton.mousePressed(() => {
-            if (tileSize > minTileSize) {
-                zoom--;
-                Math.round(tileSize /= 1.1);
-                players.forEach(p => {
-                Math.round(p.x /= 1.1);
-                Math.round(p.y /= 1.1);
-                });
-            }
+                if (tileSize > minTileSize) {
+                    zoom--;
+                    Math.round(tileSize /= 1.1);
+                    players.forEach(p => {
+                        Math.round(p.x /= 1.1);
+                        Math.round(p.y /= 1.1);
+                    });
+                }
             });
 
             parseJSON();
@@ -303,20 +308,20 @@ const Join = () => {
 
             // Draw Players
             players.forEach(p => {
-                if(p.playerStats.stats['classLevel'].includes("Rogue")){
-                  p.img = rogueImg;
+                if (p.playerStats.stats['classLevel'].includes("Rogue")) {
+                    p.img = rogueImg;
                 }
-                else if(p.playerStats.stats['classLevel'].includes("Knight")){
-                  p.img = knightImg;
+                else if (p.playerStats.stats['classLevel'].includes("Knight")) {
+                    p.img = knightImg;
                 }
-                else if(p.playerStats.stats['classLevel'].includes("Wizard")){
-                  p.img = wizardImg;
+                else if (p.playerStats.stats['classLevel'].includes("Wizard")) {
+                    p.img = wizardImg;
                 }
-                else{
-                  p.img = tokenImg;
+                else {
+                    p.img = tokenImg;
                 }
-              });
-              players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
+            });
+            players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
 
             // Draw Fog
             fog.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
