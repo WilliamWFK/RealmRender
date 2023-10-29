@@ -14,9 +14,7 @@ class Tile {
             down: "empty",
             left: "empty"
         };
-        this.theme = theme;     // Theme of tile
-        /**this.selectImage();*/
-        this.seed = seed;
+        this.p5Image = null;
     }
 
     isWall() {
@@ -67,7 +65,7 @@ class Tile {
       this.selectImage();
     }
     setImage(image){
-      this.image = image;
+      this.p5Image = image;
     }
     draw(p5, tileSize, mapX, mapY){
       /*if (this.type == "floor") {
@@ -77,7 +75,7 @@ class Tile {
       } else {
         p5.image(wallImg, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
       }*/
-      p5.image(this.image, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
+      p5.image(this.p5Image, (this.x + mapX) * tileSize, (this.y + mapY) * tileSize, tileSize, tileSize);
     }
 
     on(x, y, p5, tileSize){

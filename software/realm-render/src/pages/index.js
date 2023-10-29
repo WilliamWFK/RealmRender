@@ -10,6 +10,58 @@ const Home = () => {
 
   const [formData, setFormData] = useState({ name: "", width: 90, height: 90, players: 2, theme: "Atlantis" });
 
+  const [jsonData] = useState(localStorage.getItem("maps") ? JSON.parse(localStorage.getItem("maps")) : []);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const toggleItemSelection = (index) => {
+    // Toggle the selection for the clicked item
+    if (selectedItem === index) {
+      setSelectedItem(null); // Deselect if already selected
+    } else {
+      setSelectedItem(index); // Select the new item
+    }
+  };
+  const renderTable = () => {
+    const reversedData = jsonData.slice().reverse();
+    return (
+      <table id="load_table">
+        <thead>
+          <tr>
+            <th>Save Name</th>
+            <th>Save Theme</th>
+            <th>Selected</th>
+          </tr>
+        </thead>
+        <tbody>
+          {reversedData.map((item, index) => (
+            <tr key={index}>
+              <td>{item.name}</td>
+              <td>{item.theme}</td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={selectedItem === jsonData.length - 1 - index}
+                  onChange={() => toggleItemSelection(jsonData.length - 1 - index)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  };
+
+
+  const handleLoad = (event) => {
+    event.preventDefault();
+    if (selectedItem !== null && selectedItem >= 0 && selectedItem < jsonData.length) {
+      navigate("/mapEditor", {state: {index: selectedItem, action: "load"}});
+    } else {
+      alert("Please select a save to load");
+      return;
+    }
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -19,8 +71,6 @@ const Home = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    alert(`Name: ${formData.name}, Email: ${formData.width}, Message: ${formData.height}, Players: ${formData.players}, Theme: ${formData.theme}`
-    );
 
     navigate("/mapEditor", { state: { name: formData.name, width: formData.width, height: formData.height, players: formData.players, theme: formData.theme } });
   }
@@ -44,12 +94,6 @@ const Home = () => {
             <h1>Create Your Map</h1>
             <div class="settingForm">
               {/* example settings */}
-              {/*<div>setting:</div>
-              <input type="text" id="setting1" name="setting1"></input>
-              <div>setting two:</div>
-              <label for="setting2">{sliderValue}</label>
-              <input type="range" min="0" max="10" value={sliderValue} onInput={(e) => setValue(e.target.value)} id="setting2" name="setting2"></input>
-              */}
               {/* example settings end */}
               <form onSubmit={handleSubmit}>
                 <div class="formInput">
@@ -107,10 +151,10 @@ const Home = () => {
           </div>
           <div class="menuBackdrop loadForm">
             <h1>Load</h1>
-            <textarea id="pasteBox" name="pasteBox" rows="4"></textarea>
+            {renderTable()}
             <div class="navButtons">
               <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
-              <div class="createButton" ><p class="text">Load</p><p class="plus">+</p></div>
+              <div class="createButton" onClick={handleLoad}><p class="text">Load</p><p class="plus">+</p></div>
             </div>
           </div>
         </div>

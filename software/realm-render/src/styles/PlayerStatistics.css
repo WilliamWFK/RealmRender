@@ -17,39 +17,39 @@
     user-select: none; /* Standard syntax */
 }
 
-table {
+.sheet-table {
   width: 200%;
   display: flex;
   flex-wrap: wrap;
 }
 
 
-tr {
+.sheet-table tr {
   width: 100%;
 }
-h1{
+.sheet-table h1{
   height: 50px;
 }
 
-td {
+.sheet-table td {
   padding: 8px;
   width: 50%;
   color: #3B3B3B;
 }
-td[id] {
+.sheet-table td[id] {
   cursor: pointer;
   transition: background-color 0.3s ease;
   border: 1px dotted #8B4513;
   border-radius: 25px;
 }
 
-td[id]:hover {
+.sheet-table td[id]:hover {
   background-color: #EDEDED;
   border: 1px dotted #993910;
   border-radius: 25px;
 }
 
-input {
+.sheet-table input {
   width: 250%;
   border-radius: 5px;
   border: 1px solid #8B4513;

@@ -18,3 +18,17 @@ code {
 :root {
   background-color: white;
 }
+
+#load_table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#load_table th {
+  font-weight: bold;
+  padding: 8px;
+}
+#load_table tr {
+  padding: 8px;
+  text-align: center;
+}

@@ -174,6 +174,7 @@ class PlayerStatistics {
 
 
     let table = document.createElement("table");
+    table.className = "sheet-table";
     let tbody = document.createElement("tbody");
     let h1 = document.createElement("h1");
 
