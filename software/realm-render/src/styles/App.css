@@ -135,6 +135,7 @@
   display: flex;
   align-items: center;
   margin-left: 10px; /* Add margin to separate from Back button */
+  cursor: pointer;
 }
 
 .createButton > .plus {
