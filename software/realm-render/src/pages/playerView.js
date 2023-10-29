@@ -11,11 +11,13 @@ import Fog from "../Model/Fog";
 
 // create new RTDbObject
 
-const rtdb = new RTDbObject("ABCD");
 
-rtdb.createMapListener(console.log);
 
 const Join = () => {
+    const rtdb = new RTDbObject("BBBB");
+
+    rtdb.createMapListener(console.log);
+
     const navigate = useNavigate();
     const { state } = useLocation();
 

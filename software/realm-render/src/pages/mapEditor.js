@@ -9,12 +9,14 @@
   import jsPdf from "jspdf";
   import '../styles/mapEditor.css';
   import Fog from "../Model/Fog";
+  import RTDbObject from '../Model/RTDbObject';
 
 
   const LoadMap = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
 
+    let rtdb;
     let mapObj;
     let mapped = [];
     let fog = [];
@@ -435,6 +437,13 @@
           }
 
           let value = JSON.stringify(saveData);
+          if (rtdb === undefined) {
+              rtdb = new RTDbObject("BBBB");
+              console.log("rtdb created");
+          } else {
+              rtdb.updateMapData(value);
+              console.log("rtdb updated");
+          }
 
         }
 

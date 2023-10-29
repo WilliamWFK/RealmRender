@@ -72,7 +72,7 @@ class RTDbObject {
     updateMapData(map) {
         const mapReference = ref(this.db, 'maps/' + this.gameId);
         update(mapReference, {
-            tiles: map.tiles
+            tiles: map
         });
         console.log("Map updated");
     }
