@@ -123,8 +123,7 @@ const Join = () => {
             zeroOpacityFogImg.background(255, 0);
 
             fullOpacityFogImg.mask(zeroOpacityFogImg);
-            fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
-            console.log("before tiles");
+
             selectedGame.tiles.forEach(r => {
                 let row = [];
                 r.forEach(t => {
@@ -136,26 +135,20 @@ const Join = () => {
                 });
                 mapped.push(row);
             });
-
-            console.log("before players");
             selectedGame.players.forEach(p => {
-                players.push(new Player(p.id, p.x, p.y, p.img, p.playerStats));
+                players.push(new Player(p.id, p.x, p.y, tokenImg, p.playerStats));
             });
-
-            console.log("before fog");
             selectedGame.fog.forEach(r => {
                 let row = [];
                 r.forEach(f => {
                     let fogTile = new Fog(f.x, f.y);
+                    fogTile.opacity = f.opacity;
                     row.push(fogTile);
                 });
                 fog.push(row);
             });
-            fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
-
-            console.log("before fogupdate");
-
-            players.forEach(p => fogUpdate(p));
+            fog.forEach(r => r.forEach(t => decideImage(t)));
+            mapObj.fogLayer = fog;
         }
 
         function storeImage(tile) {
@@ -228,7 +221,6 @@ const Join = () => {
         }
 
         function parseJSON() {
-            console.log(mapData.tiles);
             let games = JSON.parse(mapData.tiles);
 
             selectedGame = games;
@@ -241,6 +233,8 @@ const Join = () => {
             mapObj = new Map(mapWidth, mapHeight, mapSeed);
 
             mapped = [];
+            players = [];
+            fog = [];
 
             mapObj.tiles = mapped;
 
@@ -251,25 +245,20 @@ const Join = () => {
             minTileSize = Math.min(window.innerHeight / mapHeight, window.innerWidth / mapWidth);
         }
 
-        function fogUpdate(player) {
-            let x = Math.round((player.x + tileSize / 2) / tileSize);
-            let y = Math.round((player.y + tileSize / 2) / tileSize);
-            let radius = fowRadius;
-
-            for (let i = -radius; i <= radius; i++) {
-                for (let j = -radius; j <= radius; j++) {
-                    if (x + i >= 0 && x + i < mapWidth && y + j >= 0 && y + j < mapHeight) {
-                        if (i === -radius || i === radius || j === -radius || j === radius) {
-                            if (fog[x + i][y + j].opacity !== 0) {
-                                fog[x + i][y + j].setImage(halfOpacityFogImg);
-                                fog[x + i][y + j].opacity = 127;
-                            }
-                        } else {
-                            fog[x + i][y + j].opacity = 0;
-                            fog[x + i][y + j].setImage(zeroOpacityFogImg);
-                        }
-                    }
-                }
+        function decideImage(f) {
+            switch (f.opacity) {
+                case 0:
+                    f.setImage(zeroOpacityFogImg);
+                    break;
+                case 127:
+                    f.setImage(halfOpacityFogImg);
+                    break;
+                case 255:
+                    f.setImage(fullOpacityFogImg);
+                    break;
+                default:
+                    f.setImage(zeroOpacityFogImg);
+                    break;
             }
         }
 
@@ -306,7 +295,7 @@ const Join = () => {
             const mapSeed = 'exampleSeed';
 
             // Buttons
-            let backButton = p5.createButton("🠈");
+            let backButton = p5.createButton("<");
             let zoomInButton = p5.createButton("+");
             let zoomOutButton = p5.createButton("-");
 
@@ -364,6 +353,13 @@ const Join = () => {
             // Draw Tiles
             mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
 
+            // Draw Fog
+            fog.forEach(r => {
+                r.forEach(t => {
+                    t.draw(p5, tileSize, mapX, mapY)
+                });
+            });
+
             // Draw Players
             players.forEach(p => {
                 if (p.playerStats.stats['classLevel'].includes("Rogue")) {
@@ -381,12 +377,7 @@ const Join = () => {
             });
             players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
 
-            // Draw Fog
-            fog.forEach(r => {
-                r.forEach(t => {
-                    t.draw(p5, tileSize, mapX, mapY)
-                });
-            });
+
 
 
             // Place bounds on panning
