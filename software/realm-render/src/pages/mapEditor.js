@@ -9,12 +9,14 @@
   import jsPdf from "jspdf";
   import '../styles/mapEditor.css';
   import Fog from "../Model/Fog";
+  import RTDbObject from '../Model/RTDbObject';
 
 
   const LoadMap = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
 
+    let rtdb;
     let mapObj;
     let mapped = [];
     let fog = [];
@@ -268,6 +270,7 @@
             break;
         }
       }
+
       function setup() {
         const seed = 'exampleSeed';
         //check if map is being loaded or created
@@ -369,6 +372,81 @@
         minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
       }
 
+      function saveMap() {
+          while(zoom > 0){
+              zoom -= 1;
+              Math.round(tileSize /= 1.1);
+              players.forEach(p => {
+              Math.round(p.x /= 1.1);
+              Math.round(p.y /= 1.1);
+              });
+          }
+          while(zoom < 0){
+              Math.round(tileSize *= 1.1);
+              players.forEach(p => {
+              Math.round(p.x *= 1.1);
+              Math.round(p.y *= 1.1);
+              });
+              zoom += 1;
+          }
+
+          //remove img from players
+          //copy the players array
+          let playersCopy = [];
+          players.forEach(p => {
+              let player = new Player(p.id, p.x, p.y, p.img, p.playerStats);
+              player.img = null;
+              playersCopy.push(player);
+          });
+
+          //deep copy the tiles array
+          let tilesCopy = [];
+          mapped.forEach(r => {
+              let row = [];
+              r.forEach(t => {
+              let tile = new Tile(t.x, t.y, t.type, t.seed);
+              tile.p5Image = null;
+              tile.image = t.image;
+              row.push(tile);
+              });
+              tilesCopy.push(row);
+          });
+
+          //deep copy the fog array
+          let fogCopy = [];
+          fog.forEach(r => {
+              let row = [];
+              r.forEach(t => {
+              let tile = new Fog(t.x, t.y);
+              tile.img = null;
+              tile.opacity = t.opacity;
+              row.push(tile);
+              });
+              fogCopy.push(row);
+          });
+
+          let saveData = {
+              name: state.name,
+              width: state.width,
+              height: state.height,
+              theme: state.theme,
+              tiles: tilesCopy,
+              fog: fogCopy,
+              players: playersCopy,
+              fogOn: fogOn
+          }
+
+          let value = JSON.stringify(saveData);
+          if (rtdb === undefined) {
+              rtdb = new RTDbObject("BBBB");
+              console.log("rtdb created");
+          } else {
+              rtdb.updateMapData(value);
+              console.log("rtdb updated");
+          }
+
+        }
+
 
       p5.setup = () => {
         p5.createCanvas(window.innerWidth, window.innerHeight);
@@ -379,6 +457,7 @@
         let exportButton = p5.createButton("Export PDF");
         let png = p5.createButton("Export PNG");
         let save = p5.createButton("Save");
+        let host = p5.createButton("Host");
 
         backButton.position(10, 10);
         zoomInButton.position(10, 10);
@@ -387,44 +466,54 @@
         exportButton.position(10, 10);
         png.position(10, 10);
         save.position(10, 10);
+        host.position(10, 10);
 
-      backButton.style('width', '8vh');
-      backButton.style('height', '8vh');
-      backButton.style('font-size', '4vh');
+        backButton.style('width', '8vh');
+        backButton.style('height', '8vh');
+        backButton.style('font-size', '4vh');
 
-      zoomInButton.style('width', '8vh');
-      zoomInButton.style('height', '8vh');
-      zoomInButton.style('margin-top', '10vh');
-      zoomInButton.style('font-size', '4vh');
+        zoomInButton.style('width', '8vh');
+        zoomInButton.style('height', '8vh');
+        zoomInButton.style('margin-top', '10vh');
+        zoomInButton.style('font-size', '4vh');
 
-      zoomOutButton.style('width', '8vh');
-      zoomOutButton.style('height', '8vh');
-      zoomOutButton.style('margin-top', '20vh');
-      zoomOutButton.style('font-size', '4vh');
+        zoomOutButton.style('width', '8vh');
+        zoomOutButton.style('height', '8vh');
+        zoomOutButton.style('margin-top', '20vh');
+        zoomOutButton.style('font-size', '4vh');
 
-      fogToggle.style('width', '8vh');
-      fogToggle.style('height', '8vh');
-      fogToggle.style('margin-top', '30vh');
-      fogToggle.style('font-size', '4vh');
+        fogToggle.style('width', '8vh');
+        fogToggle.style('height', '8vh');
+        fogToggle.style('margin-top', '30vh');
+        fogToggle.style('font-size', '4vh');
 
-      backButton.mousePressed(() => {
-        navigate("/index");
-      });
-      exportButton.style('width', '8vh');
-      exportButton.style('height', '8vh');
-      exportButton.style('margin-top', '40vh');
-      exportButton.style('font-size', '2vh');
+        backButton.mousePressed(() => {
+          navigate("/index");
+        });
+        exportButton.style('width', '8vh');
+        exportButton.style('height', '8vh');
+        exportButton.style('margin-top', '40vh');
+        exportButton.style('font-size', '2vh');
 
-      png.style('width', '8vh');
-      png.style('height', '8vh');
-      png.style('margin-top', '50vh');
-      png.style('font-size', '2vh');
+        png.style('width', '8vh');
+        png.style('height', '8vh');
+        png.style('margin-top', '50vh');
+        png.style('font-size', '2vh');
 
 
         save.style('width', '8vh');
         save.style('height', '8vh');
         save.style('margin-top', '60vh');
         save.style('font-size', '2vh');
+
+        host.style('width', '8vh');
+        host.style('height', '8vh');
+        host.style('margin-top', '70vh');
+        host.style('font-size', '2vh');
+
+        host.mousePressed(() => {
+          saveMap();
+        });
 
         zoomInButton.mousePressed(() => {
           if (tileSize < maxTileSize) {

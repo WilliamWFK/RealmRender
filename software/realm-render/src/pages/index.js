@@ -79,7 +79,7 @@ const Home = () => {
       <div class="menuBackdrop mainMenu">
           <div onClick={() => { setMenumode(1) }} class="menuButtonItem"><p>New</p></div>
           <div onClick={() => { setMenumode(2) }} class="menuButtonItem"><p>Load</p></div>
-          <Link to="/playerView" class="menuButtonItem"><p>Join</p></Link>
+          <div onClick={() => { setMenumode(3) }} class="menuButtonItem"><p>Join</p></div>
         </div>
     )
   }
@@ -148,6 +148,36 @@ const Home = () => {
             <div class="navButtons">
               <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
               <div class="createButton" onClick={handleLoad}><p class="text">Load</p><p class="plus">+</p></div>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (menumode === 3) {
+      return (
+        <div>
+          {mainMenuButtons()}
+          <div class="auxMenuBackdrop joinForm">
+            <h1>Join</h1>
+            <textarea id="pasteBox" name="pasteBox" rows="1"></textarea>
+            <div class="navButtons">
+              <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
+              {/* <div class="createButton" ><p class="text">Join</p></div> */}
+              <Link to="/playerView" class="createButton"><p class="textJoin">Join</p></Link>
+            </div>
+          </div>
+        </div>
+      );
+    } else if (menumode === 3) {
+      return (
+        <div>
+          {mainMenuButtons()}
+          <div class="auxMenuBackdrop joinForm">
+            <h1>Join</h1>
+            <textarea id="pasteBox" name="pasteBox" rows="1"></textarea>
+            <div class="navButtons">
+              <div class="backButton" onClick={() => { setMenumode(0) }}><p class="caret">&lt;</p><p class="text">Back</p></div>
+              {/* <div class="createButton" ><p class="text">Join</p></div> */}
+              <Link to="/playerView" class="createButton"><p class="textJoin">Join</p></Link>
             </div>
           </div>
         </div>
