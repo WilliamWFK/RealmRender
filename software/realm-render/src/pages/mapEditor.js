@@ -127,6 +127,8 @@
             if (p.id === activePlayer.id) {
               p.x = activePlayer.x;
               p.y = activePlayer.y;
+              saveMap("player");
+
             }
           });
         }
@@ -372,7 +374,7 @@
         minTileSize = Math.min(window.innerHeight / state.height, window.innerWidth / state.width);
       }
 
-      function saveMap() {
+      function saveMap(host) {
           while(zoom > 0){
               zoom -= 1;
               Math.round(tileSize /= 1.1);
@@ -438,8 +440,10 @@
 
           let value = JSON.stringify(saveData);
           if (rtdb === undefined) {
+            if(host === "host"){
               rtdb = new RTDbObject("BBBB");
               console.log("rtdb created");
+            }
           } else {
               rtdb.updateMapData(value);
               console.log("rtdb updated");
@@ -512,7 +516,7 @@
         host.style('font-size', '2vh');
 
         host.mousePressed(() => {
-          saveMap();
+          saveMap("host");
         });
 
         zoomInButton.mousePressed(() => {
