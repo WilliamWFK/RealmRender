@@ -2,22 +2,21 @@ import { initializeApp } from "firebase/app";
 import { get, getDatabase, onValue, ref, update, set } from "firebase/database";
 import firebaseConfig from "../firebaseConfig.js";
 
+
 class RTDbObject {
     constructor(gameId) {
         this.gameId = gameId;
         // intialize app
         this.app = initializeApp(firebaseConfig);
         this.db = getDatabase(this.app);
-        // this.update();
     }
 
     createMapListener(callback) {
         const mapReference = ref(this.db, 'maps/' + this.gameId);
         onValue(mapReference, (snapshot) => {
-            const tiles = snapshot.val();
+            let tiles = snapshot.val();
             callback(tiles);
-            console.log("Map update received");
-            console.log(tiles);
+            return tiles;
         });
     }
 
@@ -26,8 +25,6 @@ class RTDbObject {
         onValue(entityReference, (snapshot) => {
             const entities = snapshot.val();
             callback(entities);
-            console.log("Entity update received");
-            console.log(entities);
         });
     }
 
@@ -36,8 +33,6 @@ class RTDbObject {
         onValue(entityReference, (snapshot) => {
             const player = snapshot.val();
             callback(player);
-            console.log("Player update received");
-            console.log(player);
         });
     }
 
@@ -46,11 +41,8 @@ class RTDbObject {
         get(gameReference).then((snapshot) => {
             if (snapshot.exists()) {
                 const game = snapshot.val();
-                console.log("Game data retrieved");
-                console.log(game);
                 return game;
             } else {
-                console.log("No data available");
             }
         }).catch((error) => {
             console.error(error);
@@ -64,17 +56,14 @@ class RTDbObject {
         onValue(gameReference, (snapshot) => {
             const game = snapshot.val();
             callback(game);
-            console.log("Game update received");
-            console.log(game);
         });
     }
 
     updateMapData(map) {
         const mapReference = ref(this.db, 'maps/' + this.gameId);
-        update(mapReference, {
+        set(mapReference, {
             tiles: map
         });
-        console.log("Map updated");
     }
 
     updateEntityData(entity) {
@@ -82,7 +71,6 @@ class RTDbObject {
         update(entityReference, {
             entities: entity.entities
         });
-        console.log("Entities updated");
     }
 
     updatePlayerData(player) {
@@ -90,7 +78,6 @@ class RTDbObject {
         update(entityReference, {
             player: player
         });
-        console.log("Player updated");
     }
 
     updateGameData(game) {
@@ -98,7 +85,6 @@ class RTDbObject {
         update(gameReference, {
             game: game.game
         });
-        console.log("Game updated");
     }
 
     createNewGame(game) {
@@ -106,7 +92,6 @@ class RTDbObject {
         set(gameReference, {
             game: game
         });
-        console.log("Game created");
     }
 
     createNewMap(map) {
@@ -114,7 +99,6 @@ class RTDbObject {
         set(mapReference, {
             tiles: map.tiles
         });
-        console.log("Map created");
     }
 
     createNewEntity(entity) {
@@ -122,7 +106,6 @@ class RTDbObject {
         set(entityReference, {
             entities: entity.entities
         });
-        console.log("Entities created");
     }
 
     createNewPlayer(player) {
@@ -130,7 +113,6 @@ class RTDbObject {
         set(entityReference, {
             player: player
         });
-        console.log("Player created");
     }
 }
 
