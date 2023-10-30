@@ -123,7 +123,6 @@ const Join = () => {
             zeroOpacityFogImg.background(255, 0);
 
             fullOpacityFogImg.mask(zeroOpacityFogImg);
-            fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
 
             selectedGame.tiles.forEach(r => {
                 let row = [];
@@ -136,6 +135,20 @@ const Join = () => {
                 });
                 mapped.push(row);
             });
+            selectedGame.players.forEach(p => {
+                players.push(new Player(p.id, p.x, p.y, tokenImg, p.playerStats));
+            });
+            selectedGame.fog.forEach(r => {
+                let row = [];
+                r.forEach(f => {
+                    let fogTile = new Fog(f.x, f.y);
+                    fogTile.opacity = f.opacity;
+                    row.push(fogTile);
+                });
+                fog.push(row);
+            });
+            fog.forEach(r => r.forEach(t => decideImage(t)));
+            mapObj.fogLayer = fog;
         }
 
         function storeImage(tile) {
@@ -208,9 +221,6 @@ const Join = () => {
         }
 
         function parseJSON() {
-            // let games = JSON.parse(rtdb.getGameData());
-
-            console.log(mapData.tiles);
             let games = JSON.parse(mapData.tiles);
 
             selectedGame = games;
@@ -223,6 +233,8 @@ const Join = () => {
             mapObj = new Map(mapWidth, mapHeight, mapSeed);
 
             mapped = [];
+            players = [];
+            fog = [];
 
             mapObj.tiles = mapped;
 
@@ -231,6 +243,23 @@ const Join = () => {
 
             maxTileSize = tileSize * 2;
             minTileSize = Math.min(window.innerHeight / mapHeight, window.innerWidth / mapWidth);
+        }
+
+        function decideImage(f) {
+            switch (f.opacity) {
+                case 0:
+                    f.setImage(zeroOpacityFogImg);
+                    break;
+                case 127:
+                    f.setImage(halfOpacityFogImg);
+                    break;
+                case 255:
+                    f.setImage(fullOpacityFogImg);
+                    break;
+                default:
+                    f.setImage(zeroOpacityFogImg);
+                    break;
+            }
         }
 
         p5.mousePressed = () => {
@@ -242,27 +271,16 @@ const Join = () => {
 
             players.forEach(p => {
                 if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
-                    activePlayer = p;
                     p.printStats();
-                }
-
-                if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
-                    activePlayer = -1;
                 }
             });
         }
 
         p5.mouseDragged = () => {
-
-            if (activePlayer !== -1) {
-                activePlayer.x = p5.mouseX + (-(mapX) * tileSize);
-                activePlayer.y = p5.mouseY + (-(mapY) * tileSize);
-            } else {
-                mapX += (p5.mouseX - prevX) / tileSize;
-                mapY += (p5.mouseY - prevY) / tileSize;
-                prevX = p5.mouseX;
-                prevY = p5.mouseY;
-            }
+            mapX += (p5.mouseX - prevX) / tileSize;
+            mapY += (p5.mouseY - prevY) / tileSize;
+            prevX = p5.mouseX;
+            prevY = p5.mouseY;
         }
 
         p5.mouseReleased = () => {
@@ -270,12 +288,14 @@ const Join = () => {
             prevY = -1;
         }
 
+
+
         p5.setup = () => {
             p5.createCanvas(window.innerWidth, window.innerHeight);
             const mapSeed = 'exampleSeed';
 
             // Buttons
-            let backButton = p5.createButton("🠈");
+            let backButton = p5.createButton("<");
             let zoomInButton = p5.createButton("+");
             let zoomOutButton = p5.createButton("-");
 
@@ -323,8 +343,6 @@ const Join = () => {
                 }
             });
 
-
-
             updateJSON();
         };
 
@@ -334,6 +352,13 @@ const Join = () => {
 
             // Draw Tiles
             mapped.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+
+            // Draw Fog
+            fog.forEach(r => {
+                r.forEach(t => {
+                    t.draw(p5, tileSize, mapX, mapY)
+                });
+            });
 
             // Draw Players
             players.forEach(p => {
@@ -352,8 +377,7 @@ const Join = () => {
             });
             players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
 
-            // Draw Fog
-            fog.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+
 
 
             // Place bounds on panning
