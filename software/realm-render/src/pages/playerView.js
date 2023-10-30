@@ -124,7 +124,7 @@ const Join = () => {
 
             fullOpacityFogImg.mask(zeroOpacityFogImg);
             fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
-
+            console.log("before tiles");
             selectedGame.tiles.forEach(r => {
                 let row = [];
                 r.forEach(t => {
@@ -136,6 +136,26 @@ const Join = () => {
                 });
                 mapped.push(row);
             });
+
+            console.log("before players");
+            selectedGame.players.forEach(p => {
+                players.push(new Player(p.id, p.x, p.y, p.img, p.playerStats));
+            });
+
+            console.log("before fog");
+            selectedGame.fog.forEach(r => {
+                let row = [];
+                r.forEach(f => {
+                    let fogTile = new Fog(f.x, f.y);
+                    row.push(fogTile);
+                });
+                fog.push(row);
+            });
+            fog.forEach(r => r.forEach(t => t.setImage(fullOpacityFogImg)));
+
+            console.log("before fogupdate");
+
+            players.forEach(p => fogUpdate(p));
         }
 
         function storeImage(tile) {
@@ -208,8 +228,6 @@ const Join = () => {
         }
 
         function parseJSON() {
-            // let games = JSON.parse(rtdb.getGameData());
-
             console.log(mapData.tiles);
             let games = JSON.parse(mapData.tiles);
 
@@ -233,6 +251,28 @@ const Join = () => {
             minTileSize = Math.min(window.innerHeight / mapHeight, window.innerWidth / mapWidth);
         }
 
+        function fogUpdate(player) {
+            let x = Math.round((player.x + tileSize / 2) / tileSize);
+            let y = Math.round((player.y + tileSize / 2) / tileSize);
+            let radius = fowRadius;
+
+            for (let i = -radius; i <= radius; i++) {
+                for (let j = -radius; j <= radius; j++) {
+                    if (x + i >= 0 && x + i < mapWidth && y + j >= 0 && y + j < mapHeight) {
+                        if (i === -radius || i === radius || j === -radius || j === radius) {
+                            if (fog[x + i][y + j].opacity !== 0) {
+                                fog[x + i][y + j].setImage(halfOpacityFogImg);
+                                fog[x + i][y + j].opacity = 127;
+                            }
+                        } else {
+                            fog[x + i][y + j].opacity = 0;
+                            fog[x + i][y + j].setImage(zeroOpacityFogImg);
+                        }
+                    }
+                }
+            }
+        }
+
         p5.mousePressed = () => {
 
             if (prevX === -1 && prevY === -1) {
@@ -242,33 +282,24 @@ const Join = () => {
 
             players.forEach(p => {
                 if (p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize)) {
-                    activePlayer = p;
                     p.printStats();
-                }
-
-                if (!players.some(p => p.on(p5.mouseX + (-(mapX) * tileSize), p5.mouseY + (-(mapY) * tileSize), p5, tileSize))) {
-                    activePlayer = -1;
                 }
             });
         }
 
         p5.mouseDragged = () => {
-
-            if (activePlayer !== -1) {
-                activePlayer.x = p5.mouseX + (-(mapX) * tileSize);
-                activePlayer.y = p5.mouseY + (-(mapY) * tileSize);
-            } else {
-                mapX += (p5.mouseX - prevX) / tileSize;
-                mapY += (p5.mouseY - prevY) / tileSize;
-                prevX = p5.mouseX;
-                prevY = p5.mouseY;
-            }
+            mapX += (p5.mouseX - prevX) / tileSize;
+            mapY += (p5.mouseY - prevY) / tileSize;
+            prevX = p5.mouseX;
+            prevY = p5.mouseY;
         }
 
         p5.mouseReleased = () => {
             prevX = -1;
             prevY = -1;
         }
+
+
 
         p5.setup = () => {
             p5.createCanvas(window.innerWidth, window.innerHeight);
@@ -323,8 +354,6 @@ const Join = () => {
                 }
             });
 
-
-
             updateJSON();
         };
 
@@ -353,7 +382,11 @@ const Join = () => {
             players.forEach(p => p.draw(p5, tileSize, mapX, mapY));
 
             // Draw Fog
-            fog.forEach(r => r.forEach(t => t.draw(p5, tileSize, mapX, mapY)));
+            fog.forEach(r => {
+                r.forEach(t => {
+                    t.draw(p5, tileSize, mapX, mapY)
+                });
+            });
 
 
             // Place bounds on panning
