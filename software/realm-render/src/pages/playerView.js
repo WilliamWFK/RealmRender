@@ -74,10 +74,10 @@ const Join = () => {
 
         function updateJSON() {
             onValue(mapReference, (snapshot) => {
-                const tiles = snapshot.val();
                 console.log("Map update received");
-                mapData = tiles.tiles;
+                mapData = snapshot.val();
                 parseJSON();
+                preload(mapTheme);
             });
         }
 
@@ -210,8 +210,8 @@ const Join = () => {
         function parseJSON() {
             // let games = JSON.parse(rtdb.getGameData());
 
-            console.log(mapData);
-            let games = JSON.parse(mapData);
+            console.log(mapData.tiles);
+            let games = JSON.parse(mapData.tiles);
 
             selectedGame = games;
 
@@ -326,8 +326,6 @@ const Join = () => {
 
 
             updateJSON();
-            parseJSON();
-            preload(mapTheme);
         };
 
         p5.draw = () => {
